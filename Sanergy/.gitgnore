@@ -1,0 +1,6 @@
+*venv/*
+*.vscode/*
+.ignore
+venv/
+.vscode/
+.idea/

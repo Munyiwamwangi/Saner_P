@@ -1,0 +1,166 @@
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  ​
+  body {
+      background: url("https://images.unsplash.com/photo-1479920252409-6e3d8e8d4866?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  ​
+  h1 {
+      font-family: 'Fira Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.7em;
+      color: black;
+  }
+  ​
+  .intro > p {
+      font-family: 'Roboto Slab', serif;
+      font-weight: 300;
+      font-size: 1em;
+      color: black;
+  }
+  ​
+  .main {
+      width: 450px;
+      height: 100%;
+      padding-bottom: 25px;
+      margin-top: 40px;
+    margin-bottom: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px 10px 10px 10px;
+      -moz-border-radius: 10px 10px 10px 10px;
+      -webkit-border-radius: 10px 10px 10px 10px;
+      border: 3px solid #ffffff;
+      background-color:rgba(0, 0, 0, 0.2);
+  }
+  ​
+  .header {
+      width: 100%;
+        height: 70px;
+        text-align: center;
+  }
+  ​
+  .logo {
+      margin-top: 20px;
+  }
+  ​
+  .intro {
+      text-align: center;
+  }
+  ​
+  hr {
+      width: 350px;
+      border-color: #FFCC00;
+  }
+  ​
+  .form {
+      width: 400px;
+      height: 50px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px 10px 10px 10px;
+      -moz-border-radius: 10px 10px 10px 10px;
+      -webkit-border-radius: 10px 10px 10px 10px;
+      background-color: #FFFFFF;
+      display: inline-block;
+      opacity: 0.7;
+      font-family: 'Roboto Slab', serif;
+      font-weight: 300;
+      font-size: 1em;
+      color: black;
+      text-align: center;
+  }
+  ​
+  .example {
+  color: #545454}
+  ​
+  .list, .textinput {
+      text-align: center;
+  }
+  ​
+  .result {
+      width: 400px;
+      height: 50px;
+      margin-top: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px 10px 10px 10px;
+      -moz-border-radius: 10px 10px 10px 10px;
+      -webkit-border-radius: 10px 10px 10px 10px;
+      background-color: #A4E2E0;
+      text-align: center;
+      display: inline-block;
+  }
+  ​
+  .result-remove {
+      width: 400px;
+      height: 50px;
+      margin-top: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px 10px 10px 10px;
+      -moz-border-radius: 10px 10px 10px 10px;
+      -webkit-border-radius: 10px 10px 10px 10px;
+      background-color: #E2A4A4;
+      text-align: center;
+      text-decoration: line-through;
+      display: inline-block;
+  }
+  ​
+  .result, .result-remove > p {
+      font-family: 'Roboto Slab', serif;
+      font-weight: 400;
+      font-size: 1em;
+      color: black;
+  }
+  ​
+  .close {
+      float: right;
+      position: relative;
+      bottom: 43px;
+      margin-right: 9px;
+      cursor: pointer;
+  }
+  ​
+  .check {
+      float: left;
+      position: relative;
+      top: 10px;
+      margin-left: 9px;
+      margin-right: -36px;
+      cursor: pointer;
+  }
+  ​
+  .add {
+      float: left;
+      position: relative;
+      top: 10px;
+      margin-left: 9px;
+      margin-right: -36px;
+      cursor: pointer;
+      display: none;
+  }
+  ​
+  .button {
+    background:none;
+    font-size:20px;
+    font-weight:bold;
+    
+  }
+  ​
+  .button:hover {background-color: #3e8e41}
+  ​
+  .button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
