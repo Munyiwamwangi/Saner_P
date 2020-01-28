@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/home/munyiwanjiku/Documents/projects/sanergy/Leave-management-System/virtual"
+$VIRTUAL_ENV = r"/home/munyiwanjiku/Documents/projects/Sanergy/Intranet/Sanergy/virtual"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

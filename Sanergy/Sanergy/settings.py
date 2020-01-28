@@ -40,13 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leave_management',
     'employee',
-    'salesforce',
     'rest_framework',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'django_seed',
+    'bootstrap4',
+    'bootstrap3',
+    'social_django',
+    'users',
+    'crispy_forms',
+    
 ]
 
 MIDDLEWARE = [
@@ -95,12 +95,10 @@ WSGI_APPLICATION = 'Sanergy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intranetsarnergy',
-        'USER': 'intradmin',
-        'PASSWORD': 'sanergy123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+        'NAME':'sanergy',
+        'USER':'munyiwanjiku',
+        'PASSWORD':'joe',
+    },
 
 }
 
@@ -109,7 +107,6 @@ DATABASE_ROUTERS = [
 ]
 
 SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -148,14 +145,43 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
-AUTHETICATION_BACKENDS = {
-    # Needed to login by username in Django admin, regardless of 'allauth'
-    'django.contrib.auth.backend.ModelBackend',
-
-    # 'allauth' specific authentication methods, in this case login with Gmail
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-}
-
 SITE_ID = 1
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# salesforce credentials
+SALESFORCE_USERNAME = 'domnick.kamya@saner.gy.ffa'
+SALESFORCE_SECURITY_TOKEN = 'RolR1FqVokyPBjREIoBDq21j'
+SALESFORCE_PASSWORD = 'Sanergy123'
+SALESFORCE_DOMAIN = 'test'
+
+
+# socoial auth setup
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1026629942419-qokhhup918dhbnmjfo21u5d2gdi9can3.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qEQJSXwqbF0LiYIr5KVx2GKR'
+
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+'''
+This error was due to the session cookie not being saved over a non-https url.
+When testing on localhost with SESSION_COOKIE_SECURE set to True in django,
+the session cookies will not persist between redirect and you will get this error in any kind of page change where session would be checked.
+'''
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
+SESSION_COOKIE_SECURE = False
+

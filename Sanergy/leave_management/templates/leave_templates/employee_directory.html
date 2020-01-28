@@ -1,42 +1,20 @@
 {% extends "leave_templates/base.html" %}
 {% load bootstrap4 %}
 {% load static %}
+
 {% block content %}
-<!-- <h1>Employees Data</h1>
-    <h3>y-value pairs</h3>
-    <p>First name: {{ employee_first_name }}</p>
-    <p>Full Name:  {{ employee_full_name }} </p>
-    <p>Employee Id:  {{ employee_id }}</p>
-    <p>Employee Line Manager: {{ employees_line_manager }} </p>
-    <p>EMployee Work Email: {{ employee_work_email }} </p>
-    <p>EMployee HR Id: {{ employee_hr_id }} </p>
-    <p>Employee Active: {{ employee_active }} </p>
-    <p>Employee Is Deleted: {{ employee_is_deleted }} </p> -->
-    
-<div class="admin container" style="padding-top: 100px; padding-left:30px;padding-right: 30px;">
-    <table>
-        <tr>
-            <th style="font-size: 40px; text-align: center; font-family: 'PT Sans', sans-serif;"">
-                <tr>First name</tr>
-                <tr>Full Name</tr>
-                <tr>Employee Id</tr>
-                <tr>Employee Line Manager</tr>
-                <tr>EMployee Work Email</tr>
-                <tr>EMployee HR Id</tr>
-                <tr>Employee Active</tr>
-                <tr>Employee Is Deleted</tr>
-            </th>
-        </tr>
-        <tr style="font-family: 'Be Vietnam', sans-serif; font-size:21px; font-weight:500; text-align: center;">
-            <td>{{ employee_first_name }}</td>
-            <td>{{ employee_full_name }}</td>
-            <td>{{ employee_id }}</td>
-            <td>{{ employees_line_manager }}</td>
-            <td>{{ employee_work_email }}</td>
-            <td>{{ employee_hr_id }}</td>
-            <td>{{ employee_active }}</td>
-            <td>{{ employee_is_deleted }}</td>
-        </tr>
-    </table>
+<div class="container">
+    <h4 style="font-style: oblique;">Employee Directory</h4>
+    <h4 style="font-style: italic;">Key  -  Value Pairs Visual Data Directory</h4>
+    <div >
+        {% for employee_details in data %}
+        <br>
+        {% for k, v in employee_details.items %}
+        <ol>
+            <p>{{ k }} : {{ v }}</p>
+        </ol>
+        {% endfor %}
+        {% endfor %}
+    </div>
 </div>
-{% endblock %}
+{% endblock content %}
