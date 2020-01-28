@@ -26,6 +26,7 @@ SECRET_KEY = 'dt4n@@q@uayg60$v-qyf@in-!hnks^!651oa41$9f17=-9cgr='
 DEBUG = True
 
 ALLOWED_HOSTS = []
+db_host = False
 
 
 # Application definition
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'social_django',
     'users',
     'crispy_forms',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -95,9 +96,10 @@ WSGI_APPLICATION = 'Sanergy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'sanergy',
-        'USER':'munyiwanjiku',
-        'PASSWORD':'joe',
+        'NAME': 'sanergy',
+        'USER': 'munyiwanjiku',
+        'PASSWORD': 'joe',
+        'PORT': '5432',
     },
 
 }
@@ -129,6 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
+AUTH_USER_MODEL = "employee.Employee"
 
 LANGUAGE_CODE = 'en-us'
 
@@ -169,23 +172,17 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1026629942419-qokhhup918dhbnmjfo21u5d2gdi9can3.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qEQJSXwqbF0LiYIr5KVx2GKR'
-
-
 LOGIN_URL = '/auth/login/google-oauth2/'
-
 LOGIN_URL = 'login'
+<<<<<<< HEAD
 <<<<<<< HEAD
 LOGIN_REDIRECT_URL = ('leave/home')#user is taken home after login in
 =======
 LOGIN_REDIRECT_URL = 'home'
 >>>>>>> 3e8be495573933f9de8e0b93465545d68d3f67d1
+=======
+LOGIN_REDIRECT_URL = 'home'
+>>>>>>> datamining and restructuring
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-
-'''
-This error was due to the session cookie not being saved over a non-https url.
-When testing on localhost with SESSION_COOKIE_SECURE set to True in django,
-the session cookies will not persist between redirect and you will get this error in any kind of page change where session would be checked.
-'''
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
 SESSION_COOKIE_SECURE = False
-
