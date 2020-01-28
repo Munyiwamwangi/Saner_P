@@ -1,4 +1,4 @@
-#!/home/munyiwanjiku/Documents/projects/sanergy/Leave-management-System/virtual/bin/python3
+#!/home/munyiwanjiku/Documents/projects/Sanergy/Intranet/Sanergy/virtual/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

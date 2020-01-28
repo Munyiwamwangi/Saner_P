@@ -3,15 +3,16 @@ from django.db import models
 from django.utils import timezone
 
 # data to serialize and send back to Salesforce
-
 class LeaveType(models.Model):
     LEAVE_CHOICES = (
+        ('SICK_LEAVE', 'SICK_LEAVE'),
+        ('STUDY_LEAVE', 'STUDY_LEAVE'),
+        ('EXAM_LEAVE', 'EXAM_LEAVE'),
         ('MATERNITY_LEAVE', 'MATERNITY_LEAVE'),
         ('PATERNITY_LEAVE', 'PATERNITY_LEAVE'),
         ('ANNUAL_LEAVE', 'ANNUAL_LEAVE'),
         ('COMPASSIONATE_LEAVE', 'COMPASSIONATE_LEAVE'),
-        ('SICK_LEAVE', 'SICK_LEAVE'),
-        ('STUDY_LEAVE', 'STUDY_LEAVE'),
+        
     )
     Leave_Types = models.CharField(max_length=20, choices=LEAVE_CHOICES, default='annual')
 
@@ -48,7 +49,6 @@ class LeaveClassDetails(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.Leave_Id, self.Comments)
-from django.db import models
 
 # Create your models here.
 

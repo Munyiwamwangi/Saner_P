@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/munyiwanjiku/Documents/projects/sanergy/Leave-management-System/virtual"
+VIRTUAL_ENV="/home/munyiwanjiku/Documents/projects/Sanergy/Intranet/Sanergy/virtual"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

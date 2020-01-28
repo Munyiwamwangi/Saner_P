@@ -1,23 +1,20 @@
-{% extends "leave_templates/base.html" %} {% load crispy_forms_tags %} {% load
-  bootstrap4 %} {% load bootstrap3 %} {% block content %}
+{% extends "leave_templates/base.html" %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% load bootstrap3 %}
+{% block content %}
   <html lang="en">
     <head>
       <meta charset="utf-8" />
   
       <title>Login Page!</title>
-  
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-        crossorigin="anonymous"
-      />
     </head>
     <body>
       <div class="container">
         <div class="jumbotron">
           {% if user.is_authenticated %}
-          <p>Logged as {{ user.username }}</p>
+          <p>Hey {{ user.username }}, Welcome Back</p>
+          <p>Email: {{ user.email }}</p>
           <a class="btn " href="{% url 'logout' %}">Logout</a>
           {% else %}
           <a
@@ -31,8 +28,7 @@
   
         <div class="content-section">
           {% if user.is_authenticated %}
-          <p>{{ user.username }}</p>
-          <p>{{ user.email }}</p>
+          
           {% else %}
           <a class="btn btn-sm" href="{% url 'social:begin' 'google-oauth2' %}">
             <p>
