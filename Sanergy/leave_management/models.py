@@ -1,15 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from employee.models import Employee
+
 
 class LeaveType(models.Model):
     LEAVE_CHOICES = (
         ('SICK_LEAVE', 'SICK_LEAVE'),
-
         ('STUDY_LEAVE', 'STUDY_LEAVE'),
-
         ('EXAM_LEAVE', 'EXAM_LEAVE'),
-
         ('MATERNITY_LEAVE', 'MATERNITY_LEAVE'),
 
         ('PATERNITY_LEAVE', 'PATERNITY_LEAVE'),
@@ -17,7 +16,6 @@ class LeaveType(models.Model):
         ('ANNUAL_LEAVE', 'ANNUAL_LEAVE'),
 
         ('COMPASSIONATE_LEAVE', 'COMPASSIONATE_LEAVE'),
-
     )
 
     Leave_Types = models.CharField(max_length=20, choices=LEAVE_CHOICES, default='annual')
@@ -52,9 +50,9 @@ class LeaveClassDetails(models.Model):
     Requested_Days = models.IntegerField(default=0, help_text='Total no of requested leave days')
     Leave_Status = models.IntegerField(choices=LeaveStatus, default=1)
     Comments = models.CharField(max_length=500, null=True)
-    Coverage_Plans = models.ForeignKey(User, on_delete=models.DO_NOTHING, max_length=50, )
+    Coverage_Plans = models.CharField(max_length=50, blank=False)
     Leave_Attachments = models.FileField(upload_to='leave_management/media/leave_documents', unique=False, blank=False)
-    Created_By = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner', null=True)
+    Leave_Owner = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='owner', null=True)
     Submitted_Date = models.DateTimeField(auto_now_add=True, )
 
     class Meta:
@@ -62,6 +60,8 @@ class LeaveClassDetails(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.Leave_Id, self.Comments)
+
+# Create your models here.
 
 
 class LeaveModels(models.Model):

@@ -1,6 +1,6 @@
-*venv/*
-*.vscode/*
+virtual
+vscode
 .ignore
-venv/
-.vscode/
-.idea/
+venv
+.vscode
+.idea
