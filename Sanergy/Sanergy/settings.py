@@ -174,7 +174,11 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qEQJSXwqbF0LiYIr5KVx2GKR'
 LOGIN_URL = '/auth/login/google-oauth2/'
 
 LOGIN_URL = 'login'
+<<<<<<< HEAD
 LOGIN_REDIRECT_URL = ('leave/home')#user is taken home after login in
+=======
+LOGIN_REDIRECT_URL = 'home'
+>>>>>>> 3e8be495573933f9de8e0b93465545d68d3f67d1
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 '''

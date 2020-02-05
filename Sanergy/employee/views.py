@@ -31,26 +31,6 @@ def employee_details(request):
         'data': data
     }
 
-    # looping through data list to access every object
-    for employee_data in data:
-        for key, value in employee_data.items():
-            print('{}: {}'.format(key, value))
-
-        # Accessing values only
-        k = employee_data.keys()
-        for i in k:
-            print(employee_data[i])
-
-        # keys only, not tested though
-        first_dictionary = data[0]
-        k = first_dictionary.keys()
-        for i in k:
-            print(first_dictionary[i])
-
-    return render(request, 'leave_templates/employee_directory.html', context)
-    # return JsonResponse(context, status=200)
-
-
 
 def psqlEmployeeDetails(request):
     connection = postgressConnection()
