@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
 
 # data to serialize and send back to Salesforce
 class LeaveType(models.Model):
@@ -9,11 +8,15 @@ class LeaveType(models.Model):
         ('STUDY_LEAVE', 'STUDY_LEAVE'),
         ('EXAM_LEAVE', 'EXAM_LEAVE'),
         ('MATERNITY_LEAVE', 'MATERNITY_LEAVE'),
+
         ('PATERNITY_LEAVE', 'PATERNITY_LEAVE'),
+
         ('ANNUAL_LEAVE', 'ANNUAL_LEAVE'),
+
         ('COMPASSIONATE_LEAVE', 'COMPASSIONATE_LEAVE'),
         
     )
+
     Leave_Types = models.CharField(max_length=20, choices=LEAVE_CHOICES, default='annual')
 
     def __str__(self):
@@ -22,13 +25,20 @@ class LeaveType(models.Model):
 
 class LeaveClassDetails(models.Model):
     Approved = 0
+
     Pending = 1
+
     Declined = 2
+
     PendingCancellation = 3
+
     LeaveStatus = (
         (Approved, 'Approved'),
+
         (Pending, 'Pending'),
+
         (Declined, 'Declined'),
+
         (PendingCancellation, 'PendingCancellation'),
     )
 
