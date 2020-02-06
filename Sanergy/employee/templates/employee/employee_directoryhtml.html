@@ -2,43 +2,104 @@
 {% load bootstrap4 %}
 {% load static %}
 {% block content %}
-<div class="wrapper" style="text-align:center;">
-  <img class="fixed-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-color-195.png" width="160px" alt="Sanergy" >
-  <h2 style="font-size: 1.4em;
-      text-align: center;">Our TEAMS | <strong style="color:#6daeb2;">Nairobi</strong></h2>
-  </div>
-  
-      {% for item in employee %}
-    <div class="container">
-      <h2 style="text-align:center;"><strong>Name: </strong> {{ item.Employee_Full_Name }}</h2>
-    <div class="col-md-6 col-sm-6">
-      <div class="col-xs-12 col-sm-12" style="text-align:center;"> 
-        <p style="text-align:left;"><strong>Email: </strong>{{ item.HR_Employee_ID }} </p>
-        <p style="text-align:left;"><strong>About: </strong> Web Designer / UI. </p>
-        <p style="text-align:left;"><strong>Status: </strong> {{ item.Employee_Active }} </p>
-        <p style="text-align:left;"><strong>Mobile: </strong>0707963284 </p>
-        <p style="text-align:left;"><strong>Email: </strong> {{ item.email }} </p>
-        <p style="text-align:left;"><strong>Department: </strong> Information Tecnology. </p>
-        <p style="text-align:left;"><strong>Status: </strong>
-        <span class="tags" style="text-align:left;">html5</span>
-        <span class="tags" style="text-align:center;">css3</span>
-        <span class="tags" style="text-align:left;">jquery</span>
-        <span class="tags" style="text-align:left;">bootstrap3</span>
-        </p>
-        <p style="text-align:center;  "><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
-        </div>
-    </div>
-    <div class="col-md-6 col-sm-6">
-      <div class="col-xs-12 col-sm-12" style="text-align:center;">
-        <p style="text-align:center;"><strong>Image: </strong><input class="btn-sm" type="button" value="Upload Picture">
-        </p>
-        <img class="avatar" src="https://images.unsplash.com/photo-1532879444636-a3fdb47d7d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ash" width="300" style=" border-radius: 50%;">
-      </div>
-    </div>
-  </div>
-  <br>
-  {% endfor %}
+<head>
+  {{form.media}}
+  {% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans:700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  {% endblock %}
+</head>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 25px;
+    font-weight: 900;
+  }
 
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 6px;
+    height: 50px;
+    font-size: 18px;
+
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+
+</style>
+<body>
+  <div class="wrapper" style="text-align:center;">
+    <img class="fixed-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-color-195.png" width="150px" alt="Sanergy Logo" >
+    <h4 style="font-size: 1.4em; text-align: center;"> <img style="height: 30px;" src="https://image.flaticon.com/icons/svg/345/345736.svg"> Employee | <strong style="color:#6daeb2;">DIRECTORY</strong></h4>
+  </div>
+  <div class="table table-bordered table-striped" style="padding-left: 60px; padding-right: 60px; padding-top: 10px; ">
+    <h3 style="color:#6daeb2;" class="loading"  >Search Any Clue <span id="wait">.</span> </h3>
+    <p>Type something in the input field to search the table for first names, last names or emails:</p>  
+    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    <table>
+      <tr style="font-size: 30px;">
+        <th>First Name </th>
+        <th>Full Name</th>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Line Manager</th>
+        <th>HR Employee_ID</th>
+      </tr>
+      {% for employee in employee %}
+      <tbody id="myTable">
+        <tr >
+          <td>{{ employee.Employee_First_Name }}</td>
+          <td>{{ employee.Employee_Full_Name }}</td>
+          <td>{{ employee.Id }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.Employee_Active }}</td>
+          <td>{{ employee.Line_Manager }}</td>
+          <td>{{ employee.HR_Employee_ID }}</td>
+        </tr>
+      </tbody>
+      {% endfor%}
+      <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
+        <script>
+          var dots = window.setInterval( function() {
+              var wait = document.getElementById("wait");
+              if ( wait.innerHTML.length > 5 ) 
+                  wait.innerHTML = "";
+              else 
+                  wait.innerHTML += ".";
+              }, 200);
+          </script>
+    </table>
+  </div>
+  {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </script>
-  </body></html>
-  {% endblock content %}
+{% bootstrap_javascript %}
+</body>
+</html>
+{% endblock %}
+</script>
+</body></html>
+{% endblock content %}
