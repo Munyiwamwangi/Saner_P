@@ -1,6 +1,157 @@
-<body>
+{% extends "leave_templates/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
 {% block content %}
-<h4 style="color: olivedrab;" >Application</h4>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Apply leave</title>
+    {{form.media}}
+
+    {% block styles %} {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    {% endblock %}
+
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border-radius: 25px;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    #id_Leave_Type{
+       
+        height: 50px;
+        border-radius: 25px;
+        text-align: center;
+    }
+    #id_Begin_Date{
+       
+       height: 50px;
+       border-radius: 25px;
+   }
+   #id_End_Date{
+       
+       height: 50px;
+       border-radius: 25px;
+   }
+   #id_Requested_Days{
+       
+       height: 50px;
+       border-radius: 25px;
+   }
+    #id_Comments{
+        height: 100px;
+        border-radius: 25px;
+    }
+</style>
+
+<body class="container-fluid">
+    <!-- flash messages cong  -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- flash messages cong  -->
+    {% include 'leave_templates/navbar.html' %}
+    <div class="panel panel-default">
+        <div class="row">
+            <div class="col-6" style="padding-right: 200px; padding-left:30px; margin-top: 100px;">
+                <div class="card"
+                    style="width: 400px; box-shadow: 0 40px 15px 0 rgba(0, 0, 0, 0.2); height: 500px; font-weight: 600; ">
+                    <div class="card-body" style="padding-top: 90px;">
+                        <form action="{% url 'leave_application'%}" method="post" enctype="multipart/form-data"
+                            style="height: 50px;">
+
+                            {% csrf_token%}
+                            {% bootstrap_form leaveform %}
+
+
+                            <div class="form-group text-center">
+                                <input type="submit" class="btn btn-primary sign-up-button" value="Apply">
+                            </div>
+                            <input type="hidden" name="next" value="">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 " style="padding-top: 100px; padding-right: 40px; ">
+                <table>
+                    <tr>
+                        <th>Employee </th>
+                        <th>Type</th>
+                      
+                        <th>Begin Date</th>
+                        <th>End Date</th>
+                        <th>Requested Days</th>
+                        <th>Status </th>
+                      
+                        <!-- <th> Leave Type</th> -->
+
+                    </tr>
+                    {% for leave in leavess %}
+                    <tr>
+
+                        <td>{{leave.user.username}}</td>
+                        <td>{{leave.Leave_Type}}</td>
+                       
+                        <td>{{leave.Begin_Date}}</td>
+                        <td>{{leave.End_Date}}</td>
+                        <td>{{leave.Requested_Days}}</td>
+                        <td>{{leave.get_leave_status_display}}</td>
+
+                    </tr>
+                    {% endfor%}
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    {% block scripts %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css"
+        rel="stylesheet">
+    <script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/moment.js/2.17.1/moment.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
     
+    <script>
+        $(function () {
+            $('.datetime-input').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+        });
+    </script>
+    {% bootstrap_javascript %}
+    {% endblock %}
+
 </body>
+
+</html>
+{% endblock %}

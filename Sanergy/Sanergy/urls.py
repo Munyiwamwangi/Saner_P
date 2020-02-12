@@ -1,5 +1,4 @@
 """Sanergy URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
 Examples:
@@ -31,10 +30,8 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('leave/', include('leave_management.urls')),
     path('employee/', include('employee.urls')),
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
-    path('', include('social_django.urls', namespace='social')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('home', TemplateView.as_view(template_name='profile.html'), name='profile')
 
 ]
 
