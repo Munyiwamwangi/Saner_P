@@ -1,0 +1,398 @@
+{% extends "leave_templates/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+
+
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Employee Bio Hub</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|Roboto:300,400,700');
+    
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    a {
+      text-decoration: none;
+    }
+    
+    .container {
+      width: 100%;
+      position: relative;
+      font-family: 'PT Sans Narrow', sans-serif;
+    }
+    
+    .wrapper {
+      max-width: 1170px;
+      margin: auto; 
+    }
+    
+    
+    
+    h2 {
+      width: 100%;
+      padding: 1em;
+      margin: 0;
+      display: block;
+      color: #999;
+      text-transform: uppercase;
+      font-weight: 300;
+      letter-spacing: 1px;
+      font-size: 1.4em;
+    }
+    
+    h1, 
+    h2 {
+      font-family: 'Roboto', sans-serif;  
+    }
+    
+    .employees-wrapper {
+      max-width: 1170px;
+      margin: auto;
+      border: 1px solid #dbdbdb;
+      display: flex;
+    }
+    
+    .employee-list {
+      width: 230px;
+      padding: 1em;
+    }
+    
+    .employee-list ul {
+      padding: 0;
+      list-style-type: none;
+    }
+    
+    .employee-list .name, .name {
+        text-decoration: none;
+        color:#6daeb2;
+        background-color: rgba(255,255,255,0);
+        font-size: 1.7em;
+        display: block;
+        padding: .5em 0;
+        font-weight: 600;
+        font-variant: all-petite-caps;
+    }
+    
+    .job-title {
+      display: block;
+      color: black;
+      font-size: .7em;
+      font-weight: 400;
+    }
+    
+    .employee-pics {
+      flex-basis: 400px;
+      padding: .5em;
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    
+    .employee-pics .name {
+      display: none;
+      font-size: 1.8em;
+    }
+    
+    .employee-pics .pic-frame {
+        width: calc(33% - 1em);
+        filter: saturate(0);
+        height: 260px;
+        display: inline-block;
+        margin: .5em;
+    }
+    
+    
+    .employee-pics img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    
+    @media only screen and (max-width: 1000px) {
+      .employee-list,
+      .employee-pics {
+        padding: 1em;
+      }
+      .employee-pics {
+        justify-content: flex-start;
+      }
+      .employee-pics .pic-frame {
+        width: calc(50% - 20px);
+      }
+    }
+    
+    @media only screen and (max-width: 750px) {
+      .employees-wrapper {
+        flex-wrap: wrap;
+        max-width: 500px;
+      }
+      h2 {
+        font-size: 1.4em;
+        text-align: center;
+      }
+      .employee-pics .name {
+        display: block;
+        text-align: center;
+        padding: .5em;
+        margin-bottom: 1em;
+        width: 100%;
+      }
+      .employee-list,
+      .employee-pics {
+        width: 100%;
+        text-align: center;
+      }
+      .employee-pics {
+        justify-content: center;
+      }
+      .employee-pics .pic-frame {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: 350px;
+        margin: 0;
+        padding: 1em 0 0;
+        filter: saturate(1) !important;
+      }
+    }
+    
+    @media only screen and (max-width: 500px) {
+      .employee-pics .pic-frame {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: 250px;
+      }
+      h1 {
+        font-size: 1.3em;
+      }
+    }
+    
+    @media only screen and (max-width: 400px) {
+      .employee-pics .pic-frame {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: 250px;
+      }
+      h1 {
+        font-size: 1.2em;
+      }
+    }
+    </style>
+    <script>
+      window.console = window.console || function(t) {};
+    </script>
+    <script>
+      if (document.location.search.match(/type=embed/gi)) {
+        window.parent.postMessage("resize", "*");
+      }
+    </script>
+    </head>
+
+
+    {% for item in employee %}
+    <body translate="no">
+    <div class="container">
+    <div class="wrapper" style="text-align:center;">
+    <img class="fixed-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-color-195.png" width="160px" alt="Sanergy" >
+    <h2 style="font-size: 1.4em;
+        text-align: center;">Our TEAMS | <strong style="color:#6daeb2;">Nairobi</strong></h2>
+    <h3 style="font-size: 1.4em;
+        text-align: center;">Information Tecnology Team</h3>
+    </div>
+    
+    <div class="employees-wrapper">
+    
+    <div class="employee-list">
+    <ul>
+    <li><a href="emprofile.html" class="name employee-number-1">{{ item.Employee_Full_Name }}<span class="job-title">Marketing Strategist</span></a></li>
+    <li><a href="emprofile.html" class="name employee-number-2" style="padding-left: 0em; background-color: rgba(255, 255, 255, 0);">Sue McGuire<span class="job-title">Lead Designer</span></a></li>
+    <li><a href="emprofile.html" class="name employee-number-3">Evan Latista<span class="job-title">Sales Manager</span></a></li>
+    </ul>
+    </div>
+    
+    <div class="employee-pics">
+    <div class="pic-frame employee-number-1">
+    <a href="/employees/ted-hurst/">
+    <img src="https://images.unsplash.com/photo-1529421308418-eab98863cee4?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=f146a8e0de4e567fedddbf83b9232f24" alt="">
+    </a>
+    <a href="#" class="name">Ted Hurst<span class="job-title">Marketing Strategist</span></a>
+    </div>
+    <div class="pic-frame employee-number-2" style="filter: saturate(0) contrast(1);">
+    <a href="/employees/sue-mcguire/">
+    <img src="https://images.unsplash.com/photo-1521296797187-726205347ca9?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=2557c8c60d2c56ce498cb6036f49fb90" alt="">
+    </a>
+    <a class="name">Sue McGuire<span class="job-title">Lead Designer</span></a>
+    </div>
+    <div class="pic-frame employee-number-3">
+    <a href="/employees/sue-mcguire/">
+    <img src="https://images.unsplash.com/photo-1497470288371-3a7b5a82a048?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=3a0516af761be710cebb6dbb259632dc" alt="">
+    </a>
+    <a class="name">Evan Latista</a>
+    </div>
+    </div>
+    </div>
+    <div class="employees-wrapper">
+    
+    <div class="employee-list" >
+    <ul>
+    <li><a href="emprofile.html" class="name employee-number-4" style="padding-left: 0.0998749em; background-color: rgba(253, 254, 254, 0.004);">Ted Hurst<span class="job-title">Marketing Strategist</span></a></li>
+    <li><a href="emprofile.html" class="name employee-number-5" style="padding-left: 0em; background-color: rgba(255, 255, 255, 0);">Theresa Aoko<span class="job-title">Mobile Developer</span></a></li>
+    <li><a href="emprofile.html" class="name employee-number-6" style="padding-left: 0em; background-color: rgba(255, 255, 255, 0);">Nimo Said<span class="job-title">Front-end Developer</span></a></li>
+    </ul>
+    </div>
+    
+    <div class="employee-pics">
+    <div class="pic-frame employee-number-4" style="filter: saturate(0.0906467) contrast(1.00755);">
+    <a href="emprofile.html">
+    <img src="https://images.unsplash.com/photo-1529421308418-eab98863cee4?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=f146a8e0de4e567fedddbf83b9232f24" alt="">
+    </a>
+    <a href="#" class="name">Ted Hurst<span class="job-title">Marketing Strategist</span></a>
+    </div>
+    <div class="pic-frame employee-number-5" style="filter: saturate(0) contrast(1);">
+    <a href="emprofile.html">
+    <img src="https://images.unsplash.com/photo-1533674689012-136b487b7736?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="">
+    </a>
+    <a class="name">Theresa Aoko<span class="job-title"> Mobile Developer</span></a>
+    </div>
+    <div class="pic-frame employee-number-6" style="filter: saturate(0) contrast(1);">
+    <a href="emprofile.html">
+    <img src="data:image/jpeg;base64,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" alt="">
+    </a>
+    <a class="name">Nimo Said</a>
+    </div>
+    </div>
+    </div>
+    
+    <br><br>
+    <div class="wrapper">
+    <h3 style="font-size: 1.4em;
+        text-align: center;">Business Development Team</strong></h3>
+    
+    </div>
+    
+    <div class="employees-wrapper">
+    
+    <div class="employee-list">
+    <ul>
+    <li><a href="emprofile.html" class="name employee-number-4">Kevin McDowell<span class="job-title">Marketing Strategist</span></a></li>
+    <li><a href="emprofile.html" class="name employee-number-5" style="padding-left: 0em; background-color: rgba(255, 255, 255, 0);">Shirley Hotchkins<span class="job-title">Lead Designer</span></a></li>
+    <li><a href="emprofile.html" class="name employee-number-6">Zach Baur<span class="job-title">Back-End Developer</span></a></li>
+    </ul>
+    </div>
+    
+    <div class="employee-pics">
+    <div class="pic-frame employee-number-4">
+    <a href="emprofile.html">
+    <img src="https://images.unsplash.com/photo-1526866428207-a2ffb7d82586?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=0c90bc094ddfc46f30de51048ef54465" alt="">
+    </a>
+    <a href="#" class="name">Kevin McDowell<span class="job-title">Marketing Strategist</span></a>
+    </div>
+    <div class="pic-frame employee-number-5" style="filter: saturate(0) contrast(1);">
+    <a href="emprofile.html">
+    <img src="https://images.unsplash.com/photo-1515010915584-5674a0686d0a?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=e81513bba34bec0a08ffc72a864a11a0" alt="">
+    </a>
+    <a class="name">Shirley Hotchkins<span class="job-title">Lead Designer</span></a>
+    </div>
+    <div class="pic-frame employee-number-6">
+    <a href="emprofile.html">
+    <img src="https://images.unsplash.com/photo-1528528956182-52938743340c?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=400&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=a060307b9912bbfbf1e9f2f754ecd68c" alt="">
+    </a>
+    <a class="name">Zach Baur<span class="job-title">Back-End Developer</span></a>
+    </div>
+    </div>
+    </div>
+    
+    <br><br><br>
+    </div>
+    <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-9bf952ccbbd13c245169a0a1190323a27ce073a3d304b8c0fdf421ab22794a58.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script id="rendered-js">
+    if ($('.employees-wrapper').length) {
+      $('.employees-wrapper').each(function () {
+        $(function () {
+          var i = 1;
+          $('.employee-list .name').each(function () {
+            $(this).addClass('employee-number-' + i);
+            i++;
+          });
+        });
+    
+        $(function () {
+          var i = 1;
+          $('.employee-pics .pic-frame').each(function () {
+            $(this).addClass('employee-number-' + i);
+            i++;
+          });
+        });
+      });
+    
+    
+    
+      $(function () {
+    
+        var name = '.employee-list .';
+        var pic = '.employee-pics .';
+    
+        $('[class*="employee-number-"]').
+        on("mouseenter", function () {
+          var employeeNumber = $(this).attr("class").split(" ").pop();
+          var employeePic = pic + employeeNumber;
+          var employeeName = name + employeeNumber;
+          var screenWidth = $(window).width();
+    
+          if (screenWidth > 750) {
+            TweenMax.to(employeePic, .7, {
+              css: 'filter: saturate(1.2) contrast(1.1);',
+              ease: Circ.easeOut });
+    
+            TweenMax.to(employeeName, .4, {
+              paddingLeft: '1em',
+              ease: Circ.easeOut });
+    
+            TweenMax.to(employeeName, .2, {
+              backgroundColor: 'rgba(175, 208, 220, 0.26)' });
+    
+          }
+        }).
+        on("mouseleave", function () {
+          var employeeNumber = $(this).attr("class").split(" ").pop();
+          var employeePic = pic + employeeNumber;
+          var employeeName = name + employeeNumber;
+          var screenWidth = $(window).width();
+    
+          if (screenWidth > 750) {
+            TweenMax.to(employeePic, .7, {
+              css: 'filter: saturate(0) contrast(1);',
+              ease: Circ.easeOut });
+    
+            TweenMax.to(employeeName, .2, {
+              paddingLeft: 0,
+              ease: Circ.easeOut });
+    
+            TweenMax.to(employeeName, .2, {
+              backgroundColor: 'rgba(255,255,255,0)' });
+    
+          }
+        });
+      });
+    }
+    //# sourceURL=pen.js
+        </script>
+    <script src="https://static.codepen.io/assets/editor/iframe/iframeRefreshCSS-8a264da60d1f38eaa58c8243fe0ad6a782e98673c75eb542ccf03bc0efbfe2de.js"></script>
+    
+    {% endfor %}
+    </body></html>
+
+</div>
+{% endblock content %}
