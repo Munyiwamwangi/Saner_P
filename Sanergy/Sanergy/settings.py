@@ -72,9 +72,8 @@ REST_FRAMEWORK = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
 
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,11 +95,13 @@ WSGI_APPLICATION = 'Sanergy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sanergy',
-        'USER': 'munyiwanjiku',
-        'PASSWORD': 'joe',
+        'NAME': 'intranetsarnergy',
+        'USER': 'intradmin',
+        'PASSWORD': 'sanergy123',
+        'HOST': 'localhost',
         'PORT': '5432',
-    },
+    }
+
 
 }
 
@@ -172,12 +173,31 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1026629942419-qokhhup918dhbnmjfo21u5d2gdi9can3.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qEQJSXwqbF0LiYIr5KVx2GKR'
-LOGIN_URL = '/auth/login/google-oauth2/'
-LOGIN_URL = 'login'
 
-LOGIN_REDIRECT_URL = ('leave/home')#user is taken home after login in
+
+# LOGIN_REDIRECT_URL = ('leave/home')#user is taken home after login in
+# LOGIN_REDIRECT_URL = 'home'
+# LOGIN_REDIRECT_URL = 'home'
+
+
+# LOGIN_URL = '/auth/login/google-oauth2/'
+
+LOGIN_URL = 'login'
+PASSWORD_RESET_URL = 'password_reset'
+
+# LOGIN_REDIRECT_URL = 'verifier'
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
 LOGIN_REDIRECT_URL = 'home'
-LOGIN_REDIRECT_URL = 'home'
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
+LOGOUT_REDIRECT_URL = 'home'
+
+'''
+This error was due to the session cookie not being saved over a non-https url.
+When testing on localhost with SESSION_COOKIE_SECURE set to True in django,
+the session cookies will not persist between redirect and you will get this error in any kind of page change where session would be checked.
+'''
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
 SESSION_COOKIE_SECURE = False
+
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = "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"
+
