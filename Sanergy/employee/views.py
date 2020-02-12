@@ -1,4 +1,3 @@
-#function to populate and update postgres
 import copy
 import re
 
@@ -11,28 +10,27 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from leave_management.views import salesforcelogin
 
-from .dbcon import postgressConnection
 from .models import Employee
 
 
 def landing(request):
     return render (request, 'users/landing.html')
     
+    
 #employee querry from postgress
 def employee_details(request):
     employee = Employee.objects.all()
     context={}
     context['employee'] = employee
-    return render(request, 'leave_templates/employee_directoryhtml.html', context)
+    return render(request, 'employee/employee_directoryhtml.html', context)
 
 
-def psqlEmployeeDetails(request):
-    connection = postgressConnection()
-    cursor = connection.cursor()
-    data = "select * from employee_employee"
-    cursor.execute(data)
-    employee_records = cursor.fetchall()
-    return JsonResponse(employee_records, safe=False)
+def employee_profile(request):
+    employee = Employee.objects.all()
+    context={
+        'employee':employee
+    }
+    return render(request, 'employee/profile.html', context)
 
 
  #Employee details SOQL
@@ -68,10 +66,20 @@ def populate_postgres(request):
                                     Employee_Full_Name=Name,
                                     IsDeleted=IsDeleted,
                                     email=Work_Email__c)
-    
+
     employee = Employee.objects.all()
     for item in employee:
         context['employee'] = employee
 
-    return render(request, 'leave_templates/employee_directory.html', context)
+    return render(request, 'employee/employee_directory.html', context)
     # return JsonResponse(data, safe=False)
+
+
+def create_custom_user(request):
+    employee = Employee.objects.filter(email__isnull=False).exclude(Id__isnull=True)
+    context={
+        'employee':employee
+    }
+    for field in employee:
+        print(field.Employee_Full_Name)
+    return render(request, 'employee/employee_directory.html', context)
