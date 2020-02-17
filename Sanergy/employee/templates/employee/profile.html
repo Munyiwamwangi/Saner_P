@@ -1,0 +1,121 @@
+<html lang="en" class=""><head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+    <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+    <link rel="canonical" href="https://codepen.io/galaxija737/pen/wdghI">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.css">
+    <style class="INLINE_PEN_STYLESHEET_ID">
+          @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+    body
+    {
+        font-family: 'Lato', 'sans-serif';
+        }
+    .profile 
+    {
+        min-height: 355px;
+        display: inline-block;
+        }
+    
+    .divider 
+    {
+        border-top:1px solid rgba(0,0,0,0.1);
+        }
+    .emphasis 
+    {
+        border-top: 4px solid transparent;
+        }
+    .emphasis:hover 
+    {
+        border-top: 4px solid #dedace;
+        }
+    .emphasis h2
+    {
+        margin-bottom:0;
+        }
+    span.tags 
+    {
+        background: #999999;
+        border-radius: 2px;
+        color: #f5f5f5;
+        font-weight: bold;
+        padding: 2px 4px;
+        }
+    
+        </style>
+    <script src="https://static.codepen.io/assets/editor/iframe/iframeConsoleRunner-dc0d50e60903d6825042d06159a8d5ac69a6c0e9bcef91e3380b17617061ce0f.js"></script>
+    <script src="https://static.codepen.io/assets/editor/iframe/iframeRefreshCSS-e120fd1ef4e480df85dd5faf7ee953074e62dc3d6da49fdf75fe06deb33f93c5.js"></script>
+    <script src="https://static.codepen.io/assets/editor/iframe/iframeRuntimeErrors-29f059e28a3c6d3878960591ef98b1e303c1fe1935197dae7797c017a3ca1e82.js"></script>
+    </head>
+    {% for item in employee %}
+    <body>
+    <br>
+    <br>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container" >
+    
+    <div class="row" >
+    <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6" style="text-align:center;" >
+    <div class="well profile" style="background:#cbd5d4;">
+    <img class="avatar" src="https://images.unsplash.com/photo-1532879444636-a3fdb47d7d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ash" style=" border-radius: 50%;">
+    <div class="col-sm-12" style="text-align:center;">
+    <br>
+    
+    <div class="col-xs-12 col-sm-12" style="text-align:center;">
+    <h2 style="text-align:center;">{{ item.Employee_Full_Name }} </h2>
+    <h2 style="text-align:center;">{{ item.HR_Employee_ID }} </h2>
+    <p style="text-align:center;"><strong>About: </strong> Web Designer / UI. </p>
+    <p style="text-align:center;"><strong>Status: </strong> {{ item.Employee_Active }} </p>
+    <p style="text-align:center;"><strong>Mobile: </strong>0707963284 </p>
+    <p style="text-align:center;"><strong>Email: </strong> {{ item.email }} </p>
+    <p style="text-align:center;"><strong>Department: </strong> Information Tecnology. </p>
+    <p style="text-align:center;"><strong>Status: </strong>
+    <span class="tags" style="text-align:center;">html5</span>
+    <span class="tags" style="text-align:center;">css3</span>
+    <span class="tags" style="text-align:center;">jquery</span>
+    <span class="tags" style="text-align:center;">bootstrap3</span>
+    </p>
+    <p style="text-align:center;"><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
+    </div>
+    
+    
+    <div class="col-xs-12 divider text-center">
+    <div class="col-xs-12 col-sm-12 emphasis">
+    <div id="icons" styles="text-align: center;">
+                <img src="icons/icn_google.png">
+                <img src="icons/icn_instagram.png">
+                <img src="icons/icn_linkedin.png">
+                <img src="icons/icn_twitter.png">
+                <img src="icons/icn_facebook.png">
+            </div>
+    <div class="col-xs-12 col-sm-4 emphasis">
+    
+    <div class="btn-group dropup btn-block">
+    
+    <ul class="dropdown-menu text-left" role="menu">
+    <li><a href="#"><span class="fa fa-envelope pull-right"></span> Send an email </a></li>
+    <li><a href="#"><span class="fa fa-list pull-right"></span> Add or remove from a list </a></li>
+    <li class="divider"></li>
+    <li><a href="#"><span class="fa fa-warning pull-right"></span>Report this user for spam</a></li>
+    <li class="divider"></li>
+    <li><a href="#" class="btn disabled" role="button"> Unfollow </a></li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    {% endfor %}
+    <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-db44b196776521ea816683afab021f757616c80860d31da6232dedb8d7cc4862.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.0.2/bootstrap-hover-dropdown.min.js"></script>
+    <script id="INLINE_PEN_JS_ID">
+        
+        //# sourceURL=pen.js
+      </script>
+    
+    </body></html>
