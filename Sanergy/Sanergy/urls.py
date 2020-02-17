@@ -33,7 +33,7 @@ urlpatterns = [
     path('leave/', include('leave_management.urls')),
     path('employee/', include('employee.urls')),
     path('', include('django.contrib.auth.urls')),
-    path('', views.home, name='home'),
+    path('', views.home, name='login'),
     path('', views.password_reset_done, name="Reset_done"),
     path('home', TemplateView.as_view(template_name='profile.html'), name='profile')
 

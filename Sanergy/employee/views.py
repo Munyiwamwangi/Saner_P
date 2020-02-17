@@ -16,7 +16,6 @@ def landing(request):
 
 
 
-
 # employee querry from postgress
 def employee_details(request):
     employee = Employee.objects.all()

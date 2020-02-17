@@ -14,7 +14,7 @@ from django.conf import settings
 
 
 def home(request):
-    return render(request, 'registration/landing2.html')
+    return render(request, 'registration/login.html')
 
 def password_reset(request):
     return render(request, 'users/password_reset_form.html')
