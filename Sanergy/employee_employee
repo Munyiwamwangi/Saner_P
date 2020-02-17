@@ -1,0 +1,24 @@
+                         List of relations
+ Schema |                Name                | Type  |    Owner     
+--------+------------------------------------+-------+--------------
+ public | auth_group                         | table | munyiwanjiku
+ public | auth_group_permissions             | table | munyiwanjiku
+ public | auth_permission                    | table | munyiwanjiku
+ public | django_admin_log                   | table | munyiwanjiku
+ public | django_content_type                | table | munyiwanjiku
+ public | django_migrations                  | table | munyiwanjiku
+ public | django_session                     | table | munyiwanjiku
+ public | django_site                        | table | munyiwanjiku
+ public | employee_employee                  | table | munyiwanjiku
+ public | employee_employee_groups           | table | munyiwanjiku
+ public | employee_employee_user_permissions | table | munyiwanjiku
+ public | leave_management_leaveclassdetails | table | munyiwanjiku
+ public | leave_management_leavemodels       | table | munyiwanjiku
+ public | leave_management_leavetype         | table | munyiwanjiku
+ public | social_auth_association            | table | munyiwanjiku
+ public | social_auth_code                   | table | munyiwanjiku
+ public | social_auth_nonce                  | table | munyiwanjiku
+ public | social_auth_partial                | table | munyiwanjiku
+ public | social_auth_usersocialauth         | table | munyiwanjiku
+(19 rows)
+

@@ -5,11 +5,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="PyDocumentationSettings">
-    <option name="format" value="PLAIN" />
-    <option name="myDocStringFormat" value="Plain" />
-  </component>
   <component name="TestRunnerService">
+<<<<<<< HEAD
+    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
+=======
+    <option name="projectConfiguration" value="pytest" />
     <option name="PROJECT_TEST_RUNNER" value="pytest" />
+>>>>>>> 8c477002ce81e0dfcf812d0f36e3858826fe67ba
   </component>
 </module>

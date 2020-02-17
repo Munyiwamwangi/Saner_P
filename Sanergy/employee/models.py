@@ -47,6 +47,7 @@ class Employee(AbstractUser):
     Sanergy_Department_Unit = models.CharField(max_length=100, null=True)
     Employee_Active = models.BooleanField(default=True, null=True)
     email = models.EmailField(unique=True, null=True)
+    password = models.CharField(max_length=50, null=True)
     HR_Employee_ID = models.EmailField(unique=True, null=True)
     Line_Manager = models.CharField(max_length=100, blank=False, null=True )
     IsDeleted = models.BooleanField(null=True)
