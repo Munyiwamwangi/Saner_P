@@ -11,7 +11,8 @@ from leave_management.views import salesforcelogin
 from .models import Employee
 
 def landing(request):
-    return render (request, 'users/landing.html')
+    user = request.user
+    return render(request, 'registration/landing.html')
 
 
 
