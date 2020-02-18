@@ -10,8 +10,7 @@ urlpatterns = [
     path('employee_leave_request', views.employee_leave_request, name='employee_leave_request'),
     path('populate_sanergy_calender', views.populate_sanergy_calender, name='populate_sanergy_calender'),
     path('refresh_sanergy_calender', views.refresh_sanergy_calender, name='refresh_sanergy_calender'),
-
-    # path('LeaveRequestViewSet', views.LeaveRequestViewSet, name='LeaveRequestViewSet'),
+    path('post_leave_to_salesforce', views.post_leave_to_salesforce, name='post_leave_to_salesforce'),
     path('request_leave', views.request_leave, name='request_leave'),
     path('request_leave_data', views.request_leave_data, name='request_leave_data')
 

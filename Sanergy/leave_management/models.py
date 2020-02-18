@@ -56,4 +56,4 @@ class SanergyCalendar(models.Model):
     Weekday_No = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.comments
+        return self.Decsritption
