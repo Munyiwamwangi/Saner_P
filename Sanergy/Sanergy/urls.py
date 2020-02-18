@@ -21,6 +21,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 from django.views.generic import TemplateView
+from users import views
+
 
 from employee import urls
 from users import views as user_views
@@ -30,7 +32,9 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('leave/', include('leave_management.urls')),
     path('employee/', include('employee.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('django.contrib.auth.urls')),
+    path('', views.home, name='login'),
+    path('', views.password_reset_done, name="Reset_done"),
     path('home', TemplateView.as_view(template_name='profile.html'), name='profile')
 
 ]

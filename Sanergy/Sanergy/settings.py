@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+# {% load crispy_forms_tags%}
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -85,6 +86,11 @@ TEMPLATES = [
         },
     },
 ]
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
 
 WSGI_APPLICATION = 'Sanergy.wsgi.application'
 
@@ -149,9 +155,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 SITE_ID = 1
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
 
 # salesforce credentials
 SALESFORCE_USERNAME = 'domnick.kamya@saner.gy.ffa'
@@ -172,21 +182,12 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1026629942419-qokhhup918dhbnmjfo21u5d2gdi9can3.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'qEQJSXwqbF0LiYIr5KVx2GKR'
 
-
-# LOGIN_REDIRECT_URL = ('leave/home')#user is taken home after login in
-# LOGIN_REDIRECT_URL = 'home'
-# LOGIN_REDIRECT_URL = 'home'
-
-
-# LOGIN_URL = '/auth/login/google-oauth2/'
-
-LOGIN_URL = 'login'
+LOGIN_URL = ''
 PASSWORD_RESET_URL = 'password_reset'
 
-# LOGIN_REDIRECT_URL = 'verifier'
-# SOCIAL_AUTH_URL_NAMESPACE = 'social'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'landing'
+LOGOUT_REDIRECT_URL = 'login'
+
 
 '''
 This error was due to the session cookie not being saved over a non-https url.
@@ -196,6 +197,14 @@ the session cookies will not persist between redirect and you will get this erro
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
 SESSION_COOKIE_SECURE = False
 
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = "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"
+
+
+# Google email configurations:
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "domisemak@gmail.com"
+EMAIL_HOST_PASSWORD = "Dommy2019"
+
 

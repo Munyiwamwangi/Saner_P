@@ -7,6 +7,7 @@ from .models import LeaveAccruals, EmployeeLeaveRequest
 
 
 
+
 def leave_application(request):
     return render(request, 'users/login.html')
 
@@ -166,4 +167,23 @@ def employee_leave_request(request):
     for item in requests:
         context['requests'] = requests
     return render(request, 'leave_management/requests.html', context)
+
+
+def request_leave(request):
+    return render(request, 'registration/request.html')
+
+def request_leave_data(request):
+    if request.method == 'POST':
+        employee = request.POST['employee_name']
+        supervisor = request.POST['supervisor_name']
+        start_date = request.POST['startdate']
+        # end_date = request.POST['enddate']
+
+
+        print(start_date)
+
+
+    return render(request, 'registration/request.html')
+
+
 
