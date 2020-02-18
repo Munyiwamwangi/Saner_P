@@ -94,20 +94,18 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'Sanergy.wsgi.application'
 
-
+SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intranetsarnergy',
-        'USER': 'intradmin',
-        'PASSWORD': 'sanergy123',
-        'HOST': 'localhost',
+        'NAME': 'sanergy',
+        'USER': 'munyiwanjiku',
+        'PASSWORD': 'joe',
         'PORT': '5432',
-    }
-
+    },
 
 }
 
