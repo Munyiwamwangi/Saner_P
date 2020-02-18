@@ -8,4 +8,5 @@ urlpatterns = [
     path('employee_details', views.employee_details, name='employee_details'),
     path('employee_profile', views.employee_profile, name='employee_profile'),
     path('populate_postgres', views.populate_postgres, name='populate_postgres'),
+    path('refresh_employees', views.refresh_employees, name='refresh_employees'),
 ]
