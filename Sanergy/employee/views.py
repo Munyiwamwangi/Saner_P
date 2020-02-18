@@ -22,9 +22,8 @@ def landing(request):
 @login_required
 def employee_details(request):
     current_user = request.user
-    # if current_user.is_superuser == True:
     employee = Employee.objects.all()
-    context={}
+    context = {}
     context['employee'] = employee
     return render(request, 'employee/employee_directoryhtml.html', context)
 
@@ -36,8 +35,14 @@ def employee_profile(request):
     }
     return render(request, 'employee/profile.html', context)
 
+def employee_profile(request):
+    employee = Employee.objects.all()
+    context = {
+        'employee': employee
+    }
+    return render(request, 'employee/profile.html', context)
 
- #Employee details SOQL
+# Employee details SOQL
 # @login_required
 def populate_postgres(request):
     sf = salesforcelogin()
@@ -53,13 +58,14 @@ def populate_postgres(request):
         "Talent_Partner__c,"
         "Team_Lead__c, "
         "IsDeleted from Employee__c")
+        
     context = {
         'data': data
     }
     for employee_data in data:
-        Id  = employee_data["Id"]
+        Id = employee_data["Id"]
         Line_Manager__c = employee_data["Line_Manager__c"]
-        HR_Employee_ID__c = employee_data[ "HR_Employee_ID__c"]
+        HR_Employee_ID__c = employee_data["HR_Employee_ID__c"]
         Employee_Active__c = employee_data["Employee_Active__c"]
         Employee_First_Name__c = employee_data["Employee_First_Name__c"]
         Name = employee_data["Name"]
@@ -71,7 +77,6 @@ def populate_postgres(request):
         Team_Lead__c = employee_data['Team_Lead__c']
         IsDeleted = employee_data["IsDeleted"]
 
-        #map these employees to database
         Employee.objects.update_or_create(Id=Id,
                                     defaults={
                                     'Employee_Full_Name':Name,
@@ -94,9 +99,10 @@ def populate_postgres(request):
         context['employee'] = employee
 
     return render(request, 'employee/employee_directory.html', context)
-    return JsonResponse(data, safe=False)
+    # return JsonResponse(data, safe=False)
 
 
+# Refresh Employee details SOQL 
 
 def refresh_employees(request):
     sf = salesforcelogin()
@@ -113,7 +119,7 @@ def refresh_employees(request):
         "Team_Lead__c, "
         "IsDeleted from Employee__c WHERE CreatedDate = TODAY OR LastModifiedDate = TODAY ")
     context = {
-        'data': data
+        'employee': employee
     }
     for employee_data in data:
         Id  = employee_data["Id"]
@@ -150,7 +156,6 @@ def refresh_employees(request):
     print(employee.count())
     for item in employee:
         context['employee'] = employee
-        
     return render(request, 'employee/employee_directory.html', context)
 
 
