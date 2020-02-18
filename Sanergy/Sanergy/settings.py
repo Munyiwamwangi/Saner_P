@@ -94,7 +94,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'Sanergy.wsgi.application'
 
-
+SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
