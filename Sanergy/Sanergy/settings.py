@@ -101,17 +101,14 @@ SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sanergy',
-        'USER': 'munyiwanjiku',
-        'PASSWORD': 'joe',
+        'NAME': 'intranetsarnergy',
+        'USER': 'intradmin',
+        'PASSWORD': 'sanergy123',
         'PORT': '5432',
     },
 
 }
 
-DATABASE_ROUTERS = [
-    "salesforce.router.ModelRouter"
-]
 
 SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 
