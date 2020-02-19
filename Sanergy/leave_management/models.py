@@ -8,7 +8,7 @@ class Leave_Entitlement_Type(models.Model):
     Name = models.CharField(max_length=50, blank=False)
     Leave_Type = models.CharField(max_length=50, blank=False)
     Leave_Group = models.CharField(max_length=50, blank=False)
-    
+
 class LeaveAccruals(models.Model):
     Days_Accrued = models.CharField(max_length=100, blank=False)
     Days_Worked = models.CharField(max_length=100, blank=False, null=True )
@@ -42,6 +42,17 @@ class EmployeeLeaveRequest(models.Model):
     sick_leave_doc_attached = models.FileField(upload_to='sick_leave_documents', null=True, blank=False)
     stage = models.CharField(max_length=400, blank=False, null=True)
     startEndDate = models.CharField(max_length=400, blank=False, null=True)
+
+class SanergyCalendar(models.Model):
+    Date = models.CharField(max_length=100, null=True, blank=True)
+    Decsritption = models.CharField(max_length=300, null=True, blank=True)
+    isBusinessDay = models.BooleanField(null=True, blank=True)
+    isBusinessDayInclSat = models.BooleanField(null=True, blank=True)
+    isHoliday = models.BooleanField(null=True, blank=True)
+    isWeekend = models.BooleanField(null=True, blank=True)
+    isWeekend_or_Holiday = models.BooleanField(null=True, blank=True)
+    Weekday_Name = models.CharField(max_length=100, null=True, blank=True)
+    Weekday_No = models.PositiveIntegerField(null=True, blank=True)
 
 
     def __str__(self):
