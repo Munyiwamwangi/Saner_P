@@ -1,5 +1,6 @@
 import time
 
+import schedule
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -9,7 +10,6 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-import schedule
 from users.utils import salesforcelogin
 
 from .forms import LeaveApplicationForm
@@ -17,7 +17,6 @@ from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
                      LeaveAccruals, SanergyCalendar)
 from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 
-# from __future__ import absolute_import
 
 def leave_application(request):
     return render(request, 'users/login.html')
@@ -69,8 +68,6 @@ def populate_leaveAccruals(request):
         employee = accrual["Employee__c"]
         leave_entitlement_utilization = accrual["Leave_Entitlement_Utilization__c"]
         period = accrual["Period__c"]
-
-
 
         # map these accruals to database
         LeaveAccruals.objects.update_or_create(
@@ -269,7 +266,6 @@ def refresh_sanergy_calender(request):
                                 })
     # messages.add_message (request, messages.INFO, 'Calendar is Ready!')
         return HttpResponse("the calendar is populated")
-
 
 
 def request_leave(request):
