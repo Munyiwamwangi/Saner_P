@@ -18,7 +18,7 @@ class LeaveAccruals(models.Model):
 
 
 class EmployeeLeaveRequest(models.Model):
-    Id = models.CharField(max_length=400, blank=False, null=True)
+    Id = models.CharField(primary_key=True, max_length=400)
     approval_status = models.CharField(max_length=400, blank=False, null=True)
     comments = models.CharField(max_length=400, blank=False, null=True)
     coverage_plans = models.CharField(max_length=400, blank=False, null=True)
@@ -40,7 +40,7 @@ class EmployeeLeaveRequest(models.Model):
     no_of_leave_days_requested = models.CharField(max_length=400, blank=False, null=True)
     request_from_VFP = models.CharField(max_length=400, blank=False, null=True)
     sick_leave_doc_attached = models.FileField(upload_to='sick_leave_documents', null=True, blank=False)
-    stage = models.CharField(max_length=400, blank=False, null=True)
+    stage = models.CharField(max_length=400, blank=False, null=False, default='Open')
     startEndDate = models.CharField(max_length=400, blank=False, null=True)
 
 
@@ -56,4 +56,4 @@ class SanergyCalendar(models.Model):
     Weekday_No = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.comments
+        return self.Decsritption

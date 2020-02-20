@@ -101,9 +101,9 @@ SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intranetsarnergy',
-        'USER': 'intradmin',
-        'PASSWORD': 'sanergy123',
+        'NAME': 'sanergy',
+        'USER': 'munyiwanjiku',
+        'PASSWORD': 'joe',
         'PORT': '5432',
     },
 
