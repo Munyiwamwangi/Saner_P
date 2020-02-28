@@ -1,6 +1,5 @@
 import time
 
-import schedule
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -10,6 +9,7 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+# import schedule
 from users.utils import salesforcelogin
 
 from .forms import LeaveApplicationForm
@@ -17,6 +17,7 @@ from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
                      LeaveAccruals, SanergyCalendar)
 from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 
+# from __future__ import absolute_import
 
 def leave_application(request):
     return render(request, 'users/login.html')
@@ -68,6 +69,8 @@ def populate_leaveAccruals(request):
         employee = accrual["Employee__c"]
         leave_entitlement_utilization = accrual["Leave_Entitlement_Utilization__c"]
         period = accrual["Period__c"]
+
+
 
         # map these accruals to database
         LeaveAccruals.objects.update_or_create(
@@ -268,6 +271,7 @@ def refresh_sanergy_calender(request):
         return HttpResponse("the calendar is populated")
 
 
+
 def request_leave(request):
     return render(request, 'registration/request.html')
 
@@ -297,6 +301,6 @@ def post_leave_to_salesforce(request):
    renderer_classes = [JSONRenderer]
    data = {"Employee_s_Department__c" :"aCDD0000000Gmb2OAC", "Request_From_VFP__c":	True, "Employee__c": "aAsD000000001S7", "Leave_End_Date__c": "2018-01-30", "Leave_Entitlement_Utilization__c": "aJ67E0000004CncSAE", "Leave_Start_Date__c": "2018-01-25"}
    query = sf.Employee_Leave_Request__c.create(data)
-   schedule.every(5).seconds.do(post_leave_to_salesforce)
+   # schedule.every(5).seconds.do(post_leave_to_salesforce)
 #    return Response(query)
    return Response(query['id'])

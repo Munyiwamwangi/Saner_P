@@ -18,7 +18,7 @@ class LeaveAccruals(models.Model):
 
 
 class EmployeeLeaveRequest(models.Model):
-    Id = models.CharField(primary_key=True, max_length=400)
+    Id = models.CharField(max_length=400, blank=False, null=True)
     approval_status = models.CharField(max_length=400, blank=False, null=True)
     comments = models.CharField(max_length=400, blank=False, null=True)
     coverage_plans = models.CharField(max_length=400, blank=False, null=True)
@@ -40,7 +40,7 @@ class EmployeeLeaveRequest(models.Model):
     no_of_leave_days_requested = models.CharField(max_length=400, blank=False, null=True)
     request_from_VFP = models.CharField(max_length=400, blank=False, null=True)
     sick_leave_doc_attached = models.FileField(upload_to='sick_leave_documents', null=True, blank=False)
-    stage = models.CharField(max_length=400, blank=False, null=False, default='Open')
+    stage = models.CharField(max_length=400, blank=False, null=True)
     startEndDate = models.CharField(max_length=400, blank=False, null=True)
 
 
