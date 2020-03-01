@@ -1,17 +1,22 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from .utils import postgressConnection
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404
+import hashlib
+import uuid
 
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+# Email imports:
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
 
 from employee.models import Employee
 
+from .models import CustomUser
+from .passwordgenerator import generatePassword
+from .utils import postgressConnection
 
-# Email imports:
-from django.core.mail import send_mail
-from django.conf import settings
-from django.contrib.auth import get_user_model
+salt = uuid.uuid4().hex
 
 
 
@@ -30,23 +35,48 @@ def password_reset_confirm(request):
 def password_reset_done(request):
     return render(request, 'registration/password_reset_done.html')
 
-
 def create_custom_user(request):
-    User = get_user_model()
-    user = Employee.objects.filter(email__isnull=False).exclude(Id__isnull=True)
-    context={
-        'user':user
-    }
-    for field in user:
+    employee = Employee.objects.filter(email__isnull=False).exclude(Id__isnull=True)
+    context={ }
+    
+    for field in employee:
         email = field.email
-        password = field.password
-        Id = field.Id
+        salesforceid = field.Id
+        password = generatePassword(10)
+        print(password)
+        print(email)
+
+
+        password = make_password(password, None, 'default')
+        # print(password)
+
+        #METHOD2 :  hashing the password with salt, store as raw bytes
+        # password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
+        # print(password2)
+        
         first_name = field.Employee_First_Name
+        full_name = field.Employee_Full_Name
 
-        User.objects.update_or_create(Id=Id,
-                                    defaults={
-                                    'email' : email,
-                                    'password' : password,
-                                    'first_name': first_name})
+        CustomUser.objects.update_or_create(salesforceid = salesforceid,
+                                defaults={
+                                    'email':email,
+                                    'password':password,
+                                    'first_name':first_name,
+                                    })
 
-    return HttpResponse("the users are populated")
+
+        employee = CustomUser.objects.all()
+        context['employee'] = employee
+        print(employee.count())
+        
+    return render(request, 'employee/employee_directory.html', context)
+
+
+@login_required
+def user_directory(request):
+    current_user = request.user
+    employee = CustomUser.objects.all()
+    context = {}
+    context['employee'] = employee
+    print(employee.count())
+    return render(request, 'employee/employee_directoryhtml.html', context)

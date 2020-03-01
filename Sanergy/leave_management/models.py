@@ -1,6 +1,5 @@
 from django.db import models
-from employee.models import Employee
-
+from employee.models import  Employee
 
 class Leave_Entitlement_Type(models.Model):
     Id = models.CharField(primary_key=True, max_length=50)
@@ -17,14 +16,14 @@ class LeaveAccruals(models.Model):
 
 
 class EmployeeLeaveRequest(models.Model):
-    Id = models.CharField(max_length=400, blank=False, null=True)
+    Id = models.CharField(primary_key=True, max_length=400)
     approval_status = models.CharField(max_length=400, blank=False, null=True)
     comments = models.CharField(max_length=400, blank=False, null=True)
     coverage_plans = models.CharField(max_length=400, blank=False, null=True)
     department_team_lead = models.CharField(max_length=400, blank=False, null=True)
-    employee = models.CharField(max_length=400, blank=False, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     employee_s_department = models.CharField(max_length=400, blank=False, null=True)
-    HR_approve_cancellation = models.CharField(max_length=400, blank=False, null=True)
+    HR_approve_cancellation = models.BooleanField(max_length=400, blank=False, null=True)
     leave_approved = models.CharField(max_length=400, blank=False, null=True)
     leave_end_date = models.CharField(max_length=400, blank=False, null=True)
     leave_entitlement_utilization = models.CharField(max_length=400, blank=False, null=True)
@@ -39,9 +38,8 @@ class EmployeeLeaveRequest(models.Model):
     no_of_leave_days_requested = models.CharField(max_length=400, blank=False, null=True)
     request_from_VFP = models.CharField(max_length=400, blank=False, null=True)
     sick_leave_doc_attached = models.FileField(upload_to='sick_leave_documents', null=True, blank=False)
-    stage = models.CharField(max_length=400, blank=False, null=True)
+    stage = models.CharField(max_length=400, blank=False, null=False, default='Open')
     startEndDate = models.CharField(max_length=400, blank=False, null=True)
-
 
 class SanergyCalendar(models.Model):
     Date = models.CharField(max_length=100, null=True, blank=True)

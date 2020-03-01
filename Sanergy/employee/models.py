@@ -1,13 +1,14 @@
+# Create your models here.
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, BaseUserManager, User
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-
+from users.models import CustomUser
 
 
 class Employee(models.Model):
-    # username = None
     Id = models.CharField(primary_key=True,max_length=100, blank=False )
     Employee_First_Name = models.CharField(max_length=100, blank=False, null=True)
     Employee_Last_Name = models.CharField(max_length=100, null=True)
@@ -30,6 +31,10 @@ class Employee(models.Model):
     Phone_Number = models.CharField(max_length=100, blank=True, null=True)
     is_staff = models.BooleanField(default=False, null=True)
     is_employee = models.BooleanField(default=True, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null = True)
 
+    class Meta:
+        ordering = ('Employee_Full_Name',)
 
-
+    def __str__(self):
+        return self.Employee_Full_Name

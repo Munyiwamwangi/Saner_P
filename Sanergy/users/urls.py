@@ -5,6 +5,6 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('reset/done/', views.password_reset_done, name='password_reset_done'),
-    path('create_custom_user', views.create_custom_user, name='create_custom_user')
-
+    path('create_custom_user', views.create_custom_user, name='create_custom_user'),
+    path('user_directory/', views.user_directory, name='user_directory'),
 ]
