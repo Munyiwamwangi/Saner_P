@@ -11,8 +11,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from employee.models import Employee
+from employee.models import  Employee
 from users.utils import salesforcelogin
 
 from .forms import LeaveApplicationForm
@@ -64,6 +63,21 @@ def individual_leave_history(request, id=None):
 
 
     return render(request, 'registration/request.html', context)
+
+
+def individual_leave_history(request, id=None):
+    current_user = request.user
+    current_user_sfid = current_user.salesforceid
+    email = current_user.email
+    if Employee.objects.filter(email=email).exists():
+        print(email)
+        user_history = EmployeeLeaveRequest.objects.filter(employee=current_user_sfid)
+        print(user_history)
+        context={
+            'user_history':user_history
+            }
+
+    return render(request, 'leave_templates/history.html', context)
 
         # fetching leave types 
 def leave_entitlement_types(request):
@@ -370,6 +384,7 @@ def refresh_sanergy_calender(request):
 
 
 
+<<<<<<< HEAD
 def request_leave(request):
     user = request.user.Id
     def leaves():
@@ -390,6 +405,8 @@ def request_leave(request):
 
 
 
+=======
+>>>>>>> leave history done
 def request_leave_data(request):
         user = request.user.Id
         context={}

@@ -27,10 +27,17 @@
         text-align: left;
         padding: 6px;
         height: 50px;
+<<<<<<< HEAD
         font-size: 16px;
+<<<<<<< HEAD
         font-size: 18px;
 
         font-size: 16px;
+=======
+=======
+        font-size: 18px;
+>>>>>>> leave history done
+>>>>>>> leave history done
     }
     
     tr:nth-child(even) {
@@ -73,6 +80,11 @@
     </head>
 
     <body>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> leave history done
 
         <ul id="ul-nav">
 
@@ -83,11 +95,20 @@
             <li class="list" style="float:right" class="link"><a class="active" href="#search" style="color: white;padding-top: 34px;">Leave History</a></li>
 
         </ul>
+<<<<<<< HEAD
+=======
+
+>>>>>>> leave history done
+>>>>>>> leave history done
     </body>
 
     </html>
     <br>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> leave history done
     <div class="col-8 col-md-8 col-sm-8">
         <div class="table table-bordered table-striped" style="padding-left: 60px; padding-right: 60px; padding-top: 10px; " id="search">
             <h3 style="font-style: oblique; font-weight:300; text-transform: unset; text-shadow: 2rem; text-align: center;">
@@ -258,6 +279,57 @@
             </table>
         </div>
 
+=======
+    <div class="table table-bordered table-striped" style="padding-left: 60px; padding-right: 60px; padding-top: 10px; " id="search">
+        <br>
+        <br>
+        <br>
+        <p></p>
+        
+        
+
+        <table>
+            <tr style="font-size: 30px;">
+                <th>Leave Type </th>
+                <th>Leave Id </th>
+                <th>Approval Status</th>
+                <th>Coverage Plans</th>
+                <th>Approved Days</th>
+
+            </tr>
+            {% for history in user_history %}
+            <tbody id="myTable">
+                <tr>
+                    <td>{{ history.Id }}</td>
+                    <td>{{ history.approval_status }}</td>
+                    <td>{{ history.coverage_plans }}</td>
+                    <td>{{ history.no_of_approved_leave_days }}</td>
+                    <td>{{history.leave_type }}</td>
+
+                </tr>
+            </tbody>
+            {% endfor%}
+            <script>
+                $(document).ready(function() {
+                    $("#myInput").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <script>
+                var dots = window.setInterval(function() {
+                    var wait = document.getElementById("wait");
+                    if (wait.innerHTML.length > 5)
+                        wait.innerHTML = "";
+                    else
+                        wait.innerHTML += ".";
+                }, 200);
+            </script>
+        </table>
+>>>>>>> leave history done
     </div>
     {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
