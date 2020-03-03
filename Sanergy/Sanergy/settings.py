@@ -108,7 +108,6 @@ DATABASES = {
     },
 
 }
-
 # DJNAGO FULL LIST OF PASSWORD HASHERS TO SUPPORT ANY HASHING ALGORITHM
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',

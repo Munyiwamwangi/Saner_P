@@ -31,7 +31,7 @@ class Employee(models.Model):
     Phone_Number = models.CharField(max_length=100, blank=True, null=True)
     is_staff = models.BooleanField(default=False, null=True)
     is_employee = models.BooleanField(default=True, null=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null = True)
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, null = True)
 
     class Meta:
         ordering = ('Employee_Full_Name',)

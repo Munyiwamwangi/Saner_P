@@ -42,13 +42,9 @@ def create_custom_user(request):
     for field in employee:
         email = field.email
         salesforceid = field.Id
-        password = generatePassword(10)
-        print(password)
-        print(email)
-
-
+        password = generatePassword(15)
         password = make_password(password, None, 'default')
-        # print(password)
+        print(password)
 
         #METHOD2 :  hashing the password with salt, store as raw bytes
         # password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
