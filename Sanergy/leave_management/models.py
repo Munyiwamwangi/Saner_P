@@ -1,5 +1,4 @@
 from django.db import models
-
 from employee.models import Employee
 
 
@@ -54,6 +53,21 @@ class SanergyCalendar(models.Model):
     isWeekend_or_Holiday = models.BooleanField(null=True, blank=True)
     Weekday_Name = models.CharField(max_length=100, null=True, blank=True)
     Weekday_No = models.PositiveIntegerField(null=True, blank=True)
+
+
+class Leave_Entitlement_Utilization(models .Model):
+    id = models.CharField(primary_key=True, max_length=400)
+    Accrued_To_Date_Selected = models.CharField(max_length=300, null=True, blank=True)
+    Employee = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Days_Accrued = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Days_Remaining = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Days_Scheduled = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Days_Used = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Entitlement_Type_Config = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Type = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Type_Name = models.CharField(max_length=300, null=True, blank=True)
+    Leave_Year = models.CharField(max_length=300, null=True, blank=True)
+    Total_No_of_Leave_Days = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.Decsritption
