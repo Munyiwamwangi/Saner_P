@@ -11,7 +11,8 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from employee.models import  Employee
+
+from employee.models import Employee
 from users.utils import salesforcelogin
 
 from .forms import LeaveApplicationForm
@@ -63,21 +64,6 @@ def individual_leave_history(request, id=None):
 
 
     return render(request, 'registration/request.html', context)
-
-
-def individual_leave_history(request, id=None):
-    current_user = request.user
-    current_user_sfid = current_user.salesforceid
-    email = current_user.email
-    if Employee.objects.filter(email=email).exists():
-        print(email)
-        user_history = EmployeeLeaveRequest.objects.filter(employee=current_user_sfid)
-        print(user_history)
-        context={
-            'user_history':user_history
-            }
-
-    return render(request, 'leave_templates/history.html', context)
 
         # fetching leave types 
 def leave_entitlement_types(request):
@@ -464,7 +450,7 @@ def request_leave_data(request):
 
 # @api_view(('GET',))
 def post_leave_to_salesforce(request):
-    user = request.user.Id
+    user = request.user.salesforceid
     start_date = request.POST.getlist('date')[0]
     end_date = request.POST.getlist('date')[-1]
     days_selected = request.POST.getlist('half_day')

@@ -123,8 +123,8 @@ def populate_postgres(request):
     for item in employee:
         context['employee'] = employee
 
-    # return render(request, 'employee/employee_directory.html', context)
-    return JsonResponse(data, safe=False)
+    return render(request, 'employee/employee_directory.html', context)
+    # return JsonResponse(data, safe=False)
 
 
 
