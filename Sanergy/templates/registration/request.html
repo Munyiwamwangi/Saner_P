@@ -27,35 +27,34 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead class="btn-info">
                     <tr>
-                      <th>Employee name</th>
-                        <th>Employee supervisor</th>
                       <th>Leave Type</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Submit</th>
+                        <th>Comments</th>
+                        <th></th>
                     </tr>
                   </thead>
                     <tr>
-                      <td><input id="employee_name" type="text"  name="employee_name" value="{{ employee_name }}" class="form-control "/></td>
-                         <td><input id="supervisor_name" type="text" name="supervisor_name" value="{{ supervisor_name }}" class="form-control "/></td>
                       <td>
-                            <select id="leaves" name="leaves" form="leaves" class="form-control ">
-                              <option value="anual_leave" name="anualleave">Anual Leave</option>
-                              <option value="sick_leave" name="sickleave">Sick Leave</option>
-                              <option value="compassionate" name="compassionate">Compassionate Leave</option>
-                              <option value="Exam Leave" name="examleave">Exam Leave</option>
+                            <select id="leave_id" name="leave_name"  class="form-control ">
+                              {% for leave_type, id  in leave %}
+                              <option name="optleave_type" value={{id}}>{{leave_type}}</option>
+                              {% endfor %}  
+                              </select>
                       </td>
                         <td><input type="date" name="startdate" value="{{ start_date }}" class="form-control" ></td>
                         <td><input type="date" name="enddate" class="form-control" value="{{ enddate }}" class="form-control "></td>
+                        <td><input type="comments" name="comments" class="form-control" value="{{ comments }}" class="form-control "></td>
                         <td><button type="submit" class="btn btn-info">View</button></td>
                     </tr>
-
+                   
                   </tbody>
                 </table>
                    </form>
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Days selected</h6>
             </div>
+            <form method="POST" action="post_leave_to_salesforce">
                   <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0" >
                       <thead class="btn-info">
                           <th>Date</th>
@@ -65,14 +64,20 @@
                       <tbody >
                       {% for date,day,holiday,weekend in days %}
                       <tr class="btn-light">
-                         <td>{{date}}</td>
+                         <td><input type="date" name="date" class="form-control" value="{{ date }}" class="form-control "></td>
                          <td>{{day}}</td>
-                          <td><input type="number" name="half_day" value="0.0" class="form-control" ></td>
+                          <td><input type="number" name="half_day" value="0.0" class="form-control" step="0.01"></td>
 
                       </tr>
                       {% endfor %}
+                      <td><input type="text" name="leave_type" class="form-control" value="{{leave_type_selected}}" class="form-control "></td>
+                      <td>comments: {{comments}}</td>
+                      <td><button type="submit" class="btn btn-info">Submit Request</button></td>
+
+
                       </tbody>
                   </table>
+                </form>
 
 
               </div>

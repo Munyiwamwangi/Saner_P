@@ -159,11 +159,10 @@ def refresh_employees(request):
     return render(request, 'employee/employee_directory.html', context)
 
 
-def create_custom_user(request):
-    employee = Employee.objects.filter(email__isnull=False).exclude(Id__isnull=True)
-    context={
-        'employee':employee
-    }
-    for field in employee:
-        print(field.Employee_Full_Name)
-    return render(request, 'employee/employee_directory.html', context)
+
+
+    
+        
+
+
+    # return render(request, 'employee/employee_directory.html', context)

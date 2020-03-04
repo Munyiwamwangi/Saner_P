@@ -1,5 +1,6 @@
 import time
 
+# import schedule
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -9,12 +10,11 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-# import schedule
-from users.utils import salesforcelogin
+from users.utils import salesforcelogin, postgressConnection
 
 from .forms import LeaveApplicationForm
 from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
-                     LeaveAccruals, SanergyCalendar)
+                     LeaveAccruals, SanergyCalendar, Leave_Entitlement_Utilization)
 from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 
 # from __future__ import absolute_import
@@ -223,8 +223,64 @@ def populate_sanergy_calender(request):
     calendar = SanergyCalendar.objects.all()
     for kitu in calendar:
         print(kitu.Weekday_Name)
-    # messages.add_message (request, messages.INFO, 'Calendar is Ready!')
     return JsonResponse(data, safe=False)
+
+# Populate leave entitlement utilization 
+def entitlement_utilization(request):
+    sf = salesforcelogin()
+    data = sf.bulk.Leave_Entitlement_Utilization__c.query(
+        "SELECT id,"
+        "Accrued_To_Date_Selected__c,"
+        "Employee__c,"
+        "Leave_Days_Accrued__c,"
+        "Leave_Days_Remaining__c,"
+        "Leave_Days_Scheduled__c,"
+        "Leave_Days_Used__c,"
+        "Leave_Entitlement_Type_Config__c,"
+        "Leave_Type__c,"
+        "Leave_Type_Name__c,"
+        "Leave_Year__c,"
+        "Total_No_of_Leave_Days__c from Leave_Entitlement_Utilization__c ")
+  
+    context = {
+        'data': data
+    }
+
+    for item in data:
+        id = item['Id']
+        Accrued_To_Date_Selected = item['Accrued_To_Date_Selected__c']
+        Employee = item['Employee__c']
+        Leave_Days_Accrued = item['Leave_Days_Accrued__c']
+        Leave_Days_Remaining = item['Leave_Days_Remaining__c']
+        Leave_Days_Scheduled = item['Leave_Days_Scheduled__c']
+        Leave_Days_Used = item['Leave_Days_Used__c']
+        Leave_Entitlement_Type_Config = item['Leave_Entitlement_Type_Config__c']
+        Leave_Type = item['Leave_Type__c']
+        Leave_Type_Name = item['Leave_Type_Name__c']
+        Leave_Year  = item['Leave_Year__c']
+        Total_No_of_Leave_Days = item['Total_No_of_Leave_Days__c']
+
+        Leave_Entitlement_Utilization.objects.update_or_create(
+                                    id = id ,
+                                    defaults={
+                                    "Accrued_To_Date_Selected" : Accrued_To_Date_Selected,
+                                    "Employee" : Employee,
+                                    "Leave_Days_Accrued" : Leave_Days_Accrued,
+                                    "Leave_Days_Remaining" : Leave_Days_Remaining,
+                                    "Leave_Days_Scheduled" : Leave_Days_Scheduled,
+                                    "Leave_Days_Used" : Leave_Days_Used,
+                                    "Leave_Entitlement_Type_Config" : Leave_Entitlement_Type_Config,
+                                    "Leave_Type" : Leave_Type,
+                                    "Leave_Type_Name" : Leave_Type_Name,
+                                    "Leave_Year" : Leave_Year,
+                                    "Total_No_of_Leave_Days" : Total_No_of_Leave_Days,
+                                    })
+
+    
+    return JsonResponse(data, safe=False)
+
+
+
 
 # Refresh sanergy Calendar
 def refresh_sanergy_calender(request):
@@ -267,40 +323,74 @@ def refresh_sanergy_calender(request):
                                 'Weekday_Name' : Weekday_Name__c,
                                 'Weekday_No' : Weekday_No__c,
                                 })
-    # messages.add_message (request, messages.INFO, 'Calendar is Ready!')
         return HttpResponse("the calendar is populated")
 
 
 
-def request_leave(request):
-    return render(request, 'registration/request.html')
+# def request_leave(request):
+
 
 def request_leave_data(request):
-    if request.method == 'POST':
-        employee = request.POST['employee_name']
-        supervisor = request.POST['supervisor_name']
-        start_date = request.POST['startdate']
-        end_date = request.POST['enddate']
+        user = request.user.Id
+        context={}
+    
+        if request.method == 'POST':
+            start_date = request.POST['startdate']
+            end_date = request.POST['enddate']
+            comments = request.POST['comments']
+            
+            connection = postgressConnection()
+            cursor= connection.cursor()
+            days_selected = "SELECT \"Date\",\"Weekday_Name\", \"Decsritption\", \"isWeekend\" FROM leave_management_sanergycalendar WHERE \"Date\" BETWEEN '" + start_date + "' AND '" + end_date + "' ORDER BY \"Date\" ASC"
+            cursor.execute(days_selected)
+            days_requested = cursor.fetchall()
 
-        connection = postgressConnection()
-        cursor= connection.cursor()
-        days_selected = "SELECT \"Date\",\"Weekday_Name\", \"Decsritption\", \"isWeekend\" FROM leave_management_sanergycalendar WHERE \"Date\" BETWEEN '" + start_date + "' AND '" + end_date + "' ORDER BY \"Date\" ASC"
-        cursor.execute(days_selected)
-        days_requested = cursor.fetchall()
+            # Fetching leave types:
+            connection = postgressConnection()
+            year = '2019.0'
+            cursor = connection.cursor()
+            strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
+            cursor.execute(strleave_type)
+            leave = cursor.fetchall()
+            
+            leave_type_selected= request.POST.getlist('leave_name')
+            
+
+            
+            context = {
+                'days': days_requested,
+                'leave': leave,
+                'comments': comments,
+                'leave_type_selected': leave_type_selected
+            }
+            
+            
+            
+        return render(request, 'registration/request.html', context)
 
 
-        context = {
-            'days': days_requested
-        }
-    return render(request, 'registration/request.html', context)
 
-
-@api_view(('GET',))
+# @api_view(('GET',))
 def post_leave_to_salesforce(request):
-   sf = salesforcelogin()
-   renderer_classes = [JSONRenderer]
-   data = {"Employee_s_Department__c" :"aCDD0000000Gmb2OAC", "Request_From_VFP__c":	True, "Employee__c": "aAsD000000001S7", "Leave_End_Date__c": "2018-01-30", "Leave_Entitlement_Utilization__c": "aJ67E0000004CncSAE", "Leave_Start_Date__c": "2018-01-25"}
-   query = sf.Employee_Leave_Request__c.create(data)
-   # schedule.every(5).seconds.do(post_leave_to_salesforce)
-#    return Response(query)
-   return Response(query['id'])
+    user = request.user.Id
+    start_date = request.POST.getlist('date')[0]
+    end_date = request.POST.getlist('date')[-1]
+    days_selected = request.POST.getlist('half_day')
+    days_requested = sum(map(float,days_selected))
+    leave_type_selected = request.POST.getlist('leave_type')
+    leave_submitted =leave_type_selected[0][2:-2]
+   
+   
+    connection = postgressConnection()
+    cursor= connection.cursor()
+    employee_department= "SELECT \"Sanergy_Department_Unit\" FROM employee_employee WHERE \"Id\" = '" + user + "' "
+    cursor.execute(employee_department)
+    department = cursor.fetchall()
+    department = department[0][0]
+
+    sf = salesforcelogin()
+    data = {"Employee_s_Department__c" :department, "Request_From_VFP__c":True, "Employee__c": user, "Leave_End_Date__c": end_date, "No_Of_Leave_Days_Requested__c": days_requested, "Leave_Entitlement_Utilization__c": leave_submitted, "Leave_Start_Date__c": start_date}
+    query = sf.Employee_Leave_Request__c.create(data)
+
+    return HttpResponse("leave applied successfully")
+    
