@@ -338,6 +338,7 @@ def request_leave_data(request):
             start_date = request.POST['startdate']
             end_date = request.POST['enddate']
             comments = request.POST['comments']
+            # coverage = request.POST['coverage']
             
             connection = postgressConnection()
             cursor= connection.cursor()
@@ -346,24 +347,39 @@ def request_leave_data(request):
             days_requested = cursor.fetchall()
 
             # Fetching leave types:
-            connection = postgressConnection()
-            year = '2019.0'
-            cursor = connection.cursor()
-            strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
-            cursor.execute(strleave_type)
-            leave = cursor.fetchall()
+            def leaves():
+                connection = postgressConnection()
+                year = '2019.0'
+                cursor = connection.cursor()
+                strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
+                cursor.execute(strleave_type)
+                leave = cursor.fetchall()
+                return leave
+            
+            leave = leaves()
+           
             
             leave_type_selected= request.POST.getlist('leave_name')
+            leave_type_selected = leave_type_selected[0]
+           
             
-
+            def leave_desplayed():
+                for i in leave:
+                    if i[1] == leave_type_selected:
+                        return i[0]
+            
+            leave_to_display = leave_desplayed()
             
             context = {
                 'days': days_requested,
                 'leave': leave,
                 'comments': comments,
-                'leave_type_selected': leave_type_selected
+                'leave_type_selected': leave_type_selected[0],
+                'Leave_display': leave_to_display,
+                # 'coverage': coverage
             }
             
+           
             
             
         return render(request, 'registration/request.html', context)
@@ -378,9 +394,11 @@ def post_leave_to_salesforce(request):
     days_selected = request.POST.getlist('half_day')
     days_requested = sum(map(float,days_selected))
     leave_type_selected = request.POST.getlist('leave_type')
-    leave_submitted =leave_type_selected[0][2:-2]
-   
-   
+    
+    leave_submitted =leave_type_selected[0]
+    print(leave_submitted)
+
+
     connection = postgressConnection()
     cursor= connection.cursor()
     employee_department= "SELECT \"Sanergy_Department_Unit\" FROM employee_employee WHERE \"Id\" = '" + user + "' "
@@ -390,6 +408,7 @@ def post_leave_to_salesforce(request):
 
     sf = salesforcelogin()
     data = {"Employee_s_Department__c" :department, "Request_From_VFP__c":True, "Employee__c": user, "Leave_End_Date__c": end_date, "No_Of_Leave_Days_Requested__c": days_requested, "Leave_Entitlement_Utilization__c": leave_submitted, "Leave_Start_Date__c": start_date}
+    print(data)
     query = sf.Employee_Leave_Request__c.create(data)
 
     return HttpResponse("leave applied successfully")
