@@ -1,0 +1,191 @@
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Sanergy</title>
+{% load static %}
+    {% load crispy_forms_tags%}
+  <link rel="stylesheet" type="text/css" href="{% static 'users/vendor/fontawesome-free/css/all.min.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/sb-admin-2.min.css' %}">
+</head>
+<body>
+ <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Request Leave</h6>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                   <form method="POST" action="/leave/request_leave_data">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead class="btn-info">
+                    <tr>
+                      <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Comments</th>
+                        <th></th>
+                    </tr>
+                  </thead>
+                    <tr>
+                      <td>
+                            <select id="leave_id" name="leave_name"  class="form-control ">
+                              {% for leave_type, id  in leave %}
+                              <option name="optleave_type" value={{id}}>{{leave_type}}</option>
+                              {% endfor %}  
+                              </select>
+                      </td>
+                        <td><input type="date" name="startdate" value="{{ start_date }}" class="form-control" ></td>
+                        <td><input type="date" name="enddate" class="form-control" value="{{ enddate }}" class="form-control "></td>
+                        <td><input type="comments" name="comments" class="form-control" value="{{ comments }}" class="form-control "></td>
+                        <td><button type="submit" class="btn btn-info">View</button></td>
+                    </tr>
+                   
+                  </tbody>
+                </table>
+                   </form>
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Days selected</h6>
+            </div>
+            <div >
+            <form method="POST" action="post_leave_to_salesforce">
+                  <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0" >
+                      <thead class="btn-info">
+                          <th>Date</th>
+                          <th>Week day</th>
+                           <th>Half day</th>
+                      </thead>
+                      <tbody >
+                      {% for date,day,holiday,weekend in days %}
+                      <tr class="btn-light">
+                         <td><input type="date" name="date" class="form-control" value="{{ date }}" class="form-control "></td>
+                         <td>{{day}}</td>
+                          <td><input type="number" name="half_day" value="0.0" class="form-control" step="0.01"></td>
+
+                      </tr>
+                      {% endfor %}
+                      <td><input type="text" name="leave_type" class="form-control" value="{{leave_type_selected}}" class="form-control "></td>
+                      <td>comments: {{comments}}</td>
+                      <td><button type="submit" class="btn btn-info">Submit Request</button></td>
+
+
+                      </tbody>
+                  </table>
+                </form>
+              </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Leave History</h6>
+            </div>
+             <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead class="btn-info">
+                    <tr>
+                      <th>Leave Type</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                        <th>Leave Type</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr>
+                      <td>Tiger Nixon</td>
+                      <td>System Architect</td>
+                      <td>Edinburgh</td>
+                      <td>61</td>
+                    </tr>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Leave Balances</h6>
+            </div>
+             <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead class="btn-info">
+                    <tr>
+                      <th>Leave Type</th>
+                      <th>Total days</th>
+                      <th>Days used</th>
+                      <th>Balance</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                       <th>Leave Type</th>
+                      <th>Total days</th>
+                      <th>Days used</th>
+                      <th>Balance</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr>
+                      <td>Anual Leave</td>
+                      <td>21</td>
+                      <td>6</td>
+                      <td>15</td>
+                    </tr>
+                    <tr>
+                      <td>Compassionate leave</td>
+                      <td>21</td>
+                      <td>6</td>
+                      <td>15</td>
+                    </tr>
+                    <tr>
+                      <td>Sick leave</td>
+                      <td>21</td>
+                      <td>6</td>
+                      <td>15</td>
+                    </tr>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        </div>
+        <!-- /.container-fluid -->
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'users/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'users/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'users/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'users/js/sb-admin-2.min.js' %}"></script>
+
+</body>
+</html>
