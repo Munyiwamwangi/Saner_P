@@ -11,6 +11,12 @@ html {
     -o-background-size: cover;
     background-size: cover;
   }
+  .success{
+    font-family: cursive;
+    text-align: center;
+    padding-top: 11px;
+    text-decoration: green;
+  }
   ​
   h1 {
       font-family: 'Fira Sans', sans-serif;
@@ -164,3 +170,5 @@ html {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
+
+ 
