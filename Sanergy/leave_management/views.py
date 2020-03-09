@@ -1,7 +1,9 @@
+import datetime
 import time
 
-# import schedule
+import schedule
 from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
@@ -10,23 +12,64 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.utils import salesforcelogin, postgressConnection
+from employee.models import Employee
+from users.utils import salesforcelogin
 
 from .forms import LeaveApplicationForm
 from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
-                     LeaveAccruals, SanergyCalendar, Leave_Entitlement_Utilization)
+                     LeaveAccruals, SanergyCalendar)
 from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 
-# from __future__ import absolute_import
 
 def leave_application(request):
-    return render(request, 'users/login.html')
+    
+    return render(request, 'users/login.html', )
+
+
+def individual_leave_history(request, id=None):
+    current_user = request.user
+    if Employee.objects.filter(email=(current_user.email)).exists():
+        user_history = EmployeeLeaveRequest.objects.filter(employee = (current_user.salesforceid)).order_by('-Id')[:5]
+        context={
+            'user_history':user_history,
+            'current_user': current_user,
+            }
+
+        #  WHO IS OUT-GET USER INSTANCE, AND DEPARTMENT UNIT
+        user_sfid = current_user.salesforceid
+        employee = Employee.objects.get(Id=user_sfid)
+        employee_department_unit_id = employee.Sanergy_Department_Unit
+
+        # THE, GRAB LEAVES THAT SHARE THE DEPARTMENT UNIT WITH THE CURRENT USER
+        # LEAVES TO SHOW, SAME DEPARTMENT, APPROVED BY HR, NOT OVER NY END DAY TODAY
+        hr_approved_leaves =  EmployeeLeaveRequest.objects.filter(
+            employee_s_department = employee_department_unit_id,
+            approval_status = "Approved by HR",
+            leave_end_date__lt = datetime.date.today())
+        pending_approval_leaves =  EmployeeLeaveRequest.objects.filter(
+            employee_s_department = employee_department_unit_id,
+            approval_status = "Pending Approval",
+            leave_end_date__lt = datetime.date.today())
+
+        colleagues_leaves = hr_approved_leaves | pending_approval_leaves
+        for leaves in colleagues_leaves:
+            print(leaves.employee)
+            print(leaves.approval_status)
+            print(leaves.leave_start_date)
+            print(leaves.leave_end_date)
+
+            print(colleagues_leaves.count())
+
+        context['colleagues_leaves'] = colleagues_leaves
+
+
+    return render(request, 'registration/request.html', context)
 
         # fetching leave types 
 def leave_entitlement_types(request):
     sf = salesforcelogin()
     leave_type_data = sf.bulk.Leave_Entitlement_Type_Config__c.query(
-         "SELECT Id,name,Leave_Type__c, Leave_Group__c from Leave_Entitlement_Type_Config__c where Year__c=2019")
+         "SELECT Id,name,Leave_Type__c, Leave_Group__c from Leave_Entitlement_Type_Config__c where Year__c = 2018")
     context = {
         'leave_type_data': leave_type_data
     }
@@ -39,11 +82,11 @@ def leave_entitlement_types(request):
 
     
     leaveTypes=Leave_Entitlement_Type.objects.all()
-    return HttpResponse('DB ostgreSQL updated Leave Types sucessfully !')
+
+    return HttpResponse(leaveTypes)
     # return JsonResponse(leave_types, safe=False)
 
   
-
 def request_leave(request):
     sf = salesforcelogin()
     data = sf.Leave_Entitlement_Type_Config__c.create(
@@ -70,8 +113,6 @@ def populate_leaveAccruals(request):
         leave_entitlement_utilization = accrual["Leave_Entitlement_Utilization__c"]
         period = accrual["Period__c"]
 
-
-
         # map these accruals to database
         LeaveAccruals.objects.update_or_create(
                                                Days_Accrued= days_accrued,
@@ -87,7 +128,7 @@ def populate_leaveAccruals(request):
     return render(request, 'leave_management/accruals.html', context)
 
 
-def employee_leave_request(request):
+def populate_employee_leave_request(request):
     sf = salesforcelogin()
     data = sf.bulk.Employee_Leave_Request__c.query(
         "SELECT Id,"
@@ -142,8 +183,11 @@ def employee_leave_request(request):
         Stage  = leave_request["Stage__c"]
         StartEndDate  = leave_request["StartEndDate__c"]
 
+        # CREATING EMPLOYEE INSTANCE AND SAVING
+        employee = Employee.objects.get(Id = employee)
+
         # map these accruals to database
-        EmployeeLeaveRequest.objects.update_or_create(comments=Id,
+        EmployeeLeaveRequest.objects.update_or_create(Id=Id,
                                         defaults={
                                         "approval_status":  Approval_status,
                                         "comments":  Comments,
@@ -174,11 +218,9 @@ def employee_leave_request(request):
     requests = EmployeeLeaveRequest.objects.all()
     for item in requests:
         context['requests'] = requests
-        print(item.comments)
-    # return render(request, 'leave_management/requests.html', context)
-    return JsonResponse(data, safe=False)
+    return HttpResponse('Done Shipping Leaves to Postgres')
 
-    
+
 def populate_sanergy_calender(request):
     sf = salesforcelogin()
     data = sf.bulk.Sanergy_Calendar__c.query(
@@ -223,6 +265,7 @@ def populate_sanergy_calender(request):
     calendar = SanergyCalendar.objects.all()
     for kitu in calendar:
         print(kitu.Weekday_Name)
+    messages.add_message (request, messages.INFO, 'Calendar is Ready!')
     return JsonResponse(data, safe=False)
 
 # Populate leave entitlement utilization 
@@ -327,6 +370,7 @@ def refresh_sanergy_calender(request):
 
 
 
+<<<<<<< HEAD
 def request_leave(request):
     user = request.user.Id
     def leaves():
@@ -347,6 +391,8 @@ def request_leave(request):
 
 
 
+=======
+>>>>>>> leave history done
 def request_leave_data(request):
         user = request.user.Id
         context={}
@@ -404,7 +450,7 @@ def request_leave_data(request):
 
 # @api_view(('GET',))
 def post_leave_to_salesforce(request):
-    user = request.user.Id
+    user = request.user.salesforceid
     start_date = request.POST.getlist('date')[0]
     end_date = request.POST.getlist('date')[-1]
     days_selected = request.POST.getlist('half_day')
