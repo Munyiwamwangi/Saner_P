@@ -26,6 +26,9 @@ salt = uuid.uuid4().hex
 def home(request):
     return render(request, 'registration/login.html')
 
+def landing(request):
+    return render (request, 'registration/qudo.html')
+
 def password_reset(request):
     return render(request, 'users/password_reset_form.html')
 
@@ -50,6 +53,7 @@ def create_custom_user(request):
         password = make_password(password, None, 'default')
         # print(password)
 
+<<<<<<< HEAD
         #METHOD2 :  hashing the password with salt, store as raw bytes
         # password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
         # print(password2)
@@ -80,3 +84,24 @@ def user_directory(request):
     context['employee'] = employee
     print(employee.count())
     return render(request, 'employee/employee_directoryhtml.html', context)
+=======
+    return HttpResponse("the users are populated")
+
+def request_leave(request):
+    user = request.user.Id
+    def leaves():
+            connection = postgressConnection()
+            year = '2019.0'
+            cursor = connection.cursor()
+            strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
+            cursor.execute(strleave_type)
+            leave = cursor.fetchall()
+            return leave
+        
+    leave = leaves()
+    context = {
+        'leave': leave
+    }
+
+    return render(request, 'registration/request.html', context)
+>>>>>>> Integrating the login templated

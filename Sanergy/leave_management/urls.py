@@ -15,7 +15,11 @@ urlpatterns = [
     path('leave_page', views.request_leave, name='leave'),
     path('request_leave_data', views.request_leave_data, name='request_leave_data'),
     path('entitlement', views.entitlement_utilization, name='entitlement'),
+<<<<<<< HEAD
     path('individual_leave_history', views.individual_leave_history, name='individual_leave_history'),
+=======
+   
+>>>>>>> Integrating the login templated
      
 
 ]

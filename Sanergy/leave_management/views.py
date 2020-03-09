@@ -65,6 +65,9 @@ def individual_leave_history(request, id=None):
 
     return render(request, 'registration/request.html', context)
 
+
+
+
         # fetching leave types 
 def leave_entitlement_types(request):
     sf = salesforcelogin()

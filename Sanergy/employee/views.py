@@ -19,12 +19,16 @@ from users.models import CustomUser
 from .models import Employee
 
 
+<<<<<<< HEAD
 def landing(request):
     current_user = request.user
     context={
         'current_user':current_user,
     }
     return render (request, 'users/landing.html', context)
+=======
+    
+>>>>>>> Integrating the login templated
     
 #QUERRY [Employee details from postgress]
 @login_required
