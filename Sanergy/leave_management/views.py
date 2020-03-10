@@ -13,11 +13,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from employee.models import Employee
-from users.utils import salesforcelogin
+from users.utils import salesforcelogin, postgressConnection
 
 from .forms import LeaveApplicationForm
 from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
-                     LeaveAccruals, SanergyCalendar)
+                     LeaveAccruals, SanergyCalendar, Leave_Entitlement_Utilization)
 from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 
 
@@ -61,10 +61,7 @@ def individual_leave_history(request, id=None):
             print(colleagues_leaves.count())
 
         context['colleagues_leaves'] = colleagues_leaves
-
-
-    return render(request, 'registration/request.html', context)
-
+        return context
 
 
 
@@ -87,14 +84,7 @@ def leave_entitlement_types(request):
     leaveTypes=Leave_Entitlement_Type.objects.all()
 
     return HttpResponse(leaveTypes)
-    # return JsonResponse(leave_types, safe=False)
-
-  
-def request_leave(request):
-    sf = salesforcelogin()
-    data = sf.Leave_Entitlement_Type_Config__c.create(
-        {'Accrue__c': 'Start Month', 'Leave_Group__c': 'aJ87E0000004CAu', 'Leave_Type__c': 'Annual Leave', 'Total_No_of_Leave_Days__c': '5', 'Year__c': '2020'})
-    return JsonResponse(data)
+   
 
 
 def populate_leaveAccruals(request):
@@ -373,9 +363,9 @@ def refresh_sanergy_calender(request):
 
 
 
-<<<<<<< HEAD
 def request_leave(request):
-    user = request.user.Id
+
+    user = request.user.salesforceid
     def leaves():
             connection = postgressConnection()
             year = '2019.0'
@@ -385,19 +375,25 @@ def request_leave(request):
             leave = cursor.fetchall()
             return leave
         
-    leave = leaves()
+    leave = leaves() 
+    history = individual_leave_history(request)
+    
+    print(history)
+    
     context = {
-        'leave': leave
+        'leave': leave,
+        'history': history,
+        'user_history':history['user_history'],
+        'colleagues_leaves':history['colleagues_leaves'],
+        
     }
 
     return render(request, 'registration/request.html', context)
 
 
 
-=======
->>>>>>> leave history done
 def request_leave_data(request):
-        user = request.user.Id
+        user = request.user.salesforceid
         context={}
     
         if request.method == 'POST':
@@ -434,6 +430,7 @@ def request_leave_data(request):
                         return i[0]
             
             leave_to_display = leave_desplayed()
+            history = individual_leave_history(request)
             
             context = {
                 'days': days_requested,
@@ -441,7 +438,9 @@ def request_leave_data(request):
                 'comments': comments,
                 'leave_type_selected': leave_type_selected,
                 'Leave_display': leave_to_display,
-                'coverage': coverage
+                'coverage': coverage,
+                'user_history':history['user_history'],
+                'colleagues_leaves':history['colleagues_leaves'],
             }
             
            
@@ -479,11 +478,14 @@ def post_leave_to_salesforce(request):
         return leave
     
     leave = leaves()
+    history = individual_leave_history(request)
 
     success = "Leave request has been submitted successfully"
     context = {
         'leave': leave,
-        'success': success
+        'success': success,
+        'user_history':history['user_history'],
+        'colleagues_leaves':history['colleagues_leaves'],
     }
 
    

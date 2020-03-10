@@ -26,6 +26,9 @@ salt = uuid.uuid4().hex
 def home(request):
     return render(request, 'registration/login.html')
 
+def logout(request):
+    return render(request, 'registration/login.html')
+
 def landing(request):
     return render (request, 'registration/qudo.html')
 
@@ -49,11 +52,12 @@ def create_custom_user(request):
         print(password)
         print(email)
 
+      
+
 
         password = make_password(password, None, 'default')
         # print(password)
 
-<<<<<<< HEAD
         #METHOD2 :  hashing the password with salt, store as raw bytes
         # password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
         # print(password2)
@@ -61,12 +65,12 @@ def create_custom_user(request):
         first_name = field.Employee_First_Name
         full_name = field.Employee_Full_Name
 
-        CustomUser.objects.update_or_create(salesforceid = salesforceid,
-                                defaults={
-                                    'email':email,
-                                    'password':password,
-                                    'first_name':first_name,
-                                    })
+        # CustomUser.objects.update_or_create(salesforceid = salesforceid,
+        #                         defaults={
+        #                             'email':email,
+        #                             'password':password,
+        #                             'first_name':first_name,
+        #                             })
 
 
         employee = CustomUser.objects.all()
@@ -84,24 +88,21 @@ def user_directory(request):
     context['employee'] = employee
     print(employee.count())
     return render(request, 'employee/employee_directoryhtml.html', context)
-=======
-    return HttpResponse("the users are populated")
 
-def request_leave(request):
-    user = request.user.Id
-    def leaves():
-            connection = postgressConnection()
-            year = '2019.0'
-            cursor = connection.cursor()
-            strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
-            cursor.execute(strleave_type)
-            leave = cursor.fetchall()
-            return leave
+# def request_leave(request):
+#     user = request.user.salesforceid
+#     def leaves():
+#             connection = postgressConnection()
+#             year = '2019.0'
+#             cursor = connection.cursor()
+#             strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
+#             cursor.execute(strleave_type)
+#             leave = cursor.fetchall()
+#             return leave
         
-    leave = leaves()
-    context = {
-        'leave': leave
-    }
+#     leave = leaves()
+#     context = {
+#         'leave': leave
+#     }
 
-    return render(request, 'registration/request.html', context)
->>>>>>> Integrating the login templated
+#     return render(request, 'registration/request.html', context)

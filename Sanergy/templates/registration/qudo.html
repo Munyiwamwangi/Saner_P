@@ -189,11 +189,11 @@ var mailchimpSF = {"ajax_url":"https:\/\/livewp.site\/wp\/md\/qudos\/"};
                                         <div class="dropdown">
                                             <i class="fa fa-caret-down"></i>
                                             <div class="dropdown-content">
-                                                <a href="leave_page" style="background:none; font-weight:bold; font-size:15px;">Leave Request</a>
+                                                <a href="{% url 'leave_page' %} " style="background:none; font-weight:bold; font-size:15px;">Leave Request</a>
                                               
                                                 <a href="employee.html" style="background:none; font-weight:bold; font-size:15px;">Employee directory</a>
                                                
-                                                <a href="login.html" style="background:none; font-weight:bold; font-size:15px;">Logout</a>
+                                                <a href="{% url 'logout' %} " style="background:none; font-weight:bold; font-size:15px;">Logout</a>
                                             </div>
                                         </div>
                                     </div>
