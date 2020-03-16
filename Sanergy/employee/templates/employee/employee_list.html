@@ -1,0 +1,178 @@
+{% extends "leave_templates/base.html" %} {% load bootstrap4 %} {% load static %} {% block content %}
+
+<head>
+    {{form.media}} {% block styles %} {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    {% endblock %}
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border-radius: 25px;
+        font-weight: 900;
+    }
+    
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 6px;
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<body>
+    <html>
+
+    <head>
+        <style>
+            #ul-nav {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #6daeb2;
+                position: fixed;
+                width: 100%;
+            }
+            
+            .list {
+                float: left;
+            }
+            
+            li a {
+                display: block;
+                font-size: 20px;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+            
+            .active {
+                background-color: ;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <ul id="ul-nav">
+
+            <li class="list">
+                <a href="homepage.html" class="link"><img class="nav-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-white-195.png" width="160px" alt="Sanergy" style="height: 60px;"></a>
+            </li>
+            <li class="list" style="float:right" class="link"><a class="active" href="{% url 'search' %} " style="color: white;padding-top: 34px;">Filter By</a></li>
+        </ul>
+    </body>
+    </html>
+    <br>
+    <div class="table table-bordered table-striped" style="padding-left: 60px; padding-right: 60px; padding-top: 10px; " id="search">
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        
+        <h3 style="color:#6daeb2;" class="loading" >Search for employee<span id="wait">.</span> </h3>
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        <br>
+        
+        <table>
+            <tr style="font-size: 30px;">
+                <!-- <th>First Name </th> -->
+                <th>First Name</th>
+                <th>Last Name</th>
+                <!-- <th>Sanergy Department</th> -->
+                <th>Sanergy Department Unit </th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Line Manager</th>
+            </tr>
+            {% for employee in employee %}
+            <tbody id="myTable">
+                <tr>
+                    <div id="content">
+
+                    </div>
+                    <div >
+                        <td > <a href="{% url 'employee_profile' employee.Id %} ">{{ employee.Employee_First_Name }}</a> </td>
+                    </div>
+                    <td>{{ employee.Employee_Last_Name }}</td>
+                    <!-- <td>{{ employee.Id }}</td> -->
+                    <td>{{ employee.Sanergy_Department_Unit }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.Primary_Phone }}</td>
+                    <td>{{ employee.Line_Manager }}</td>
+                </tr>
+            </tbody>
+
+            {% endfor%}
+
+            <!-- HOVER TO DISPLAY  -->
+
+            <script>
+                function FetchProfileOnHover(pk) {
+                  pk = pk
+                  $.ajax({
+                    url: 'fetch_profile_hover/' + pk,
+                    success: function(data) {
+                      $('#content').html(data);
+                    }
+                  });
+                };
+              </script>
+
+              <!-- SEARCH  -->
+
+            <script>
+                $(document).ready(function() {
+                    $("#myInput").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+
+            <!-- PROGRESS DOTS  -->
+
+
+            <script>
+                var dots = window.setInterval(function() {
+                    var wait = document.getElementById("wait");
+                    if (wait.innerHTML.length > 5)
+                        wait.innerHTML = "";
+                    else
+                        wait.innerHTML += ".";
+                }, 200);
+            </script>
+        </table>
+    </div>
+    {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</script>
+{% bootstrap_javascript %}
+</body>
+
+</html>
+{% endblock %}
+</script>
+</body>
+
+</html>
+{% endblock content %}

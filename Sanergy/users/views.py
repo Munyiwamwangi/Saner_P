@@ -49,8 +49,8 @@ def create_custom_user(request):
         email = field.email
         salesforceid = field.Id
         password = generatePassword(10)
-        print(password)
         print(email)
+        print(password)
 
       
 
@@ -65,12 +65,12 @@ def create_custom_user(request):
         first_name = field.Employee_First_Name
         full_name = field.Employee_Full_Name
 
-        CustomUser.objects.update_or_create(salesforceid = salesforceid,
-                                defaults={
-                                    'email':email,
-                                    'password':password,
-                                    'first_name':first_name,
-                                    })
+        # CustomUser.objects.update_or_create(salesforceid = salesforceid,
+        #                         defaults={
+        #                             'email':email,
+        #                             'password':password,
+        #                             'first_name':first_name,
+        #                             })
 
 
         employee = CustomUser.objects.all()

@@ -1,0 +1,14 @@
+{% extends "leave_templates/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Search</button>
+  </form>
+  <ul>
+  {% for employee in filter.qs %}
+    <li>{{ user.Employee_First_Name }} - {{ employee.get_full_name }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

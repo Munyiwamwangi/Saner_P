@@ -4,7 +4,9 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
+# from leave_management.models import SanergyDepartment, SanergyDepartmentUnit
+
 from users.models import CustomUser
 
 
@@ -30,15 +32,17 @@ class Employee(models.Model):
     Employee_Role = models.CharField(unique=False, max_length=100, null=True)
     Primary_Phone = models.CharField(max_length=100, blank=True, null=True)
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, null = True, blank=True)
+    
     Team_Lead = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, related_name='team_lead')
     Line_Manager = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, related_name='line_manager')
-    Talent_Partner = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, related_name='talent_partner')   
-    
+    Talent_Partner = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, related_name='talent_partner')
+
     class Meta:
-        ordering = ('Employee_Full_Name',)
-        
+        ordering = ('Employee_First_Name',)
+
     def __str__(self):
-      return self.Employee_Full_Name
+        return self.Employee_Full_Name
+
     def __repr__(self):
         return self.__str__()
 

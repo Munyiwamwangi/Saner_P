@@ -31,7 +31,6 @@ db_host = False
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,12 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'leave_management',
+    'widget_tweaks',
     'employee',
+    'users',
     'rest_framework',
     'bootstrap4',
     'bootstrap3',
-    # 'social_django',
-    'users',
+    'social_django',
     'crispy_forms',
 
 ]
@@ -95,15 +95,16 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 WSGI_APPLICATION = 'Sanergy.wsgi.application'
 
 SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'intranetsarnergy',
-#         'USER': 'intradmin',
-#         'PASSWORD': 'sanergy123',
+#         'NAME': 'sanergy',
+#         'USER': 'munyiwanjiku',
+#         'PASSWORD': 'joe',
 #         'PORT': '5432',
 #     },
 
