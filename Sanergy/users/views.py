@@ -27,7 +27,7 @@ def home(request):
     return render(request, 'registration/login.html')
 
 def logout(request):
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/logout.html')
 
 def landing(request):
     return render (request, 'registration/qudo.html')
@@ -56,21 +56,21 @@ def create_custom_user(request):
 
 
         password = make_password(password, None, 'default')
-        # print(password)
+        print(password)
 
-        #METHOD2 :  hashing the password with salt, store as raw bytes
-        # password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
-        # print(password2)
+        # METHOD2 :  hashing the password with salt, store as raw bytes
+        password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
+        print(password2)
         
         first_name = field.Employee_First_Name
         full_name = field.Employee_Full_Name
 
-        # CustomUser.objects.update_or_create(salesforceid = salesforceid,
-        #                         defaults={
-        #                             'email':email,
-        #                             'password':password,
-        #                             'first_name':first_name,
-        #                             })
+        CustomUser.objects.update_or_create(salesforceid = salesforceid,
+                                defaults={
+                                    'email':email,
+                                    'password':password,
+                                    'first_name':first_name,
+                                    })
 
 
         employee = CustomUser.objects.all()
@@ -89,20 +89,3 @@ def user_directory(request):
     print(employee.count())
     return render(request, 'employee/employee_directoryhtml.html', context)
 
-# def request_leave(request):
-#     user = request.user.salesforceid
-#     def leaves():
-#             connection = postgressConnection()
-#             year = '2019.0'
-#             cursor = connection.cursor()
-#             strleave_type = "SELECT \"Leave_Type\", \"id\"  FROM  leave_management_leave_entitlement_utilization  WHERE \"Leave_Year\"='"+ year +"' AND \"Employee\"='"+ user +"'"
-#             cursor.execute(strleave_type)
-#             leave = cursor.fetchall()
-#             return leave
-        
-#     leave = leaves()
-#     context = {
-#         'leave': leave
-#     }
-
-#     return render(request, 'registration/request.html', context)

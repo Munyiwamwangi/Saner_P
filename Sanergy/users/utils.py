@@ -18,11 +18,11 @@ def salesforcelogin():
 
 def postgressConnection():
     connection = psycopg2.connect(
-        user="intradmin",
-        password="sanergy123",
-        host="127.0.0.1",
+        user='postgres',
+        password='intranet2020',
+        host='intranet-sandbox-db-instance-v1.cvudwjs0pws7.eu-west-2.rds.amazonaws.com',
         port="5432",
-        database="intranetsarnergy"
+        database='intranet_sandbox_db',
 
     )
 

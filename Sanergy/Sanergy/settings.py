@@ -98,15 +98,25 @@ SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'intranetsarnergy',
+#         'USER': 'intradmin',
+#         'PASSWORD': 'sanergy123',
+#         'PORT': '5432',
+#     },
+
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intranetsarnergy',
-        'USER': 'intradmin',
-        'PASSWORD': 'sanergy123',
+        'NAME': 'intranet_sandbox_db',
+        'USER': 'postgres',
+        'PASSWORD': 'intranet2020',
+        'HOST': 'intranet-sandbox-db-instance-v1.cvudwjs0pws7.eu-west-2.rds.amazonaws.com',
         'PORT': '5432',
     },
-
 }
 # DJNAGO FULL LIST OF PASSWORD HASHERS TO SUPPORT ANY HASHING ALGORITHM
 PASSWORD_HASHERS = (
@@ -175,7 +185,7 @@ MEDIA_URL = 'media/'
 
 # salesforce credentials
 SALESFORCE_USERNAME = 'domnick.kamya@saner.gy.ffa'
-SALESFORCE_SECURITY_TOKEN = 'RolR1FqVokyPBjREIoBDq21j'
+SALESFORCE_SECURITY_TOKEN = 'LlggEqsleVoDbCJVsYP2nm0xf'
 SALESFORCE_PASSWORD = 'Sanergy123'
 SALESFORCE_DOMAIN = 'test'
 

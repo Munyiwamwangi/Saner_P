@@ -68,4 +68,4 @@ class Leave_Entitlement_Utilization(models .Model):
     Total_No_of_Leave_Days = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return self.Decsritption
+        return self.Employee

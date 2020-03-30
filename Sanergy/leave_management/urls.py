@@ -16,6 +16,7 @@ urlpatterns = [
     path('request_leave_data', views.request_leave_data, name='request_leave_data'),
     path('entitlement', views.entitlement_utilization, name='entitlement'),
     
+    
      
 
 ]
