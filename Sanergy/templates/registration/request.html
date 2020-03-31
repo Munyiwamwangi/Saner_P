@@ -3,34 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Gallery</title>
-<<<<<<< HEAD
     {% load static %}
     {% load crispy_forms_tags%}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css">
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/sb-admin-2.min.css' %}">
-=======
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css">
->>>>>>> whos is out done, by filtered by  department units
     <style>
         /* 12columns.css | Created by Katherine Kato | Released under the MIT license */
         /* GitHub: https://kathykato.github.io/12columns/ */
         
         @import url("https://fonts.googleapis.com/css?family=Barlow:400,500,700");
-<<<<<<< HEAD
         
 
     </style>
     <script>
         window.console = window.console || function(t) {};
+    
     </script>
     <script>
         if (document.location.search.match(/type=embed/gi)) {
             window.parent.postMessage("resize", "*");
         }
     </script>
+    <script>
+        function dateValidator(){
+            var startDate = document.forms["leaveForm"]["startdate"].value;
+            var endDate   = document.forms["leaveForm"]["enddate"].value;
+
+            function dateConverter(dateStr){
+                    return new Date(dateStr).getTime();
+                };
+            var startDate1 = dateConverter(startDate)
+            var endDate1 = dateConverter(endDate)
+            
+            if (endDate1 < startDate1){
+                alert("Sorry, but the end date can not be less than start date, \n Please try again!");
+                return false;
+          
+            }}
+
+    </script>
+<!-- <script>
+var formSubmitting = false;
+var setFormSubmitting = function() { formSubmitting = true; };
+
+window.onload = function() {
+    window.addEventListener("beforeunload", function (e) {
+        if (formSubmitting) {
+            return undefined;
+        }
+
+        var confirmationMessage = 'It looks like you have been editing something. '
+                                + 'If you leave before saving, your changes will be lost.';
+
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    });
+};
+</script> -->
+  
+    
 </head>
 
 <body translate="no">
@@ -38,691 +71,11 @@
 <head>
 <style>
 
-=======
-        .container {
-            margin: auto;
-            padding: 0 1rem;
-            max-width: 71.25rem;
-            width: 100%;
-        }
-        
-        .grid {
-            display: flex;
-            flex-direction: column;
-            flex-flow: row wrap;
-        }
-        
-        .grid>[class*="column-"] {
-            display: block;
-        }
-        
-        .first {
-            order: -1;
-        }
-        
-        .last {
-            order: 12;
-        }
-        
-        .align-top {
-            align-items: start;
-        }
-        
-        .align-center {
-            align-items: center;
-        }
-        
-        .align-bottom {
-            align-items: end;
-        }
-        
-        .column-xs-1 {
-            flex-basis: 8.3333333333%;
-            max-width: 8.3333333333%;
-        }
-        
-        .column-xs-2 {
-            flex-basis: 16.6666666667%;
-            max-width: 16.6666666667%;
-        }
-        
-        .column-xs-3 {
-            flex-basis: 25%;
-            max-width: 25%;
-        }
-        
-        .column-xs-4 {
-            flex-basis: 33.3333333333%;
-            max-width: 33.3333333333%;
-        }
-        
-        .column-xs-5 {
-            flex-basis: 41.6666666667%;
-            max-width: 41.6666666667%;
-        }
-        
-        .column-xs-6 {
-            flex-basis: 50%;
-            max-width: 50%;
-        }
-        
-        .column-xs-7 {
-            flex-basis: 58.3333333333%;
-            max-width: 58.3333333333%;
-        }
-        
-        .column-xs-8 {
-            flex-basis: 66.6666666667%;
-            max-width: 66.6666666667%;
-        }
-        
-        .column-xs-9 {
-            flex-basis: 75%;
-            max-width: 75%;
-        }
-        
-        .column-xs-10 {
-            flex-basis: 83.3333333333%;
-            max-width: 83.3333333333%;
-        }
-        
-        .column-xs-11 {
-            flex-basis: 91.6666666667%;
-            max-width: 91.6666666667%;
-        }
-        
-        .column-xs-12 {
-            flex-basis: 100%;
-            max-width: 100%;
-        }
-        
-        @media (min-width: 48rem) {
-            .column-sm-1 {
-                flex-basis: 8.3333333333%;
-                max-width: 8.3333333333%;
-            }
-            .column-sm-2 {
-                flex-basis: 16.6666666667%;
-                max-width: 16.6666666667%;
-            }
-            .column-sm-3 {
-                flex-basis: 25%;
-                max-width: 25%;
-            }
-            .column-sm-4 {
-                flex-basis: 33.3333333333%;
-                max-width: 33.3333333333%;
-            }
-            .column-sm-5 {
-                flex-basis: 41.6666666667%;
-                max-width: 41.6666666667%;
-            }
-            .column-sm-6 {
-                flex-basis: 50%;
-                max-width: 50%;
-            }
-            .column-sm-7 {
-                flex-basis: 58.3333333333%;
-                max-width: 58.3333333333%;
-            }
-            .column-sm-8 {
-                flex-basis: 66.6666666667%;
-                max-width: 66.6666666667%;
-            }
-            .column-sm-9 {
-                flex-basis: 75%;
-                max-width: 75%;
-            }
-            .column-sm-10 {
-                flex-basis: 83.3333333333%;
-                max-width: 83.3333333333%;
-            }
-            .column-sm-11 {
-                flex-basis: 91.6666666667%;
-                max-width: 91.6666666667%;
-            }
-            .column-sm-12 {
-                flex-basis: 100%;
-                max-width: 100%;
-            }
-        }
-        
-        @media (min-width: 62rem) {
-            .column-md-1 {
-                flex-basis: 8.3333333333%;
-                max-width: 8.3333333333%;
-            }
-            .column-md-2 {
-                flex-basis: 16.6666666667%;
-                max-width: 16.6666666667%;
-            }
-            .column-md-3 {
-                flex-basis: 25%;
-                max-width: 25%;
-            }
-            .column-md-4 {
-                flex-basis: 33.3333333333%;
-                max-width: 33.3333333333%;
-            }
-            .column-md-5 {
-                flex-basis: 41.6666666667%;
-                max-width: 41.6666666667%;
-            }
-            .column-md-6 {
-                flex-basis: 50%;
-                max-width: 50%;
-            }
-            .column-md-7 {
-                flex-basis: 58.3333333333%;
-                max-width: 58.3333333333%;
-            }
-            .column-md-8 {
-                flex-basis: 66.6666666667%;
-                max-width: 66.6666666667%;
-            }
-            .column-md-9 {
-                flex-basis: 75%;
-                max-width: 75%;
-            }
-            .column-md-10 {
-                flex-basis: 83.3333333333%;
-                max-width: 83.3333333333%;
-            }
-            .column-md-11 {
-                flex-basis: 91.6666666667%;
-                max-width: 91.6666666667%;
-            }
-            .column-md-12 {
-                flex-basis: 100%;
-                max-width: 100%;
-            }
-        }
-        
-        @media (min-width: 75rem) {
-            .column-lg-1 {
-                flex-basis: 8.3333333333%;
-                max-width: 8.3333333333%;
-            }
-            .column-lg-2 {
-                flex-basis: 16.6666666667%;
-                max-width: 16.6666666667%;
-            }
-            .column-lg-3 {
-                flex-basis: 25%;
-                max-width: 25%;
-            }
-            .column-lg-4 {
-                flex-basis: 33.3333333333%;
-                max-width: 33.3333333333%;
-            }
-            .column-lg-5 {
-                flex-basis: 41.6666666667%;
-                max-width: 41.6666666667%;
-            }
-            .column-lg-6 {
-                flex-basis: 50%;
-                max-width: 50%;
-            }
-            .column-lg-7 {
-                flex-basis: 58.3333333333%;
-                max-width: 58.3333333333%;
-            }
-            .column-lg-8 {
-                flex-basis: 66.6666666667%;
-                max-width: 66.6666666667%;
-            }
-            .column-lg-9 {
-                flex-basis: 75%;
-                max-width: 75%;
-            }
-            .column-lg-10 {
-                flex-basis: 83.3333333333%;
-                max-width: 83.3333333333%;
-            }
-            .column-lg-11 {
-                flex-basis: 91.6666666667%;
-                max-width: 91.6666666667%;
-            }
-            .column-lg-12 {
-                flex-basis: 100%;
-                max-width: 100%;
-            }
-        }
-        
-        @supports (display: grid) {
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(12, 1fr);
-                grid-template-rows: auto;
-            }
-            .grid>[class*="column-"] {
-                margin: 0;
-                max-width: 100%;
-            }
-            .column-xs-1 {
-                grid-column-start: span 1;
-                grid-column-end: span 1;
-            }
-            .column-xs-2 {
-                grid-column-start: span 2;
-                grid-column-end: span 2;
-            }
-            .column-xs-3 {
-                grid-column-start: span 3;
-                grid-column-end: span 3;
-            }
-            .column-xs-4 {
-                grid-column-start: span 4;
-                grid-column-end: span 4;
-            }
-            .column-xs-5 {
-                grid-column-start: span 5;
-                grid-column-end: span 5;
-            }
-            .column-xs-6 {
-                grid-column-start: span 6;
-                grid-column-end: span 6;
-            }
-            .column-xs-7 {
-                grid-column-start: span 7;
-                grid-column-end: span 7;
-            }
-            .column-xs-8 {
-                grid-column-start: span 8;
-                grid-column-end: span 8;
-            }
-            .column-xs-9 {
-                grid-column-start: span 9;
-                grid-column-end: span 9;
-            }
-            .column-xs-10 {
-                grid-column-start: span 10;
-                grid-column-end: span 10;
-            }
-            .column-xs-11 {
-                grid-column-start: span 11;
-                grid-column-end: span 11;
-            }
-            .column-xs-12 {
-                grid-column-start: span 12;
-                grid-column-end: span 12;
-            }
-            @media (min-width: 48rem) {
-                .column-sm-1 {
-                    grid-column-start: span 1;
-                    grid-column-end: span 1;
-                }
-                .column-sm-2 {
-                    grid-column-start: span 2;
-                    grid-column-end: span 2;
-                }
-                .column-sm-3 {
-                    grid-column-start: span 3;
-                    grid-column-end: span 3;
-                }
-                .column-sm-4 {
-                    grid-column-start: span 4;
-                    grid-column-end: span 4;
-                }
-                .column-sm-5 {
-                    grid-column-start: span 5;
-                    grid-column-end: span 5;
-                }
-                .column-sm-6 {
-                    grid-column-start: span 6;
-                    grid-column-end: span 6;
-                }
-                .column-sm-7 {
-                    grid-column-start: span 7;
-                    grid-column-end: span 7;
-                }
-                .column-sm-8 {
-                    grid-column-start: span 8;
-                    grid-column-end: span 8;
-                }
-                .column-sm-9 {
-                    grid-column-start: span 9;
-                    grid-column-end: span 9;
-                }
-                .column-sm-10 {
-                    grid-column-start: span 10;
-                    grid-column-end: span 10;
-                }
-                .column-sm-11 {
-                    grid-column-start: span 11;
-                    grid-column-end: span 11;
-                }
-                .column-sm-12 {
-                    grid-column-start: span 12;
-                    grid-column-end: span 12;
-                }
-            }
-            @media (min-width: 62rem) {
-                .column-md-1 {
-                    grid-column-start: span 1;
-                    grid-column-end: span 1;
-                }
-                .column-md-2 {
-                    grid-column-start: span 2;
-                    grid-column-end: span 2;
-                }
-                .column-md-3 {
-                    grid-column-start: span 3;
-                    grid-column-end: span 3;
-                }
-                .column-md-4 {
-                    grid-column-start: span 4;
-                    grid-column-end: span 4;
-                }
-                .column-md-5 {
-                    grid-column-start: span 5;
-                    grid-column-end: span 5;
-                }
-                .column-md-6 {
-                    grid-column-start: span 6;
-                    grid-column-end: span 6;
-                }
-                .column-md-7 {
-                    grid-column-start: span 7;
-                    grid-column-end: span 7;
-                }
-                .column-md-8 {
-                    grid-column-start: span 8;
-                    grid-column-end: span 8;
-                }
-                .column-md-9 {
-                    grid-column-start: span 9;
-                    grid-column-end: span 9;
-                }
-                .column-md-10 {
-                    grid-column-start: span 10;
-                    grid-column-end: span 10;
-                }
-                .column-md-11 {
-                    grid-column-start: span 11;
-                    grid-column-end: span 11;
-                }
-                .column-md-12 {
-                    grid-column-start: span 12;
-                    grid-column-end: span 12;
-                }
-            }
-            @media (min-width: 75rem) {
-                .column-lg-1 {
-                    grid-column-start: span 1;
-                    grid-column-end: span 1;
-                }
-                .column-lg-2 {
-                    grid-column-start: span 2;
-                    grid-column-end: span 2;
-                }
-                .column-lg-3 {
-                    grid-column-start: span 3;
-                    grid-column-end: span 3;
-                }
-                .column-lg-4 {
-                    grid-column-start: span 4;
-                    grid-column-end: span 4;
-                }
-                .column-lg-5 {
-                    grid-column-start: span 5;
-                    grid-column-end: span 5;
-                }
-                .column-lg-6 {
-                    grid-column-start: span 6;
-                    grid-column-end: span 6;
-                }
-                .column-lg-7 {
-                    grid-column-start: span 7;
-                    grid-column-end: span 7;
-                }
-                .column-lg-8 {
-                    grid-column-start: span 8;
-                    grid-column-end: span 8;
-                }
-                .column-lg-9 {
-                    grid-column-start: span 9;
-                    grid-column-end: span 9;
-                }
-                .column-lg-10 {
-                    grid-column-start: span 10;
-                    grid-column-end: span 10;
-                }
-                .column-lg-11 {
-                    grid-column-start: span 11;
-                    grid-column-end: span 11;
-                }
-                .column-lg-12 {
-                    grid-column-start: span 12;
-                    grid-column-end: span 12;
-                }
-            }
-        }
-        
-        * {
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        
-        *::before,
-        *::after {
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Barlow', sans-serif;
-            font-size: 1.125rem;
-            line-height: 1.5;
-            color: #787878;
-            background: #fff;
-            text-rendering: optimizeLegibility;
-        }
-        
-        ul li {
-            margin: 0 1.5rem 0 0;
-        }
-        
-        a {
-            color: #787878;
-            text-decoration: none;
-            -webkit-transition: all 0.2s ease;
-            -o-transition: all 0.2s ease;
-            transition: all 0.2s ease;
-        }
-        
-        a:hover {
-            color: #2e2e2e;
-        }
-        
-        a.active {
-            color: #2e2e2e;
-        }
-        
-        nav {
-            padding: 2.5rem 0 2.5rem 0;
-        }
-        
-        nav ul {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: left;
-            -ms-flex-pack: left;
-            justify-content: left;
-        }
-        
-        nav li {
-            font-size: 1.25rem;
-        }
-        
-        nav li:nth-child(2) {
-            margin: 0;
-        }
-        
-        #highlight {
-            color: #ea8478;
-            font-size: 1.25rem;
-        }
-        
-        .gallery {
-            padding: 0 0 4rem 0;
-        }
-        
-        .img-container {
-            width: 100%;
-            height: 500px;
-            cursor: pointer;
-            overflow: hidden;
-        }
-        
-        .img-container:hover .img-content-hover {
-            display: block;
-        }
-        
-        img {
-            width: 100%;
-            height: 500px;
-            -o-object-fit: cover;
-            object-fit: cover;
-            -webkit-transform: scale(1);
-            -ms-transform: scale(1);
-            transform: scale(1);
-            -webkit-transition: all 0.3s ease-in-out;
-            -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
-        }
-        
-        img:hover {
-            -webkit-transform: scale(1.05);
-            -ms-transform: scale(1.05);
-            transform: scale(1.05);
-        }
-        
-        .img-content-hover {
-            position: absolute;
-            z-index: 1;
-            white-space: nowrap;
-            display: none;
-            padding: 1rem;
-            background: #fff;
-            font-weight: 400;
-            margin-top: 1.25rem;
-            margin-left: -2rem;
-        }
-        
-        .title {
-            color: #2e2e2e;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .category {
-            font-size: 1rem;
-            color: #787878;
-        }
-        
-        .img-content {
-            display: none;
-        }
-        
-        .social,
-        .copyright {
-            margin: 1rem;
-        }
-        
-        .social li {
-            display: inline-block;
-        }
-        
-        footer {
-            padding: 1rem 0;
-            background: #f7f7f7;
-            text-align: center;
-        }
-        
-        @supports (display: grid) {
-            .gallery .grid {
-                grid-gap: 1rem;
-            }
-        }
-        
-        @media (min-width: 62rem) {
-            nav ul {
-                -webkit-box-pack: right;
-                -ms-flex-pack: right;
-                justify-content: right;
-            }
-        }
-        
-        @media screen and (max-width: 1024px) {
-            img:hover {
-                -webkit-transform: none;
-                -ms-transform: none;
-                transform: none;
-            }
-            .img-container {
-                height: 100%;
-            }
-            .img-container:hover .img-content-hover {
-                display: none;
-            }
-            .img-content {
-                display: block;
-                padding: 1rem 0;
-            }
-        }
-    </style>
-    <script>
-        window.console = window.console || function(t) {};
-    </script>
-    <script>
-        if (document.location.search.match(/type=embed/gi)) {
-            window.parent.postMessage("resize", "*");
-        }
-    </script>
-</head>
-
-<body translate="no">
- <html>
-<head>
-<style>
-.ul-nav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  background-color: #6daeb2;
-
-}
-
-.list {
-  float: left;
-}
-
-li a {
-  display: block;
-  font-size: 20px;
-
-  text-align: center;
-  padding: 14px 16px;                                                                            
-  text-decoration: none;
-}
-
-
-
-.active {
-  background-color: ;
-}
->>>>>>> whos is out done, by filtered by  department units
 </style>
 </head>
 <body>
 
 <ul class="ul-nav" >
-<<<<<<< HEAD
 
   <li class="list"><a href="qudo.html" class="link"><img class="nav-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-white-195.png" width="160px" alt="Sanergy" style="height: 60px;"></a></li>
   <li class="list" style="float:right" class="link"><a class="active" href="#history" style="color: white;padding-top: 34px;">History</a></li>
@@ -748,28 +101,29 @@ li a {
                 <div class="column-xs-12" style="border: 2px solid #f2eaeb;">
                     <br>
                     <br>
-                    <h4 style="font-size:25px;font-weight:bold;text-align: center;text-decoration: underline; "id="opening" >Request for Leave</h4>
-                    <div style="font-family: cursive; text-align: center; padding-top: 11px; color: green; ">{{success}}</div>
-                    <form method="POST" action="/leave/request_leave_data">
-                        <ul class="form-style-1">
-                            <li>
+                    <h4 style="font-size:25px;font-weight:bold;text-align: center; "id="opening" >Request for Leave</h4>
+                    <!-- <div style="font-family: cursive; text-align: center; padding-top: 11px; color: green; ">{{success}}</div> -->
+                    <form method="POST" action="/leave/request_leave_data" onsubmit="return (dateValidator() && setFormSubmitting())" name="leaveForm">
+                        <ul>
+                        <li>
+                     <ul class="form-style-1">
                                 <label>Leave Type</label>
                                 <select id="leave_id" name="leave_name"  class="form-control ">
                                     {% for leave_type, id  in leave %}
                                     <option name="leave_type" value={{id}}>{{leave_type}}</option>
                                     {% endfor %}  
-                                    </select>
+                                </select>
                             </li>
-                            <li><label>Start Date </label><input type="date" name="startdate" value="{{ start_date }}" class="form-control" ></li>
+                            <li><label>Start Date </label><input type="date" name="startdate" value="{{ start_date }}" class="form-control"  required></li>
                             <li>
-                            <label>End Date </label> <input type="date" name="enddate" class="form-control" value="{{ enddate }}" class="form-control ">
-                                                                                                          
-                            </li>
-                            <li>
-                                <label> Coverage <span class="required"></span></label>
-                                <input type="text" name="coverage" class="form-control" value="" class="form-control ">
-                            </li>
-
+                                <label>End Date </label> <input type="date" name="enddate" class="form-control" value="{{ enddate }}" class="form-control " required >
+                                
+                                <li>
+                                    <label> Coverage <span class="required"></span></label>
+                                    <input type="text" name="coverage" class="form-control" value="" class="form-control ">
+                                </li>
+                                </li>
+                            
                             <li>
                                 <label>Comments <span class="required"></span></label>
                                 <textarea name="comments" id="field5" class="field-long field-textarea" value="{{ comments }}"></textarea>
@@ -777,23 +131,32 @@ li a {
                             </li>
                             <li>
                                 
-                                <button type="submit" class="btn btn-info">View</button>
+                                <button type="submit" value="submit" class="btn btn-info">View</button>
                             </li>
                         </ul>
                     </form>
                     <style type="text/css">
-                       
+                        
                     </style>
                     <br>
                 </div>
                 <div class="column-xs-12">
-                    <html lang="en">
+                    <html lang="en">                    
+                        <form method="POST" action="post_leave_to_salesforce" name="leave_submit"> 
+                            
+                            <div class="container" style="border: 2px solid #f2eaeb;">
+                                <br>
+                                <h4 style="font-size:25px;font-weight:bold;text-align:center;" id="history">Days selected</h4>
+                                
+                                {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li style="font-size:14px;font-weight:bold;text-align:center; color:green; padding: top 10px;"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            
 
-                        <form method="POST" action="post_leave_to_salesforce"> 
-                        
-                        <div class="container" style="border: 2px solid #f2eaeb;">
-                            <br>
-                            <h4 style="font-size:25px;font-weight:bold;text-align:center;text-decoration: underline;" id="history">Days selected</h4>
 
                             <br>
                             <br>
@@ -802,27 +165,26 @@ li a {
                       <thead class="">
                           <th style="font-weight:bold;text-align:center">Date</th>
                           <th style="font-weight:bold;text-align:center">Week day</th>
-                           <th style="font-weight:bold;text-align:center">Half day</th>
+                           <th style="font-weight:bold;text-align:center">Number of Days</th>
                       </thead>
                       <tbody >
-                      {% for date,day,holiday,weekend in days %}
+                      {% for date,day,holiday,weekend, CountAsLeave in days %}
                       <tr class="">
-                         <td><input type="date" name="date" style="border:0" class="form-control" value="{{ date }}" class="form-control " readonly></td>
+                         <td><input type="date" name="date" style="border:0" class="form-control" value="{{ date }}" class="form-control " required onkeypress="return false;"></td>
                          <td>{{day}}</td>
-                          <td><input type="number" name="half_day"   value="0.0" class="form-control" step="0.01"></td>
+                          <td><input type="number" name="half_day"   value="{{ CountAsLeave }}" class="form-control" step="0.01" required></td>
 
                       </tr>
                       {% endfor %}
-                      <td>Leave type: {{Leave_display}}<input type="hidden" name="leave_type"   style="border:0" value="{{ leave_type_selected }}" class="form-control" readonly></td>
-                      <td>comments: {{comments}}<input type="hidden" name="comments"   style="border:0" value="{{ comments }}" class="form-control" readonly></td>
-                      <td>Coverage: {{ coverage }}<input type="hidden" name="coverage"   style="border:0" value="{{ coverage }}" class="form-control" readonly></td>
-                      <tr>
-                      <td></td>
-                      <td><button type="submit" class="btn btn-info">Submit Request</button></td>
-                      <td></td>
-                      </tr>
+                      <td><input type="hidden" name="leave_type"   style="border:0" value="{{ leave_type_selected }}" class="form-control" readonly></td>
+                      <td><input type="hidden" name="comments"   style="border:0" value="{{ comments }}" class="form-control" readonly></td>
+                      <td>Total days : {{ days_selected }}<input type="hidden" name="coverage"   style="border:0" value="{{ coverage }}" class="form-control" readonly></td>
+                    </tr>
                       </tbody>
                   </table>
+                  <center><button type="submit" class="btn btn-info">Submit Request</button></center>
+                  <br>
+                  <P></P>
                 </form>
                         </div>
                     </form>
@@ -833,333 +195,6 @@ li a {
                     </html>
                 </div>
 
-=======
-
-  <li class="list"><a href="qudo.html" class="link"><img class="nav-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-white-195.png" width="160px" alt="Sanergy" style="height: 60px;"></a></li>
-  <li class="list" style="float:right" class="link"><a class="active" href="#history" style="color: white;padding-top: 34px;">History</a></li>
-  <li class="list" style="float:right" class="link"><a class="active" href="#balance" style="color: white;padding-top: 34px;">Balance</a></li>
-  <li class="list" style="float:right" class="link"><a class="active" href="#opening" style="color: white;padding-top: 34px;">Form</a></li>
-
-</ul>
-
-</body>
-</html>
-
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   
-    <section class="gallery">
-        <div class="container">
-            <div class="grid">
-                <div class="column-xs-12" style="border: 2px solid #f2eaeb;">
-                    <br>
-                    <br>
-                    <style>
-                        {
-                            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                            color: #333;
-                            font: 300 15px/15px Roboto, Arial, Helvetica;
-                            -webkit-font-smoothing: antialiased;
-                            box-sizing: border-box;
-                            margin-right: -15px;
-                            margin-left: -15px;
-                            animation-duration: 1s;
-                            animation-fill-mode: both;
-                            visibility: visible;
-                            animation-name: fadeInLeftBig;
-                        }
-                    </style>
-                    <h4 style="font-size:25px;font-weight:bold;text-align: center;text-decoration: underline; "id="opening" >Request for Leave</h4>
-
-                    <form>
-                        <ul class="form-style-1">
-                            <li>
-                                <label>Leave Type</label>
-                                <select name="field4" class="field-select">
-                                        <option value="Annual">Annual</option>
-                                          <option value="Sick">Sick</option>
-                                        <option value="Exam">Exam</option>
-                                        <option value="Maternity">Maternity</option>
-                                        <option value="Parternity">Parternity</option>
-                                        </select>
-                            </li>
-                            <li><label>Date </label><input type="date" name="End date" value="" required class="form"></input> <input type="date" name=" date" value="" required class="form"></input>
-                            </li>
-                            <li>
-                                <label> Coverage <span class="required"></span></label>
-                                <input type="email" name="field3" class="field-long" />
-                            </li>
-
-                            <li>
-                                <label>Comments <span class="required"></span></label>
-                                <textarea name="field5" id="field5" class="field-long field-textarea"></textarea>
-                            </li>
-                            <li>
-                                <input type="submit" value="Submit" />
-                            </li>
-                        </ul>
-                    </form>
-                    <style type="text/css">
-                        .form-style-1 {
-                            margin: 10px auto;
-                            max-width: 400px;
-                            padding: 20px 12px 10px 20px;
-                            font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-                        }
-                        
-                        .form-style-1 li {
-                            padding: 0;
-                            display: block;
-                            list-style: none;
-                            margin: 10px 0 0 0;
-                        }
-                        
-                        .form-style-1 label {
-                            margin: 0 0 3px 0;
-                            padding: 0px;
-                            display: block;
-                            font-weight: bold;
-                        }
-                        
-                        .form-style-1 input[type=text],
-                        .form-style-1 input[type=date],
-                        .form-style-1 input[type=datetime],
-                        .form-style-1 input[type=number],
-                        .form-style-1 input[type=search],
-                        .form-style-1 input[type=time],
-                        .form-style-1 input[type=url],
-                        .form-style-1 input[type=email],
-                        textarea,
-                        select {
-                            box-sizing: border-box;
-                            -webkit-box-sizing: border-box;
-                            -moz-box-sizing: border-box;
-                            border: 1px solid #BEBEBE;
-                            padding: 7px;
-                            margin: 0px;
-                            -webkit-transition: all 0.30s ease-in-out;
-                            -moz-transition: all 0.30s ease-in-out;
-                            -ms-transition: all 0.30s ease-in-out;
-                            -o-transition: all 0.30s ease-in-out;
-                            outline: none;
-                        }
-                        
-                        .form-style-1 input[type=text]:focus,
-                        .form-style-1 input[type=date]:focus,
-                        .form-style-1 input[type=datetime]:focus,
-                        .form-style-1 input[type=number]:focus,
-                        .form-style-1 input[type=search]:focus,
-                        .form-style-1 input[type=time]:focus,
-                        .form-style-1 input[type=url]:focus,
-                        .form-style-1 input[type=email]:focus,
-                        .form-style-1 textarea:focus,
-                        .form-style-1 select:focus {
-                            -moz-box-shadow: 0 0 8px #88D5E9;
-                            -webkit-box-shadow: 0 0 8px #88D5E9;
-                            box-shadow: 0 0 8px #88D5E9;
-                            border: 1px solid #88D5E9;
-                        }
-                        
-                        .form-style-1 .field-divided {
-                            width: 49%;
-                        }
-                        
-                        .form-style-1 .field-long {
-                            width: 100%;
-                        }
-                        
-                        .form-style-1 .field-select {
-                            width: 100%;
-                        }
-                        
-                        .form-style-1 .field-textarea {
-                            height: 100px;
-                        }
-                        
-                        .form-style-1 input[type=submit],
-                        .form-style-1 input[type=button] {
-                            background: #4B99AD;
-                            padding: 8px 15px 8px 15px;
-                            border: none;
-                            color: #fff;
-                        }
-                        
-                        .form-style-1 input[type=submit]:hover,
-                        .form-style-1 input[type=button]:hover {
-                            background: #4691A4;
-                            box-shadow: none;
-                            -moz-box-shadow: none;
-                            -webkit-box-shadow: none;
-                        }
-                        
-                        .form-style-1 .required {
-                            color: red;
-                        }
-                    </style>
-                    <br>
-                </div>
-                <div class="column-xs-12">
-                    <html lang="en">
-
-                    <head>
-                        <meta charset="UTF-8">
-                        <link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
-                        <meta name="apple-mobile-web-app-title" content="CodePen">
-                        <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
-                        <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
-
-                        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-                        <style>
-                            body {
-                                font-family: 'lato', sans-serif;
-                            }
-                            
-                            .container {
-                                max-width: 1000px;
-                                margin-left: auto;
-                                margin-right: auto;
-                                padding-left: 10px;
-                                padding-right: 10px;
-                            }
-                            
-                            h2 {
-                                font-size: 26px;
-                                margin: 20px 0;
-                                text-align: center;
-                            }
-                            
-                            h2 small {
-                                font-size: 0.5em;
-                            }
-                            
-                            .responsive-table li {
-                                border-radius: 3px;
-                                padding: 25px 30px;
-                                display: flex;
-                                justify-content: space-between;
-                                margin-bottom: 25px;
-                            }
-                            
-                            .responsive-table .table-header {
-                                background-color: #95A5A6;
-                                font-size: 14px;
-                                text-transform: uppercase;
-                                letter-spacing: 0.03em;
-                            }
-                            
-                            .responsive-table .table-row {
-                                background-color: #ffffff;
-                            }
-                            
-                            .responsive-table .col-1 {
-                                flex-basis: 10%;
-                            }
-                            
-                            .responsive-table .col-2 {
-                                flex-basis: 40%;
-                            }
-                            
-                            .responsive-table .col-3 {
-                                flex-basis: 25%;
-                            }
-                            
-                            .responsive-table .col-4 {
-                                flex-basis: 25%;
-                            }
-                            
-                            @media all and (max-width: 767px) {
-                                .responsive-table .table-header {
-                                    display: none;
-                                }
-                                .responsive-table li {
-                                    display: block;
-                                }
-                                .responsive-table .col {
-                                    flex-basis: 100%;
-                                }
-                                .responsive-table .col {
-                                    display: flex;
-                                    padding: 10px 0;
-                                }
-                                .responsive-table .col:before {
-                                    color: #6C7A89;
-                                    padding-right: 10px;
-                                    content: attr(data-label);
-                                    flex-basis: 50%;
-                                    text-align: right;
-                                }
-                            }
-                        </style>
-                        <script>
-                            window.console = window.console || function(t) {};
-                        </script>
-                        <script>
-                            if (document.location.search.match(/type=embed/gi)) {
-                                window.parent.postMessage("resize", "*");
-                            }
-                        </script>
-                    </head>
-
-                    <body translate="no">
-                        <div class="container" style="border: 2px solid #f2eaeb;">
-                            <br>
-                            <h4 style="font-size:25px;font-weight:bold;text-align:center;text-decoration: underline;" id="history">Days selected</h4>
-
-                            <ul class="responsive-table" style="padding-left:20px;padding-right:20px;">
-                                <li class="table-header" style="background:none;font-weight:bold;">
-
-                                    <div class="col col-2">Date</div>
-                                    <div class="col col-3">Day of the week</div>
-                                    <div class="col col-4">Custom day</div>
-
-                                </li>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">1/2/3030</div>
-                                    <div class="col col-3" data-label="Amount">Tuesday</div>
-                                    <div class="col col-4" data-label="Payment Status">  <input type="tel" id="phone" name="phone" placeholder="0.0" ></div>
-                                    
-                                </li>
-                                <hr>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">2/2/3030</div>
-                                    <div class="col col-3" data-label="Amount">Wednesday</div>
-                                    <div class="col col-4" data-label="Payment Status"><input type="tel" id="phone" name="phone" placeholder="0.0" ></div>
-                                    
-                                </li>
-                                <hr>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">3/2/3030</div>
-                                    <div class="col col-3" data-label="Amount">Thursday</div>
-                                    <div class="col col-4" data-label="Payment Status"><input type="tel" id="phone" name="phone" placeholder="0.0" ></div>
-                                    
-                                </li>
-                                <hr>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">4/2/3030</div>
-                                    <div class="col col-3" data-label="Amount">Friday</div>
-                                    <div class="col col-4" data-label="Payment Status"><input type="tel" id="phone" name="phone" placeholder="0.0" ></div>
-                                    
-                                </li>
-                            </ul>
-                        </div>
-
-
-                    </body>
-
-                    </html>
-                </div>
-
->>>>>>> whos is out done, by filtered by  department units
                 <div class="column-xs-12 column-md-6" style="border: 2px solid #f2eaeb;">
                     <br>
                     <br>
@@ -1176,89 +211,7 @@ li a {
                         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
                         <style>
-<<<<<<< HEAD
                     
-=======
-                            body {
-                                font-family: 'lato', sans-serif;
-                            }
-                            
-                            .container {
-                                max-width: 1000px;
-                                margin-left: auto;
-                                margin-right: auto;
-                                padding-left: 10px;
-                                padding-right: 10px;
-                            }
-                            
-                            h2 {
-                                font-size: 26px;
-                                margin: 20px 0;
-                                text-align: center;
-                            }
-                            
-                            h2 small {
-                                font-size: 0.5em;
-                            }
-                            
-                            .responsive-table li {
-                                border-radius: 3px;
-                                padding: 25px 30px;
-                                display: flex;
-                                justify-content: space-between;
-                                margin-bottom: 25px;
-                            }
-                            
-                            .responsive-table .table-header {
-                                background-color: #95A5A6;
-                                font-size: 14px;
-                                text-transform: uppercase;
-                                letter-spacing: 0.03em;
-                            }
-                            
-                            .responsive-table .table-row {
-                                background-color: #ffffff;
-                            }
-                            
-                            .responsive-table .col-1 {
-                                flex-basis: 10%;
-                            }
-                            
-                            .responsive-table .col-2 {
-                                flex-basis: 40%;
-                            }
-                            
-                            .responsive-table .col-3 {
-                                flex-basis: 25%;
-                            }
-                            
-                            .responsive-table .col-4 {
-                                flex-basis: 25%;
-                            }
-                            
-                            @media all and (max-width: 767px) {
-                                .responsive-table .table-header {
-                                    display: none;
-                                }
-                                .responsive-table li {
-                                    display: block;
-                                }
-                                .responsive-table .col {
-                                    flex-basis: 100%;
-                                }
-                                .responsive-table .col {
-                                    display: flex;
-                                    padding: 10px 0;
-                                }
-                                .responsive-table .col:before {
-                                    color: #6C7A89;
-                                    padding-right: 10px;
-                                    content: attr(data-label);
-                                    flex-basis: 50%;
-                                    text-align: right;
-                                }
-                            }
->>>>>>> whos is out done, by filtered by  department units
                         </style>
                         <script>
                             window.console = window.console || function(t) {};
@@ -1271,44 +224,30 @@ li a {
                     </head>
 
                     <body translate="no">
-<<<<<<< HEAD
                         <div class="container">
-=======
-                        <div  class="container">
->>>>>>> whos is out done, by filtered by  department units
                             <h4 style="font-size:25px;font-weight:bold;text-align:center;text-decoration: underline;" id="balance">Leave Balances</h4>
 
                             <ul class="responsive-table" style="padding-left:20px;padding-right:20px;">
 
-<<<<<<< HEAD
-
-=======
->>>>>>> whos is out done, by filtered by  department units
                                 <li class="table-row" style="background:none;">
 
-                                    <div class="col col-2" data-label="Customer Name">Annual</div>
-                                    <div class="col col-3" data-label="Amount">12 days</div>
+                                    <div class="col col-2" data-label="Customer Name">{{anual_leave}}</div>
+                                    <div class="col col-3" data-label="Amount">{{anual_leave_remaining}}</div>
+
+                                </li>
+                                
+                                <hr>
+                                <li class="table-row" style="background:none;">
+
+                                    <div class="col col-2" data-label="Customer Name">{{exam_leave}}</div>
+                                    <div class="col col-3" data-label="Amount">{{exam_leave_remaining}} </div>
 
                                 </li>
                                 <hr>
                                 <li class="table-row" style="background:none;">
 
-                                    <div class="col col-2" data-label="Customer Name">Sick</div>
-                                    <div class="col col-3" data-label="Amount">15 days</div>
-
-                                </li>
-                                <hr>
-                                <li class="table-row" style="background:none;">
-
-                                    <div class="col col-2" data-label="Customer Name">Exam</div>
-                                    <div class="col col-3" data-label="Amount">4 days </div>
-
-                                </li>
-                                <hr>
-                                <li class="table-row" style="background:none;">
-
-                                    <div class="col col-2" data-label="Customer Name">Maternity</div>
-                                    <div class="col col-3" data-label="Amount">31 days</div>
+                                    <div class="col col-2" data-label="Customer Name">{{compassionate_leave}}</div>
+                                    <div class="col col-3" data-label="Amount">{{compassionate_leave_remaining}}</div>
 
                                 </li>
 
@@ -1335,89 +274,7 @@ li a {
                         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
                         <style>
-<<<<<<< HEAD
                           
-=======
-                            body {
-                                font-family: 'lato', sans-serif;
-                            }
-                            
-                            .container {
-                                max-width: 1000px;
-                                margin-left: auto;
-                                margin-right: auto;
-                                padding-left: 10px;
-                                padding-right: 10px;
-                            }
-                            
-                            h2 {
-                                font-size: 26px;
-                                margin: 20px 0;
-                                text-align: center;
-                            }
-                            
-                            h2 small {
-                                font-size: 0.5em;
-                            }
-                            
-                            .responsive-table li {
-                                border-radius: 3px;
-                                padding: 25px 30px;
-                                display: flex;
-                                justify-content: space-between;
-                                margin-bottom: 25px;
-                            }
-                            
-                            .responsive-table .table-header {
-                                background-color: #95A5A6;
-                                font-size: 14px;
-                                text-transform: uppercase;
-                                letter-spacing: 0.03em;
-                            }
-                            
-                            .responsive-table .table-row {
-                                background-color: #ffffff;
-                            }
-                            
-                            .responsive-table .col-1 {
-                                flex-basis: 10%;
-                            }
-                            
-                            .responsive-table .col-2 {
-                                flex-basis: 40%;
-                            }
-                            
-                            .responsive-table .col-3 {
-                                flex-basis: 25%;
-                            }
-                            
-                            .responsive-table .col-4 {
-                                flex-basis: 25%;
-                            }
-                            
-                            @media all and (max-width: 767px) {
-                                .responsive-table .table-header {
-                                    display: none;
-                                }
-                                .responsive-table li {
-                                    display: block;
-                                }
-                                .responsive-table .col {
-                                    flex-basis: 100%;
-                                }
-                                .responsive-table .col {
-                                    display: flex;
-                                    padding: 10px 0;
-                                }
-                                .responsive-table .col:before {
-                                    color: #6C7A89;
-                                    padding-right: 10px;
-                                    content: attr(data-label);
-                                    flex-basis: 50%;
-                                    text-align: right;
-                                }
-                            }
->>>>>>> whos is out done, by filtered by  department units
                         </style>
                         <script>
                             window.console = window.console || function(t) {};
@@ -1430,40 +287,6 @@ li a {
                     </head>
 
                     <body translate="no">
-<<<<<<< HEAD
-                        <div class="container">
-                            <h4 style="font-size:25px;font-weight:bold;text-align:center;text-decoration: underline;">Who's Out</h4>
-
-                            <ul class="responsive-table" style="padding-left:20px;padding-right:20px;">
-
-                                <li class="table-row" style="background:none;">
-
-                                    <div class="col col-2" data-label="Customer Name">John Doe</div>
-                                    <div class="col col-3" data-label="Amount">12 days</div>
-
-                                </li>
-                                <hr>
-                                <li class="table-row" style="background:none;">
-
-                                    <div class="col col-2" data-label="Customer Name">Jennifer Smyth</div>
-                                    <div class="col col-3" data-label="Amount">4 days</div>
-
-                                </li>
-                                <hr>
-                                <li class="table-row" style="background:none;">
-
-                                    <div class="col col-2" data-label="Customer Name">Jorja Smith</div>
-                                    <div class="col col-3" data-label="Amount">5 days</div>
-
-                                </li>
-                                <hr>
-                                <li class="table-row" style="background:none;">
-
-                                    <div class="col col-2" data-label="Customer Name">John Carpenter</div>
-                                    <div class="col col-3" data-label="Amount">11 days</div>
-
-                                </li>
-=======
                         <div style="overflow:scroll; height:400px;" class="container">
                             <h4 style="font-size:25px;font-weight:bold;text-align:center;text-decoration: underline; ">Who's Out</h4>
 
@@ -1481,7 +304,6 @@ li a {
                                 <hr>
                                                                
                                 {% endfor %}
->>>>>>> whos is out done, by filtered by  department units
 
                             </ul>
                         </div>
@@ -1505,91 +327,7 @@ li a {
 
                         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<<<<<<< HEAD
                     
-=======
-                        <style>
-                            body {
-                                font-family: 'lato', sans-serif;
-                            }
-                            
-                            .container {
-                                max-width: 1000px;
-                                margin-left: auto;
-                                margin-right: auto;
-                                padding-left: 10px;
-                                padding-right: 10px;
-                            }
-                            
-                            h2 {
-                                font-size: 26px;
-                                margin: 20px 0;
-                                text-align: center;
-                            }
-                            
-                            h2 small {
-                                font-size: 0.5em;
-                            }
-                            
-                            .responsive-table li {
-                                border-radius: 3px;
-                                padding: 25px 30px;
-                                display: flex;
-                                justify-content: space-between;
-                                margin-bottom: 25px;
-                            }
-                            
-                            .responsive-table .table-header {
-                                background-color: #95A5A6;
-                                font-size: 14px;
-                                text-transform: uppercase;
-                                letter-spacing: 0.03em;
-                            }
-                            
-                            .responsive-table .table-row {
-                                background-color: #ffffff;
-                            }
-                            
-                            .responsive-table .col-1 {
-                                flex-basis: 10%;
-                            }
-                            
-                            .responsive-table .col-2 {
-                                flex-basis: 40%;
-                            }
-                            
-                            .responsive-table .col-3 {
-                                flex-basis: 25%;
-                            }
-                            
-                            .responsive-table .col-4 {
-                                flex-basis: 25%;
-                            }
-                            
-                            @media all and (max-width: 767px) {
-                                .responsive-table .table-header {
-                                    display: none;
-                                }
-                                .responsive-table li {
-                                    display: block;
-                                }
-                                .responsive-table .col {
-                                    flex-basis: 100%;
-                                }
-                                .responsive-table .col {
-                                    display: flex;
-                                    padding: 10px 0;
-                                }
-                                .responsive-table .col:before {
-                                    color: #6C7A89;
-                                    padding-right: 10px;
-                                    content: attr(data-label);
-                                    flex-basis: 50%;
-                                    text-align: right;
-                                }
-                            }
-                        </style>
->>>>>>> whos is out done, by filtered by  department units
                         <script>
                             window.console = window.console || function(t) {};
                         </script>
@@ -1614,39 +352,6 @@ li a {
                                     <div class="col col-1">Status</div>
 
                                 </li>
-<<<<<<< HEAD
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">Exam</div>
-                                    <div class="col col-3" data-label="Amount">1/2/3030</div>
-                                    <div class="col col-4" data-label="Payment Status">1/2/3030</div>
-                                    <div class="col col-5" data-label="Payment Status">Pending</div>
-                                </li>
-                                <hr>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">Annual</div>
-                                    <div class="col col-3" data-label="Amount">1/2/3030</div>
-                                    <div class="col col-4" data-label="Payment Status">1/2/3030</div>
-                                    <div class="col col-5" data-label="Payment Status">Approved</div>
-                                </li>
-                                <hr>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">Sick</div>
-                                    <div class="col col-3" data-label="Amount">1/2/3030</div>
-                                    <div class="col col-4" data-label="Payment Status">1/2/3030</div>
-                                    <div class="col col-5" data-label="Payment Status">Approved</div>
-                                </li>
-                                <hr>
-                                <li class="table-row">
-
-                                    <div class="col col-2" data-label="Customer Name">Annual</div>
-                                    <div class="col col-3" data-label="Amount">1/2/3030</div>
-                                    <div class="col col-4" data-label="Payment Status">1/2/3030</div>
-                                    <div class="col col-5" data-label="Payment Status">Declined</div>
-                                </li>
-=======
                                 {% for history in user_history %}
                                   <li class="table-header" style="background:none;font-weight:bold;">
                                       <div class="col col-2" style="font-size:13px;"> {{ history.leave_type | title }} </div>
@@ -1658,13 +363,12 @@ li a {
                                   <hr>
                                   {%  endfor %}
                                
->>>>>>> whos is out done, by filtered by  department units
                             </ul>
                         </div>
 
 
                     </body>
-
+            
                     </html>
                 </div>
             </div>
@@ -1696,7 +400,7 @@ li a {
         //# sourceURL=pen.js
     </script>
     <script src="https://static.codepen.io/assets/editor/iframe/iframeRefreshCSS-8a264da60d1f38eaa58c8243fe0ad6a782e98673c75eb542ccf03bc0efbfe2de.js"></script>
-
+    
 
 </body>
 

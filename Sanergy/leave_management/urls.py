@@ -12,10 +12,11 @@ urlpatterns = [
     path('refresh_sanergy_calender', views.refresh_sanergy_calender, name='refresh_sanergy_calender'),
     path('post_leave_to_salesforce', views.post_leave_to_salesforce, name='post_leave_to_salesforce'),
     path('request_leave', views.request_leave, name='request_leave'),
-    path('leave_page', views.request_leave, name='leave'),
+    path('leave_page', views.request_leave, name='leave_page'),
     path('request_leave_data', views.request_leave_data, name='request_leave_data'),
     path('entitlement', views.entitlement_utilization, name='entitlement'),
-    path('individual_leave_history', views.individual_leave_history, name='individual_leave_history'),
+    
+    
      
 
 ]

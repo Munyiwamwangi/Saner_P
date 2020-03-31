@@ -26,6 +26,12 @@ salt = uuid.uuid4().hex
 def home(request):
     return render(request, 'registration/login.html')
 
+def logout(request):
+    return render(request, 'registration/logout.html')
+
+def landing(request):
+    return render (request, 'registration/qudo.html')
+
 def password_reset(request):
     return render(request, 'users/password_reset_form.html')
 
@@ -46,13 +52,15 @@ def create_custom_user(request):
         print(password)
         print(email)
 
+      
+
 
         password = make_password(password, None, 'default')
-        # print(password)
+        print(password)
 
-        #METHOD2 :  hashing the password with salt, store as raw bytes
-        # password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
-        # print(password2)
+        # METHOD2 :  hashing the password with salt, store as raw bytes
+        password2 = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
+        print(password2)
         
         first_name = field.Employee_First_Name
         full_name = field.Employee_Full_Name
@@ -80,3 +88,4 @@ def user_directory(request):
     context['employee'] = employee
     print(employee.count())
     return render(request, 'employee/employee_directoryhtml.html', context)
+
