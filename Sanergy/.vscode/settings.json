@@ -1,3 +1,8 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "/Users/ke-c17rn9b4fvh3/Documents/Python/Intranet/Sanergy/venv/bin/python3.7"
+=======
+    "python.pythonPath": "virtual/bin/python3.6",
+    "terminal.integrated.scrollback": 3000
+>>>>>>> employee details hyperlink perfect
 }

@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
 
+from . import views
 
 urlpatterns = [
     path('', views.leave_entitlement_types, name='leave_entitlement_types'),
@@ -15,8 +15,8 @@ urlpatterns = [
     path('leave_page', views.request_leave, name='leave_page'),
     path('request_leave_data', views.request_leave_data, name='request_leave_data'),
     path('entitlement', views.entitlement_utilization, name='entitlement'),
-    
-    
-     
+    path('individual_leave_history', views.individual_leave_history, name='individual_leave_history'),
+    path('sanergy_department_unit', views.sanergy_department_unit, name='sanergy_department_unit'),
+    path('sanergy_department', views.sanergy_department, name='sanergy_department'),
 
 ]

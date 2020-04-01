@@ -28,6 +28,7 @@ from employee import urls
 from users import views as user_views
 
 urlpatterns = [
+    path('', views.home, name='login'),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('leave/', include('leave_management.urls')),

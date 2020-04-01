@@ -1,0 +1,61 @@
+{% extends "leave_templates/base.html" %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<form method="get">
+  <div class="well">
+    <h4 style="margin-top: 0">Filter</h4>
+    <div class="row">
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.Sanergy_Department_Unit.label_tag }}
+        {% render_field filter.form.Sanergy_Department_Unit class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.Employee_First_Name.label_tag }}
+        {% render_field filter.form.Employee_First_Name class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.Employee_Larst_Name.label_tag }}
+        {% render_field filter.form.Employee_Larst_Name class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.Joined_Date.label_tag }}
+        {% render_field filter.form.Joined_Date class="form-control" %}
+      </div>
+      <div class="form-group col-sm-8 col-md-6">
+        {{ filter.form.groups.label_tag }}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <span class="glyphicon glyphicon-search"></span> Search
+    </button>
+  </div>
+</form>
+
+<table class="table table-bordered " >
+  <thead>
+    <tr>
+      <th>Employee_First_Name</th>
+      <th> Employee_Full_Name </th>
+      <th> Sanergy_Department_Unit </th>
+      <th> Primary Phone </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for employee in filter.qs %}
+      <tr>
+        <td>{{ employee.Employee_First_Name }}</td>
+        <td>{{ employee.Employee_Full_Name }}</td>
+        <td>{{ employee.Sanergy_Department_Unit }}</td>
+        <td>{{ employee.Primary_Phone }}</td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="5">No data</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

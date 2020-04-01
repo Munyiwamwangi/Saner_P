@@ -1,0 +1,161 @@
+{% extends "leave_templates/base.html" %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<!-- 
+
+<ul>
+    {% for department_unit in department_unit %}
+    <p> {{ department_unit.name }} </p>
+    {% endfor %}
+</ul> -->
+
+<!-- <ul>
+    {% for department in departments %}
+    <p> {{ department.name }} </p>
+    {% endfor %}
+</ul> -->
+
+<!-- trial dropdonw starts -->
+
+<head>
+    <style>
+        /* css relative property starts */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background: #6daeb2;
+            }
+
+        ul li {
+            display: block;
+            position: relative;
+            float: left;
+            background: #6daeb2;
+        }
+        /* relative property ends  */
+
+        /* The CSS to hide the sub menus. */
+        li ul { display: none; }
+
+        ul li a {
+            display: block;
+            padding: 1em;
+            text-decoration: none;
+            white-space: nowrap;
+            color: #fff;
+        }
+        ul li a:hover { background: #2c3e50; }
+        /* The CSS to hide the sub menus. */
+
+        /* Displays the dropdown menu on hover. */
+        li:hover > ul {
+            display: block;
+            position: absolute;
+            }
+
+        li:hover li { float: none; }
+
+        li:hover a { background: #6daeb2; }
+
+        li:active a { background: #052527; }
+
+        li:hover li a:hover { background: #2c3e50; }
+
+        .main-navigation li ul li { border-top: 0; }
+        /* Displays the dropdown menu on hover. */
+
+        /* Displays second level dropdown menus to the right of the first level dropdown menu. */
+        ul ul ul {
+            left: 100%;
+            top: 0;
+            }
+        /* Displays second level dropdown menus to the right of the first level dropdown menu. */
+
+
+        /* Simple clearfix. */
+        ul:before,
+        ul:after {
+            content: " "; /* 1 */
+            display: table; /* 2 */
+        }
+
+        ul:after { clear: both; }
+        /* Simple clearfix. */
+    </style>
+</head>
+<body>
+<ul class="main-navigation">
+    <li><a href="#">Filter by</a>
+      <ul>
+        </li>
+        <li><a href="#">Department</a>
+            <!-- filtering and displaying departments only  -->
+          <ul>{% for department in departments %}
+              <li><a href="#">{{department.name}}</a>
+                <!-- nested loop for items in a department  -->
+                        <ul>{% for employee in employee %}
+                             {% if department.id == employee.Sanergy_Department  %}
+                            <div >
+                                <li><a href="{% url 'employee_profile' employee.Id %}">{{employee.Employee_First_Name}}</a></li>
+                            </div>
+                            {% endif %}                            
+                            {% endfor %}
+                    </ul>
+                <!-- nested loop for items in a department  -->
+            </li>{% endfor %}
+        </ul>
+            <!-- filtering and displaying departments only  -->
+        </li>
+        <li><a href="#">Department Unit</a>
+             <!-- filtering and displaying departments only  -->
+          <ul>{% for department_unit in department_unit %}
+            <li><a href="#">{{department_unit.name}}</a>
+              <!-- nested loop for items in a department  -->
+                      <ul>{% for employee in employee %}
+                           {% if department_unit.id == employee.Sanergy_Department_Unit  %}
+                          <div >
+                              <li><a href="{% url 'employee_profile' employee.Id %}">{{employee.Employee_First_Name}}</a></li>
+                          </div>
+                          {% endif %}                            
+                          {% endfor %}
+                  </ul>
+              <!-- nested loop for items in a department  -->
+          </li>{% endfor %}
+      </ul>
+          <!-- filtering and displaying departments only  -->
+          </li>
+          <li><a href="#"> Team Lead </a>
+            <ul>
+                {% for employee in employee %}
+              <li><a href="#">{{employee.Team_Lead}}</a></li>
+              {% endfor %}
+          </ul>
+          </li>
+      </ul>
+    </li>
+    <li><a href="#">Search</a>
+      <ul>
+        <li><a href="#">Custom Search</a>
+          <ul>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Testimonials</a>
+                <ul>
+                    <li><a href="#">Test Subjects</a></li>
+                    <li><a href="#">Test Subjects</a></li>
+                </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</body>
+
+            <!-- trial dropdown ends  -->
+
+    
+{% endblock %}
