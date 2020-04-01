@@ -1,20 +1,8 @@
-import copy
-import re
-import time
-
-import django_filters
-import schedule
 from django.contrib import messages
-from django.contrib.auth import authenticate, get_user_model, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.db import models
-from django.db.models import F, Q
+
 from django.http import (Http404, HttpResponse, HttpResponseRedirect,
                          JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  UpdateView)
 
 from leave_management.models import SanergyDepartment, SanergyDepartmentUnit
 from leave_management.views import salesforcelogin

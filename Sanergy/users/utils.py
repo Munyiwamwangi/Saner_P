@@ -4,7 +4,8 @@ from simple_salesforce import Salesforce
 from Sanergy.settings import (SALESFORCE_USERNAME,
                               SALESFORCE_SECURITY_TOKEN,
                               SALESFORCE_PASSWORD,
-                              SALESFORCE_DOMAIN)
+                              SALESFORCE_DOMAIN,
+                             )
 
 
 def salesforcelogin():
@@ -12,7 +13,7 @@ def salesforcelogin():
         username=SALESFORCE_USERNAME,
         password=SALESFORCE_PASSWORD,
         security_token=SALESFORCE_SECURITY_TOKEN,
-        domain=SALESFORCE_DOMAIN
+        domain=SALESFORCE_DOMAIN,
     )
 
 

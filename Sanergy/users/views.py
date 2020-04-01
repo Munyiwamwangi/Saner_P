@@ -75,7 +75,8 @@ def create_custom_user(request):
 
         employee = CustomUser.objects.all()
         context['employee'] = employee
-        print(employee.count())
+        # print(employee.count())
+        print("Space")
         
     return render(request, 'employee/employee_directory.html', context)
 

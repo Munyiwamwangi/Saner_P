@@ -20,8 +20,13 @@ from users.utils import salesforcelogin, postgressConnection
 
 from .forms import LeaveApplicationForm
 from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
-                     LeaveAccruals, SanergyCalendar, Leave_Entitlement_Utilization)
+                     Leave_Entitlement_Utilization, LeaveAccruals,
+                     SanergyCalendar)
 from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
+
+from.models import SanergyDepartmentUnit, SanergyDepartment
+
+
 
 
 def leave_application(request):
@@ -541,32 +546,65 @@ def post_leave_to_salesforce(request):
     user_start_date_time_stamp= datetime.timestamp(user_start_date)
     
 
-    user_end_date = datetime.strptime(end_date, "%Y-%m-%d")
-    user_end_date_time_stamp= datetime.timestamp(user_end_date)
-    
-    
-
-    data = {
-        "Employee_s_Department__c" :department, 
-        "Request_From_VFP__c":True, 
-        "Employee__c": user, 
-        "Leave_End_Date__c": end_date, 
-        "No_Of_Leave_Days_Requested__c": days_requested, 
-        "Leave_Entitlement_Utilization__c": leave_submitted, 
-        "Leave_Start_Date__c": start_date, 
-        "Coverage_Plans__c": coverage, 
-        "Comments__c": comment_submit
-        }
-    if user_start_date_time_stamp >= org_start_year_time_stamp:
-        query = sf.Employee_Leave_Request__c.create(data)
-        messages.info(request, "Your leave request has been submitted successfuly!")
-
-    else:
-        print("not submitting")
-        messages.error(request,  "Your have selected incorrect date ranges!")
-
-
     return render(request, 'registration/request.html', context)
 
+def sanergy_department(request):
+    sf = salesforcelogin()
+    data = sf.bulk.Sanergy_Department__c.query(
+        "SELECT Name, Id, Approver__c, Company__c, Department_Code__c,"
+        "Department_Status__c, Team_Lead__c,"
+        "Team_Lead_SF_Account__c from Sanergy_Department__c ")
+  
+    context = {
+        'data': data
+    }
 
-    
+    for item in data:
+        SanergyDepartment.objects.update_or_create(
+                                    id = item['Id'],
+                                    defaults={
+                                    "name": item['Name'],
+                                    "approver" : item['Approver__c'],
+                                    "company" : item['Company__c'],
+                                    "department_code" : item['Department_Code__c'],
+                                    "team_lead" : item['Team_Lead__c'],
+                                    "department_status" : item['Department_Status__c'],
+                                    "team_lead_sf_account" : item['Team_Lead_SF_Account__c'],
+                                    })
+
+    # return JsonResponse(data, safe=False)
+    return HttpResponse("Department Populated")
+
+
+def sanergy_department_unit(request):
+    sf = salesforcelogin()
+    data = sf.bulk.Sanergy_Department_Unit__c.query(
+        "SELECT Name, Id, Active__c, Approver__c, Department_Unit_Code__c, Line_Manager__c,"
+        "Line_Manager_SF_Account__c, Sanergy_Department__c, Talent_Partner_Emp_Account__c,"
+        "Talent_Partner__c, Team_Lead__c, Team_Lead_SF_Account__c,"
+        "Unit_Code__c from Sanergy_Department_Unit__c ")
+  
+    context = {
+        'data': data
+    }
+
+    for item in data:
+        SanergyDepartmentUnit.objects.update_or_create(
+                                    id = item['Id'],
+                                    defaults={
+                                    "name": item['Name'],
+                                    "active" : item['Active__c'],
+                                    "approver" : item['Approver__c'],
+                                    "department_unit_code" : item['Department_Unit_Code__c'],
+                                    "line_manager" : item['Line_Manager__c'],
+                                    "line_manager_sf_account" : item['Line_Manager_SF_Account__c'],
+                                    "sanergy_department" : SanergyDepartment.objects.get(id = item['Sanergy_Department__c']),
+                                    "talent_partner_emp_eccount" : item['Talent_Partner_Emp_Account__c'],
+                                    "talent_partner" : item['Talent_Partner__c'],
+                                    "team_lead" : item['Team_Lead__c'],
+                                    "team_lead_sf_account" : item['Team_Lead_SF_Account__c'],
+                                    "uit_code" : item['Unit_Code__c'],
+                                    })
+
+    # return JsonResponse(data, safe=False)
+    return HttpResponse("Department Units Populated ")

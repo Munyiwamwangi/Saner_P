@@ -1,6 +1,11 @@
+{% extends "leave_templates/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
 
 <html lang="en"><head>
     <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
     <meta name="apple-mobile-web-app-title" content="CodePen">
     <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
@@ -1371,6 +1376,15 @@
         color: #777!important
     }
     </style>
+
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+{% endfor %}
     <script>
       window.console = window.console || function(t) {};
     </script>
@@ -1382,6 +1396,7 @@
     </head>
     
     <body translate="no">
+        
     <br>
     <br>
     
@@ -1402,10 +1417,20 @@
     </span>
     <div class="space space-4"></div>
     </div>
+    
     <div class="col-xs-12 col-sm-8">
     <h4 class="blue">
+        
+        <!-- {{ employee.HR_Employee_ID }} {{ current_user_profile.HR_Employee_ID }} -->
+
+        {{ current_user_profile.Line_Manager.Id }}
+        {{ employee.Line_Manager.Id }}
+
+
+
     <span class="middle" style="color:white;font-weight:bold;">{{ employee.Employee_Full_Name }}</span>
-    
+
+
     </h4>
     <br>
     <div class="profile-user-info">
@@ -1414,25 +1439,29 @@
     <div class="profile-info-value">
     <span style="color:black;">{{ employee.email }} </span>
     </div>
+
     </div>
     <div class="profile-info-row">
     <div class="profile-info-name" style="color:white;font-weight:bold;"> Role: </div>
     <div class="profile-info-value">
     <span style="color:black;">{{employee.Sanergy_Department_Unit}}</span>
     </div>
+
     </div>
     <div class="profile-info-row">
     <div class="profile-info-name" style="color:white;font-weight:bold;"> Department: </div>
     <div class="profile-info-value">
     <span style="color:black;">{{employee.Sanergy_Department_Unit}}</span>
     </div>
+
     </div>
     <div class="profile-info-row">
     <div class="profile-info-name" style="color:white;font-weight:bold;"> Sub-department: </div>
     <div class="profile-info-value">
-    <span style="color:black;">Software</span>
+    <span style="color:black;">{{employee.Sanergy_Department}}</span>
     </div>
     </div>
+
     <div class="profile-info-row">
     <div class="profile-info-name" style="color:white;font-weight:bold;"> Location: </div>
     <div class="profile-info-value">
@@ -1442,17 +1471,16 @@
     </div>
     </div>
     </div>
+
     <div class="hr hr-8 dotted"></div>
     <div class="profile-user-info">
     <div class="profile-info-row">
     <div class="profile-info-name" style="color:white;font-weight:bold;">Phone: </div>
     <div class="profile-info-value">
-    <span style="color:black;">{{employee.Primary_Phone}}</span>
+    <span style="color:black;">{{ employee.Primary_Phone }} </span>
     </div>
     </div>
-    
     </div>
-    
     </div>
     </div>
     </div>
@@ -1472,6 +1500,115 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static "tinymce/js/prism.js" %}"></script>
+    </body>
+    <!-- START HR SECTION  -->
+    <!-- IF CURRENT USER IS HR, SHOW A LITTLE BUT MORE  -->
+    <!-- <body translate="no">
+        
+        <br>
+        <br>
+        
+        <div class="container" style="background:#6daeb2;padding:50px;text-align:center;">
+        <a class="logo" href="employee_directory.html">
+        <img class="default_logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-white-195.png" width="200px" alt="logo"></a>
+        <div id="user-profile-2" class="user-profile">
+        
+        <div class="tab-content no-border padding-24">
+        <div id="home" class="tab-pane active">
+        <div class="row">
+        <div class="col-xs-12 col-sm-4 center">
+        <br>
+        <br>
+        <br>
+        <span class="profile-picture">
+        <img class="editable img-responsive" alt=" Avatar" id="avatar2" src="http://bootdey.com/img/Content/avatar/avatar6.png">
+        </span>
+        <div class="space space-4"></div>
+        </div>
+        
+        <div class="col-xs-12 col-sm-8">
+        <h4 class="blue">
+    
+      
+    
+        <span class="middle" style="color:white;font-weight:bold;">{{ employee.Employee_Full_Name }}</span>
     
     
-    </body></html>
+        </h4>
+        <br>
+        <div class="profile-user-info">
+        <div class="profile-info-row">
+        <div class="profile-info-name" style="color:white;font-weight:bold;"> Email: </div>
+        <div class="profile-info-value">
+        <span style="color:black;">{{ employee.email }} </span>
+        </div>
+    
+        </div>
+        <div class="profile-info-row">
+        <div class="profile-info-name" style="color:white;font-weight:bold;"> Role: </div>
+        <div class="profile-info-value">
+        <span style="color:black;">{{employee.Sanergy_Department_Unit}}</span>
+        </div>
+    
+        </div>
+        <div class="profile-info-row">
+        <div class="profile-info-name" style="color:white;font-weight:bold;"> Department: </div>
+        <div class="profile-info-value">
+        <span style="color:black;">{{employee.Sanergy_Department_Unit}}</span>
+        </div>
+    
+        </div>
+        <div class="profile-info-row">
+        <div class="profile-info-name" style="color:white;font-weight:bold;"> Sub-department: </div>
+        <div class="profile-info-value">
+        <span style="color:black;">{{employee.Sanergy_Department}}</span>
+        </div>
+        </div>
+    
+        <div class="profile-info-row">
+        <div class="profile-info-name" style="color:white;font-weight:bold;"> Location: </div>
+        <div class="profile-info-value">
+        <i class="fa fa-map-marker light-orange bigger-110"></i>
+        <span style="color:black;">Netherlands</span>
+        <span style="color:black;">Amsterdam</span>
+        </div>
+        </div>
+        </div>
+    
+        <div class="hr hr-8 dotted"></div>
+        <div class="profile-user-info">
+        <div class="profile-info-row">
+        <div class="profile-info-name" style="color:white;font-weight:bold;">Phone: </div>
+        <div class="profile-info-value">
+        <span style="color:black;">{{ employee.Primary_Phone }} </span>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="space-20"></div>
+        <div class="row">
+        <div class="col-xs-12 col-sm-6">
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static "tinymce/js/prism.js" %}"></script>
+        </body> -->
+    <!-- IF CURRENT USER IS HR SHOW A LITTLE BIT MORE  -->
+    <!-- END HR SECTION  -->
+    </html>
+        <!-- {{ endif }} -->
+
+    {% endblock %}

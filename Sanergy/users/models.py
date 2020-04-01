@@ -8,7 +8,7 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
     username = None
     salesforceid = models.CharField(max_length=100, blank=False, null=True)
-    email = models.EmailField(unique=True, null=True)
+    email = models.EmailField(unique=False, null=True)
     password = models.CharField(max_length=100, null=True)
     
     USERNAME_FIELD = 'email'

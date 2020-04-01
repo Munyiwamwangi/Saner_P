@@ -16,6 +16,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# export DJANGO_SETTINGS_MODULE=Sanergy.settings
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -87,6 +88,16 @@ TEMPLATES = [
     },
 ]
 
+from django.contrib.messages import constants as message_constants
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -96,8 +107,7 @@ WSGI_APPLICATION = 'Sanergy.wsgi.application'
 
 SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+# https://docs.djangoproject.com/en/1.11/ref/settings/
 
 # DATABASES = {
 #     'default': {
@@ -109,6 +119,8 @@ SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 #     },
 
 # }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -119,7 +131,11 @@ DATABASES = {
         'PORT': '5432',
     },
 }
+
+
 # DJNAGO FULL LIST OF PASSWORD HASHERS TO SUPPORT ANY HASHING ALGORITHM
+
+
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
@@ -159,6 +175,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 AUTH_USER_MODEL = "users.CustomUser"
 
+SILENCED_SYSTEM_CHECKS = ["auth.W004"]
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -185,11 +203,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
 
 # salesforce credentials
+
 SALESFORCE_USERNAME = 'domnick.kamya@saner.gy.ffa'
 SALESFORCE_SECURITY_TOKEN = 'LlggEqsleVoDbCJVsYP2nm0xf'
 SALESFORCE_PASSWORD = 'Sanergy123'
 SALESFORCE_DOMAIN = 'test'
 
+# client_id = '3MVG9xqN3LZmHU7nIjL98FJA6HGc_YWAvoagjDgPFY0pzB2Tq7BU9gW8pWuDsQpo5OakYjPj2JdKtSL0TZ75j'
+# client_secret = '7BBDBEE93961D2112C28F60D8E69FA6FCD5769254080656F5A095091A513689B'
 
 # socoial auth setup
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
@@ -227,5 +248,3 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "domisemak@gmail.com"
 EMAIL_HOST_PASSWORD = "Dommy2019"
-
-
