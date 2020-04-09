@@ -4,58 +4,167 @@
 {% load static %}
 {% block content %}
 
-<form method="get">
-  <div class="well">
-    <h4 style="margin-top: 0">Filter</h4>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-3">
-        {{ filter.form.Sanergy_Department_Unit.label_tag }}
-        {% render_field filter.form.Sanergy_Department_Unit class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-3">
-        {{ filter.form.Employee_First_Name.label_tag }}
-        {% render_field filter.form.Employee_First_Name class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-3">
-        {{ filter.form.Employee_Larst_Name.label_tag }}
-        {% render_field filter.form.Employee_Larst_Name class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-3">
-        {{ filter.form.Joined_Date.label_tag }}
-        {% render_field filter.form.Joined_Date class="form-control" %}
-      </div>
-      <div class="form-group col-sm-8 col-md-6">
-        {{ filter.form.groups.label_tag }}
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">
-      <span class="glyphicon glyphicon-search"></span> Search
-    </button>
-  </div>
-</form>
+<head>
+  <style>
+    nav {
+  display: table;
+  margin-left: 0px;
+  box-shadow: 0px 2px 0px #023333;
+}
 
-<table class="table table-bordered " >
-  <thead>
-    <tr>
-      <th>Employee_First_Name</th>
-      <th> Employee_Full_Name </th>
-      <th> Sanergy_Department_Unit </th>
-      <th> Primary Phone </th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for employee in filter.qs %}
-      <tr>
-        <td>{{ employee.Employee_First_Name }}</td>
-        <td>{{ employee.Employee_Full_Name }}</td>
-        <td>{{ employee.Sanergy_Department_Unit }}</td>
-        <td>{{ employee.Primary_Phone }}</td>
-      </tr>
-    {% empty %}
-      <tr>
-        <td colspan="5">No data</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+ul ul {
+  opacity: 0;
+  position: absolute;
+  top: 160%;
+  visibility: hidden;
+  transition: all .4s ease;
+  -webkit-transition: all .4s ease;
+}
+
+
+ul ul ul {
+  top: 0%;
+  left: 160%;
+}
+
+
+ul ul li:hover > ul {
+  top: 0%;
+  left: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+
+ul li:hover > ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+
+ul li {
+  float: left;
+  display: absolute;
+  position: relative;
+}
+
+ul ul li { float: none; }
+
+ul li {
+  background-color: rgb(3, 156, 0);
+  cursor: pointer;
+}
+
+ul a {
+  text-decoration: none;
+  display: relative;
+  color: rgb(225, 235, 49);
+  padding: 1em;
+  text-align: justify;
+  text-shadow: 0px -1px 0px rgba(0,0,0,.2);
+}
+
+ul li:hover { background-color: #007373; }
+ul li a {
+            display: block;
+            padding: 1em;
+            text-decoration: none;
+            white-space: nowrap;
+            color: #FF9;
+            text-shadow: 0px -1px 0px rgba(0,0,0,.2);
+        }
+
+ul li a:hover { background-color: #007373; }
+    
+    /* setting sub menus  */
+span.dropBottom,
+span.dropRight {
+  display: block;
+  box-shadow: inset 5px 5px 5px #FF9;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  top: 100%;
+}
+
+span.dropBottom {
+  box-shadow: inset 0px 2px 0px #FF9;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+}
+    /* setting sub menus  */
+    
+  </style>
+</head>
+
+<body class="container-fluid">
+  <nav>
+    <ul>
+      <li><a href="#">Filter By</a><span class="dropBottom"></span>
+        <ul>
+          <li><a href="#">Department</a><span class="dropRight"></span>
+            <ul>
+              {% for department in departments %}
+              <li><a href="#">{{department.name}}</a>
+                <!-- nested loop for items in a department  -->
+                <ul>{% for employee in employee %}
+                 {% if department.id == employee.Sanergy_Department  %}
+                 <div >
+                  <li><a href="{% url 'employee_profile' employee.Id %}">{{employee.Employee_First_Name}}</a></li>
+                </div>
+                {% endif %}                            
+                {% endfor %}
+              </ul>
+              <!-- nested loop for items in a department  -->
+            </li>{% endfor %}
+          </ul>
+        </li>
+        <li><a href="#">Department Unit</a>
+          <!-- department units and their members  -->
+          <ul>{% for department_unit in department_unit %}
+            <li><a href="#">{{department_unit.name}}</a>
+              <ul>{% for employee in employee %}
+               {% if department_unit.id == employee.Sanergy_Department_Unit  %}
+               <div >
+                <li><a href="{% url 'employee_profile' employee.Id %}">{{employee.Employee_First_Name}}</a></li>
+              </div>
+              {% endif %}                            
+              {% endfor %}
+            </ul>
+            <!-- department units and their members  -->
+          </li>{% endfor %}
+        </ul>
+      </li>
+      <li><a href="#">Team Lead</a>
+        <ul>{% for team_lead in team_lead %}
+          <li><a href="#">{{team_lead.Employee_Full_Name}}</a>
+            <ul>{% for employee in employee %}
+             {% if employee.Team_Lead.Id == team_lead.Id  %}
+             <div >
+              <li><a href="{% url 'employee_profile' employee.Id %}">{{employee.Employee_First_Name}}</a></li>
+            </div>
+            {% endif %}                            
+            {% endfor %}
+          </ul>
+        </li>{% endfor %}
+      </ul>
+      <!-- team lead and their employees  -->
+    </li>
+  </ul>
+</li>
+<li><a href="#">search</a></li>
+</ul>
+</nav>
+</body>
 {% endblock %}

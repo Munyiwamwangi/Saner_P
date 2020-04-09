@@ -4,22 +4,6 @@
 {% load static %}
 {% block content %}
 
-<!-- 
-
-<ul>
-    {% for department_unit in department_unit %}
-    <p> {{ department_unit.name }} </p>
-    {% endfor %}
-</ul> -->
-
-<!-- <ul>
-    {% for department in departments %}
-    <p> {{ department.name }} </p>
-    {% endfor %}
-</ul> -->
-
-<!-- trial dropdonw starts -->
-
 <head>
     <style>
         /* css relative property starts */
@@ -48,6 +32,8 @@
             white-space: nowrap;
             color: #fff;
         }
+        ul li:hover { background-color: #007373; }
+
         ul li a:hover { background: #2c3e50; }
         /* The CSS to hide the sub menus. */
 
@@ -87,6 +73,7 @@
         /* Simple clearfix. */
     </style>
 </head>
+
 <body>
 <ul class="main-navigation">
     <li><a href="#">Filter by</a>
@@ -111,10 +98,9 @@
             <!-- filtering and displaying departments only  -->
         </li>
         <li><a href="#">Department Unit</a>
-             <!-- filtering and displaying departments only  -->
+             <!-- department units and their members  -->
           <ul>{% for department_unit in department_unit %}
             <li><a href="#">{{department_unit.name}}</a>
-              <!-- nested loop for items in a department  -->
                       <ul>{% for employee in employee %}
                            {% if department_unit.id == employee.Sanergy_Department_Unit  %}
                           <div >
@@ -123,17 +109,25 @@
                           {% endif %}                            
                           {% endfor %}
                   </ul>
-              <!-- nested loop for items in a department  -->
+              <!-- department units and their members  -->
           </li>{% endfor %}
       </ul>
-          <!-- filtering and displaying departments only  -->
           </li>
           <li><a href="#"> Team Lead </a>
-            <ul>
-                {% for employee in employee %}
-              <li><a href="#">{{employee.Team_Lead}}</a></li>
-              {% endfor %}
-          </ul>
+             <!-- team lead and their employees  -->
+          <ul>{% for team_lead in team_lead %}
+            <li><a href="#">{{team_lead.Employee_Full_Name}}</a>
+                      <ul>{% for employee in employee %}
+                           {% if employee.Team_Lead.Id == team_lead.Id  %}
+                          <div >
+                              <li><a href="{% url 'employee_profile' employee.Id %}">{{employee.Employee_First_Name}}</a></li>
+                          </div>
+                          {% endif %}                            
+                          {% endfor %}
+                  </ul>
+          </li>{% endfor %}
+      </ul>
+          <!-- team lead and their employees  -->
           </li>
       </ul>
     </li>

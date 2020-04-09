@@ -1,0 +1,128 @@
+   * {
+        margin: 0;
+        padding: 0;
+        border: none;
+        list-style: none;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        font-family: "Open Sans", sans-serif;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #fff;
+      }
+      .wrapper {
+        width: 90%;
+        margin: 0 auto;
+        max-width: 800px;
+      }
+      .headerImg {
+        width: 116px;
+        text-align: center;
+        margin: 20px calc(50% - 58px) 5px;
+      }
+      h1,
+      h4 {
+        font-weight: 200;
+        margin: 10px 0;
+        color: rgba(0, 0, 0, 0.65);
+        text-align: center;
+      }
+      .signIn {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        width: 354px;
+        background-color: rgba(0, 0, 0, 0.06);
+        margin: 30px auto;
+        padding: 40px;
+      }
+      .signIn img {
+        width: 96px;
+        border-radius: 100%;
+        padding: 5px;
+        margin: 0 calc(50% - 48px) 20px;
+        background-color: rgba(0, 0, 0, 0.07);
+      }
+      .email {
+        box-shadow: inset 0 -1px 3px rgba(0, 0, 0, 0.12),
+          inset 0 1px 2px rgba(0, 0, 0, 0.24);
+        padding: 10px;
+        background-color: #fff;
+        font-size: 1.1em;
+        font-weight: 300;
+        width: 100%;
+        height: 44px;
+      }
+      .email:hover {
+        box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.16),
+          inset 0 2px 2px rgba(0, 0, 0, 0.23);
+      }
+      .email:focus {
+        outline: none;
+        background-color: #fefefe;
+        box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.16),
+          inset 0 2px 2px rgba(0, 0, 0, 0.23);
+      }
+      .bar {
+        position: relative;
+        display: block;
+        width: 100%;
+      }
+      .bar:after {
+        content: "";
+        height: 2px;
+        width: 0;
+        position: absolute;
+        background-color: #2196f3;
+        background: linear-gradient(
+          to right,
+          #4885ed 25%,
+          #db3236 25%,
+          #db3236 50%,
+          #f4c20d 50%,
+          #f4c20d 75%,
+          #3cba54 75%,
+          #3cba54 100%
+        );
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      .bar:after {
+        left: 0%;
+      }
+      .email:focus ~ .bar:after {
+        width: 100%;
+      }
+
+      .button {
+        text-align: center;
+        width: 100%;
+        margin: 20px 0 6px 0;
+        background-color: rgba(33, 150, 243, 0.95);
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        height: 36px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+      .button:focus {
+        outline: none;
+      }
+      .button:hover {
+        background-color: rgba(33, 150, 243, 1);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      a {
+        color: rgba(33, 150, 243, 1);
+        text-decoration: none;
+        font-size: 14px;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .diffAccount {
+        text-align: left;
+        width: 354px;
+        margin: 0 auto;
+      }

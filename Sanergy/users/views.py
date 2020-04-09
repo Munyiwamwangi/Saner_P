@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-# Email imports:
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -17,9 +16,6 @@ from .passwordgenerator import generatePassword
 from .utils import postgressConnection
 
 salt = uuid.uuid4().hex
-
-
-
 
 # Create your views here.
 
@@ -52,9 +48,8 @@ def create_custom_user(request):
         print(email)
         print(password)
 
-      
 
-
+        #PASSWORD : the one in use
         password = make_password(password, None, 'default')
         print(password)
 
@@ -89,4 +84,3 @@ def user_directory(request):
     context['employee'] = employee
     print(employee.count())
     return render(request, 'employee/employee_directoryhtml.html', context)
-

@@ -1,14 +1,14 @@
 import datetime
 import time
-from datetime import datetime
-# import schedule
+from datetime import date, datetime
 
-
+import numpy as np
+import pandas as pd
+import schedule
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from employee.models import Employee
-from users.utils import salesforcelogin, postgressConnection
+from users.utils import postgressConnection, salesforcelogin
 
 from .forms import LeaveApplicationForm
 from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
@@ -27,17 +27,15 @@ from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 from.models import SanergyDepartmentUnit, SanergyDepartment
 
 
-
-
 def leave_application(request):
-    
     return render(request, 'users/login.html', )
+
 
 def individual_leave_history(request, id=None):
     current_user = request.user
     if Employee.objects.filter(email=(current_user.email)).exists():
         user_history = EmployeeLeaveRequest.objects.filter(employee = (current_user.salesforceid)).order_by('-Id')[:5]
-        context={
+        context = {
             'user_history':user_history,
             'current_user': current_user,
             }
@@ -47,30 +45,26 @@ def individual_leave_history(request, id=None):
         employee = Employee.objects.get(Id=user_sfid)
         employee_department_unit_id = employee.Sanergy_Department_Unit
 
-        # THE, GRAB LEAVES THAT SHARE THE DEPARTMENT UNIT WITH THE CURRENT USER
-        # LEAVES TO SHOW, SAME DEPARTMENT, APPROVED BY HR, NOT OVER NY END DAY TODAY
+
+        # THEN, GRAB LEAVES THAT SHARE THE DEPARTMENT UNIT WITH THE CURRENT USER
+        # LEAVES TO SHOW, SAME DEPARTMENT, APPROVED BY HR, NOT OVER BY END DAY TODAY
         hr_approved_leaves =  EmployeeLeaveRequest.objects.filter(
             employee_s_department = employee_department_unit_id,
             approval_status = "Approved by HR",
-            leave_end_date__lt = datetime.date.today())
+            leave_end_date__lt = date.today())
         pending_approval_leaves =  EmployeeLeaveRequest.objects.filter(
             employee_s_department = employee_department_unit_id,
             approval_status = "Pending Approval",
-            leave_end_date__lt = datetime.date.today())
+            leave_end_date__lt = date.today())
 
         colleagues_leaves = hr_approved_leaves | pending_approval_leaves
-        for leaves in colleagues_leaves:
-            print(leaves.employee)
-            print(leaves.approval_status)
-            print(leaves.leave_start_date)
-            print(leaves.leave_end_date)
-
-            print(colleagues_leaves.count())
 
         context['colleagues_leaves'] = colleagues_leaves
+        return context
+    else:
+        messages.warning(request, 'You must be an employee to have items here', extra_tags='alert')
+    # return render(request, 'registration/request.html', context)
 
-
-    return render(request, 'registration/request.html', context)
 
         # fetching leave types 
 def leave_entitlement_types(request):
@@ -162,7 +156,6 @@ def populate_employee_leave_request(request):
     context = {
         'data': data
     }
-
     # return JsonResponse(data, safe=False)
 
     for leave_request  in data:
@@ -317,7 +310,6 @@ def entitlement_utilization(request):
                                     "Total_No_of_Leave_Days" : Total_No_of_Leave_Days,
                                     })
 
-    
     # return JsonResponse(data, safe=False)
     return HttpResponse("Utilization Shipped to AWS Postgres")
 
@@ -366,10 +358,6 @@ def refresh_sanergy_calender(request):
         return HttpResponse("Sanergy calendar is populated")
 
 
-
-
-
-
 def leaves(request):
     user = user = request.user.salesforceid
     connection = postgressConnection()
@@ -381,12 +369,11 @@ def leaves(request):
     return leave
 
 
-def request_leave(request):
+def request_leave_page(request):
     user = request.user.salesforceid 
-    leave = leaves(request) 
-    # history = individual_leave_history(request)
+    leave = leaves(request)
+    history = individual_leave_history(request)
 
-    # leave balances code
     sf = salesforcelogin()
     
     leave_balance_object = sf.bulk.Leave_Entitlement_Utilization__c.query(
@@ -396,9 +383,9 @@ def request_leave(request):
 
     context = {
         'leave': leave,
-        # 'history': history,
-        # 'user_history':history['user_history'],
-        # 'colleagues_leaves':history['colleagues_leaves'],
+        'history': history,
+        'user_history':history['user_history'],
+        'colleagues_leaves':history['colleagues_leaves'],
         'anual_leave': leave_balance_object[0]['Leave_Type__c'],
         'anual_leave_remaining': leave_balance_object[0]['Leave_Days_Remaining__c'],
         'exam_leave': leave_balance_object[1]['Leave_Type__c'],
@@ -433,8 +420,7 @@ def request_leave_data(request):
         
          
         leave = leaves(request) 
-           
-            
+
         leave_type_selected= request.POST.getlist('leave_name')
         leave_type_selected = leave_type_selected[0]
                     
@@ -444,16 +430,17 @@ def request_leave_data(request):
                     return i[0]
         
         leave_to_display = leave_desplayed()
-        # history = individual_leave_history(request)
+        history = individual_leave_history(request)
 
-        # leave balances code
+        '''LEAVE BALANCES SOQL'''
+
         sf = salesforcelogin()
         leave_balance_object = sf.bulk.Leave_Entitlement_Utilization__c.query(
             "SELECT Leave_Type__c,"
             "Leave_Days_Remaining__c FROM  Leave_Entitlement_Utilization__c WHERE Employee__c='"+ user +"' AND Leave_Year__c =2020")
 
+        '''LEAVE BALANCES SOQL'''
 
-        
         context = {
             'days': days_requested,
             'leave': leave,
@@ -461,8 +448,8 @@ def request_leave_data(request):
             'leave_type_selected': leave_type_selected,
             'Leave_display': leave_to_display,
             'coverage': coverage,
-            # 'user_history':history['user_history'],
-            # 'colleagues_leaves':history['colleagues_leaves'],
+            'user_history':history['user_history'],
+            'colleagues_leaves':history['colleagues_leaves'],
             'anual_leave': leave_balance_object[0]['Leave_Type__c'],
             'anual_leave_remaining': leave_balance_object[0]['Leave_Days_Remaining__c'],
             'exam_leave': leave_balance_object[1]['Leave_Type__c'],
@@ -471,10 +458,12 @@ def request_leave_data(request):
             'compassionate_leave_remaining': leave_balance_object[2]['Leave_Days_Remaining__c'],
             'days_selected': total_selected_days + 1
         }
-        
-        
-        
-        return render(request, 'registration/request.html', context)
+
+        if coverage!='' and start_date!='' and leave_type_selected!='':
+            return render(request, 'registration/request.html', context)
+        else:
+            messages.success(request, f'Please fill all required fields!')
+            return redirect('request_leave_data')
 
 
 # @api_view(('GET',))
@@ -491,7 +480,7 @@ def post_leave_to_salesforce(request):
 
     
     leave = leaves(request)
-    # history = individual_leave_history(request)
+    history = individual_leave_history(request)
 
     department_object= Employee.objects.get(Id=user)
     
@@ -514,8 +503,8 @@ def post_leave_to_salesforce(request):
         
     context = {
         'leave': leave,
-        # 'user_history':history['user_history'],
-        # 'colleagues_leaves':history['colleagues_leaves'],
+        'user_history':history['user_history'],
+        'colleagues_leaves':history['colleagues_leaves'],
         'department_unit': department_object.Sanergy_Department_Unit,
         'anual_leave': leave_balance_object[0]['Leave_Type__c'],
         'anual_leave_remaining': leave_balance_object[0]['Leave_Days_Remaining__c'],
@@ -544,9 +533,14 @@ def post_leave_to_salesforce(request):
     
     user_start_date = datetime.strptime(start_date, "%Y-%m-%d")
     user_start_date_time_stamp= datetime.timestamp(user_start_date)
-    
 
-    return render(request, 'registration/request.html', context)
+    if days_requested >= 1:
+        messages.success(request, f'Leave request sent!')
+        return render(request, 'registration/request.html', context)
+    else:
+        messages.warning(request, f'You have applied for zero days, Please confirm details')
+        return redirect('leave_page')
+
 
 def sanergy_department(request):
     sf = salesforcelogin()
