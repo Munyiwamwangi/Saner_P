@@ -35,7 +35,6 @@ urlpatterns = [
     path('employee/', include('employee.urls')),
     path('', include('django.contrib.auth.urls')),
     path('', views.home, name='login'),
-    path('logout', views.logout, name='logout'),
     path('', views.password_reset_done, name="Reset_done"),
     
 

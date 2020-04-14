@@ -1,22 +1,22 @@
 import datetime
 import time
-from datetime import datetime
-# import schedule
+from datetime import date, datetime
 
-
+import numpy as np
+import pandas as pd
+import schedule
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from employee.models import Employee
-from users.utils import salesforcelogin, postgressConnection
+from employee.models import Employee 
+from users.utils import postgressConnection, salesforcelogin
 
 from .forms import LeaveApplicationForm
 from .models import (EmployeeLeaveRequest, Leave_Entitlement_Type,
@@ -27,17 +27,15 @@ from .serializers import Comment, CommentSerializer, LeaveRequestsSerializer
 from.models import SanergyDepartmentUnit, SanergyDepartment
 
 
-
-
 def leave_application(request):
-    
     return render(request, 'users/login.html', )
+
 
 def individual_leave_history(request, id=None):
     current_user = request.user
     if Employee.objects.filter(email=(current_user.email)).exists():
         user_history = EmployeeLeaveRequest.objects.filter(employee = (current_user.salesforceid)).order_by('-Id')[:5]
-        context={
+        context = {
             'user_history':user_history,
             'current_user': current_user,
             }
@@ -47,30 +45,25 @@ def individual_leave_history(request, id=None):
         employee = Employee.objects.get(Id=user_sfid)
         employee_department_unit_id = employee.Sanergy_Department_Unit
 
-        # THE, GRAB LEAVES THAT SHARE THE DEPARTMENT UNIT WITH THE CURRENT USER
-        # LEAVES TO SHOW, SAME DEPARTMENT, APPROVED BY HR, NOT OVER NY END DAY TODAY
+        # THEN, GRAB LEAVES THAT SHARE THE DEPARTMENT UNIT WITH THE CURRENT USER
+        # LEAVES TO SHOW, SAME DEPARTMENT, APPROVED BY HR, NOT OVER BY END DAY TODAY
         hr_approved_leaves =  EmployeeLeaveRequest.objects.filter(
             employee_s_department = employee_department_unit_id,
             approval_status = "Approved by HR",
-            leave_end_date__lt = datetime.date.today())
+            leave_end_date__lt = date.today())
         pending_approval_leaves =  EmployeeLeaveRequest.objects.filter(
             employee_s_department = employee_department_unit_id,
             approval_status = "Pending Approval",
-            leave_end_date__lt = datetime.date.today())
+            leave_end_date__lt = date.today())
 
         colleagues_leaves = hr_approved_leaves | pending_approval_leaves
-        for leaves in colleagues_leaves:
-            print(leaves.employee)
-            print(leaves.approval_status)
-            print(leaves.leave_start_date)
-            print(leaves.leave_end_date)
-
-            print(colleagues_leaves.count())
 
         context['colleagues_leaves'] = colleagues_leaves
+        return context
+    else:
+        messages.warning(request, 'You must be an employee to have items here', extra_tags='alert')
+    # return render(request, 'registration/request.html', context)
 
-
-    return render(request, 'registration/request.html', context)
 
         # fetching leave types 
 def leave_entitlement_types(request):
@@ -103,29 +96,20 @@ def request_leave(request):
 def populate_leaveAccruals(request):
     sf = salesforcelogin()
     data = sf.bulk.Leave_Accrual__c.query(
-        "SELECT Days_Accrued__c,"
-        "Days_Worked__c,"
-        "Employee__c,"
-        "Leave_Entitlement_Utilization__c,"
-        "Period__c from Leave_Accrual__c")
+        "SELECT Days_Accrued__c, Days_Worked__c, Employee__c, Leave_Entitlement_Utilization__c, Period__c from Leave_Accrual__c")
+
     context = {
         'data': data
     }
 
     for accrual  in data:
-        days_accrued = accrual["Days_Accrued__c"]
-        days_worked = accrual["Days_Worked__c"]
-        employee = accrual["Employee__c"]
-        leave_entitlement_utilization = accrual["Leave_Entitlement_Utilization__c"]
-        period = accrual["Period__c"]
-
-        # map these accruals to database
+        # map these accruals to POSTGRES database
         LeaveAccruals.objects.update_or_create(
-                                               Days_Accrued= days_accrued,
-                                               Days_Worked = days_worked,
-                                               Employee = employee,
-                                               Leave_Entitlement_Utilization = leave_entitlement_utilization,
-                                               Period = period)
+                                               Days_Accrued= accrual["Days_Accrued__c"],
+                                               Days_Worked = accrual["Days_Worked__c"],
+                                               Employee = accrual["Employee__c"],
+                                               Leave_Entitlement_Utilization = accrual["Leave_Entitlement_Utilization__c"],
+                                               Period = accrual["Period__c"])
 
     #Continue from this point:
     accruals = LeaveAccruals.objects.all()
@@ -137,88 +121,46 @@ def populate_leaveAccruals(request):
 def populate_employee_leave_request(request):
     sf = salesforcelogin()
     data = sf.bulk.Employee_Leave_Request__c.query(
-        "SELECT Id,"
-        "Approval_Status__c,"
-        "Comments__c,"
-        "Coverage_Plans__c,"
-        "Department_Team_Lead__c,"
-        "Employee__c,"
-        "Employee_s_Department__c,"
-        "HR_Approve_Cancellation__c,"
-        "Leave_Approved__c,"
-        "Leave_End_Date__c,"
-        "Leave_Entitlement_Utilization__c,"
-        "Leave_Start_Date__c,"
-        "Leave_Started__c,"
-        "Leave_Type__c,"
-        "Line_Manager_Account__c,"
-        "Line_Manager_Approve_Cancellation__c,"
-        "Next_Step__c, Next_Step_Due_Date__c,"
-        "No_Of_Approved_Leave_Days__c,"
-        "No_Of_Leave_Days_Requested__c,"
-        "Request_From_VFP__c,"
-        "Stage__c from Employee_Leave_Request__c")
+        "SELECT Id, Approval_Status__c, Comments__c, Coverage_Plans__c, Department_Team_Lead__c, Employee__c, Employee_s_Department__c,"
+        "HR_Approve_Cancellation__c, Leave_Approved__c, Leave_End_Date__c, Leave_Entitlement_Utilization__c, Leave_Start_Date__c, Leave_Started__c,"
+        "Leave_Type__c, Line_Manager_Account__c, Line_Manager_Approve_Cancellation__c, Next_Step__c, Next_Step_Due_Date__c,"
+        "No_Of_Approved_Leave_Days__c, No_Of_Leave_Days_Requested__c, Request_From_VFP__c, Stage__c from Employee_Leave_Request__c")
 
     context = {
         'data': data
     }
-
     # return JsonResponse(data, safe=False)
 
     for leave_request  in data:
-        Id = leave_request['Id']
-        Approval_status = leave_request["Approval_Status__c"]
-        Comments = leave_request["Comments__c"]
-        Coverage_Plans = leave_request["Coverage_Plans__c"]
-        Department_Team_lead = leave_request["Department_Team_Lead__c"]
-        employee = leave_request["Employee__c"]
-        Employee_s_Department = leave_request["Employee_s_Department__c"]
-        HR_Approve_Cancellation = leave_request["HR_Approve_Cancellation__c"]
-        Leave_Approved  = leave_request["Leave_Approved__c"]
-        Leave_End_Date  = leave_request["Leave_End_Date__c"]
-        Leave_Entitlement_Utilization = leave_request["Leave_Entitlement_Utilization__c"]
-        Leave_Start_Date  = leave_request["Leave_Start_Date__c"]
-        Leave_Started = leave_request["Leave_Started__c"]
-        Leave_Type = leave_request["Leave_Type__c"]
-        Line_Manager_Account = leave_request["Line_Manager_Account__c"]
-        Line_Manager_Approve_Cancellation = leave_request["Line_Manager_Approve_Cancellation__c"]
-        Next_Step  = leave_request["Next_Step__c"]
-        Next_Step_Due_Date = leave_request["Next_Step_Due_Date__c"]
-        No_Of_Approved_Leave_Days = leave_request["No_Of_Approved_Leave_Days__c"]
-        No_Of_Leave_Days_Requested = leave_request["No_Of_Leave_Days_Requested__c"]
-        Request_From_VFP  = leave_request["Request_From_VFP__c"]
-        Stage  = leave_request["Stage__c"]
-
-        # CREATING EMPLOYEE INSTANCE AND SAVING
-        employee = Employee.objects.get(Id = employee)
-
-        # map these to database
-        EmployeeLeaveRequest.objects.update_or_create(Id=Id,
+        # CREATING EMPLOYEE INSTANCE AND SAVING TO POSTGRES
+        employee = Employee.objects.get(Id = leave_request["Employee__c"])
+        EmployeeLeaveRequest.objects.update_or_create(Id=leave_request['Id'],
                                         defaults={
-                                        "approval_status":  Approval_status,
-                                        "comments":  Comments,
-                                        "coverage_plans": Coverage_Plans,
-                                        "department_team_lead": Department_Team_lead,
+                                        "approval_status":  leave_request["Approval_Status__c"],
+                                        "comments":  leave_request["Comments__c"],
+                                        "coverage_plans": leave_request["Coverage_Plans__c"],
+                                        "department_team_lead": leave_request["Department_Team_Lead__c"],
                                         "employee": employee,
-                                        "employee_s_department": Employee_s_Department,
-                                        "HR_approve_cancellation": HR_Approve_Cancellation,
-                                        "leave_approved": Leave_Approved,
-                                        "leave_end_date": Leave_End_Date,
-                                        "leave_entitlement_utilization":  Leave_Entitlement_Utilization,
-                                        "leave_start_date": Leave_Start_Date,
-                                        "leave_started": Leave_Started,
-                                        "leave_type": Leave_Type,
-                                        "line_manager_account": Line_Manager_Account,
-                                        "line_manager_approve_cancellation": Line_Manager_Approve_Cancellation,
-                                        "next_step": Next_Step,
-                                        "next_step_due_date": Next_Step_Due_Date,
-                                        "no_of_approved_leave_days": No_Of_Approved_Leave_Days,
-                                        "no_of_leave_days_requested": No_Of_Leave_Days_Requested,
-                                        "request_from_VFP": Request_From_VFP,
-                                        "stage": Stage,
+                                        "employee_s_department":  leave_request["Employee_s_Department__c"],
+                                        "HR_approve_cancellation": leave_request["HR_Approve_Cancellation__c"],
+                                        "leave_approved": leave_request["Leave_Approved__c"],
+                                        "leave_end_date": leave_request["Leave_End_Date__c"],
+                                        "leave_entitlement_utilization":  leave_request["Leave_Entitlement_Utilization__c"],
+                                        "leave_start_date": leave_request["Leave_Start_Date__c"],
+                                        "leave_started":  leave_request["Leave_Started__c"],
+                                        "leave_type": leave_request["Leave_Type__c"],
+                                        "line_manager_account":  leave_request["Line_Manager_Account__c"],
+                                        "line_manager_approve_cancellation": leave_request["Line_Manager_Approve_Cancellation__c"],
+                                        "next_step": leave_request["Next_Step__c"],
+                                        "next_step_due_date": leave_request["Next_Step_Due_Date__c"],
+                                        "no_of_approved_leave_days": leave_request["No_Of_Approved_Leave_Days__c"],
+                                        "no_of_leave_days_requested":  leave_request["No_Of_Leave_Days_Requested__c"],
+                                        "request_from_VFP": leave_request["Request_From_VFP__c"],
+                                        "stage": leave_request["Stage__c"],
                                         } )
 
     #Continue from this point:
+    print("Saving leaves")
 
     requests = EmployeeLeaveRequest.objects.all()
     for item in requests:
@@ -229,37 +171,22 @@ def populate_employee_leave_request(request):
 def populate_sanergy_calender(request):
     sf = salesforcelogin()
     data = sf.bulk.Sanergy_Calendar__c.query(
-        "SELECT Date__c,"
-        "Description__c,"
-        "IsHoliday__c,"
-        "IsWeekend__c,"
-        "is_Weekend_or_Holiday__c,"
-        "Weekday_Name__c,"
-        "Weekday_No__c from Sanergy_Calendar__c")
+        "SELECT Date__c, Description__c, IsHoliday__c, IsWeekend__c,"
+        "is_Weekend_or_Holiday__c, Weekday_Name__c, Weekday_No__c from Sanergy_Calendar__c")
 
     context = {
         'data': data
     }
-    # return JsonResponse(data, safe=False)
 
     for item in data:
-        Date__c = item['Date__c']
-        Description__c = item['Description__c']
-        IsHoliday__c = item['IsHoliday__c']
-        IsWeekend__c = item['IsWeekend__c']
-        is_Weekend_or_Holiday__c = item['is_Weekend_or_Holiday__c']
-        Weekday_Name__c = item['Weekday_Name__c']
-        Weekday_No__c = item['Weekday_No__c']
-
-        # sending to database
-        SanergyCalendar.objects.update_or_create(Date=Date__c,
+        SanergyCalendar.objects.update_or_create(Date=item['Date__c'],
                                 defaults={
-                                'Decsritption' : Description__c,
-                                'isHoliday' : IsHoliday__c,
-                                'isWeekend' : IsWeekend__c,
-                                'isWeekend_or_Holiday' : is_Weekend_or_Holiday__c,
-                                'Weekday_Name' : Weekday_Name__c,
-                                'Weekday_No' : Weekday_No__c,
+                                'Decsritption' : item['Description__c'],
+                                'isHoliday' : item['IsHoliday__c'],
+                                'isWeekend' : item['IsWeekend__c'],
+                                'isWeekend_or_Holiday' : item['is_Weekend_or_Holiday__c'],
+                                'Weekday_Name' :  item['Weekday_Name__c'],
+                                'Weekday_No' :  item['Weekday_No__c'],
                                 })
 
     calendar = SanergyCalendar.objects.all()
@@ -272,52 +199,30 @@ def populate_sanergy_calender(request):
 def entitlement_utilization(request):
     sf = salesforcelogin()
     data = sf.bulk.Leave_Entitlement_Utilization__c.query(
-        "SELECT Id,"
-        "Employee__c,"
-        "Leave_Days_Accrued__c,"
-        "Leave_Days_Remaining__c,"
-        "Leave_Days_Scheduled__c,"
-        "Leave_Days_Used__c,"
-        "Leave_Entitlement_Type_Config__c,"
-        "Leave_Type__c,"
-        "Leave_Type_Name__c,"
-        "Leave_Year__c,"
-        "Total_No_of_Leave_Days__c from Leave_Entitlement_Utilization__c ")
+        "SELECT Id, Employee__c, Leave_Days_Accrued__c, Leave_Days_Remaining__c,"
+        "Leave_Days_Scheduled__c, Leave_Days_Used__c, Leave_Entitlement_Type_Config__c,"
+        "Leave_Type__c, Leave_Type_Name__c, Leave_Year__c, Total_No_of_Leave_Days__c from Leave_Entitlement_Utilization__c ")
   
     context = {
         'data': data
     }
     # return JsonResponse(data, safe=False)
-
     for item in data:
-        id = item['Id']
-        Employee = item['Employee__c']
-        Leave_Days_Accrued = item['Leave_Days_Accrued__c']
-        Leave_Days_Remaining = item['Leave_Days_Remaining__c']
-        Leave_Days_Scheduled = item['Leave_Days_Scheduled__c']
-        Leave_Days_Used = item['Leave_Days_Used__c']
-        Leave_Entitlement_Type_Config = item['Leave_Entitlement_Type_Config__c']
-        Leave_Type = item['Leave_Type__c']
-        Leave_Type_Name = item['Leave_Type_Name__c']
-        Leave_Year  = item['Leave_Year__c']
-        Total_No_of_Leave_Days = item['Total_No_of_Leave_Days__c']
-
         Leave_Entitlement_Utilization.objects.update_or_create(
-                                    id = id ,
+                                    id = item['Id'] ,
                                     defaults={
-                                    "Employee" : Employee,
-                                    "Leave_Days_Accrued" : Leave_Days_Accrued,
-                                    "Leave_Days_Remaining" : Leave_Days_Remaining,
-                                    "Leave_Days_Scheduled" : Leave_Days_Scheduled,
-                                    "Leave_Days_Used" : Leave_Days_Used,
-                                    "Leave_Entitlement_Type_Config" : Leave_Entitlement_Type_Config,
-                                    "Leave_Type" : Leave_Type,
-                                    "Leave_Type_Name" : Leave_Type_Name,
-                                    "Leave_Year" : Leave_Year,
-                                    "Total_No_of_Leave_Days" : Total_No_of_Leave_Days,
+                                    "Employee" : item['Employee__c'],
+                                    "Leave_Days_Accrued" :  item['Leave_Days_Accrued__c'],
+                                    "Leave_Days_Remaining" : item['Leave_Days_Remaining__c'],
+                                    "Leave_Days_Scheduled" : item['Leave_Days_Scheduled__c'],
+                                    "Leave_Days_Used" :  item['Leave_Days_Used__c'],
+                                    "Leave_Entitlement_Type_Config" :  item['Leave_Entitlement_Type_Config__c'],
+                                    "Leave_Type" : item['Leave_Type__c'],
+                                    "Leave_Type_Name" : item['Leave_Type_Name__c'],
+                                    "Leave_Year" : item['Leave_Year__c'],
+                                    "Total_No_of_Leave_Days" : item['Total_No_of_Leave_Days__c'],
                                     })
 
-    
     # return JsonResponse(data, safe=False)
     return HttpResponse("Utilization Shipped to AWS Postgres")
 
@@ -326,14 +231,8 @@ def entitlement_utilization(request):
 def refresh_sanergy_calender(request):
     sf = salesforcelogin()
     data = sf.bulk.Sanergy_Calendar__c.query(
-        "SELECT Date__c,"
-        "Description__c,"
-        "isBusinessDay__c,"
-        "isBusinessDayInclSat__c,"
-        "IsHoliday__c,"
-        "IsWeekend__c,"
-        "is_Weekend_or_Holiday__c,"
-        "Weekday_Name__c,"
+        "SELECT Date__c, Description__c, isBusinessDay__c, isBusinessDayInclSat__c,"
+        "IsHoliday__c, IsWeekend__c, is_Weekend_or_Holiday__c, Weekday_Name__c,"
         "Weekday_No__c from Sanergy_Calendar__c WHERE CreatedDate = TODAY OR LastModifiedDate = TODAY")
 
     context = {
@@ -341,33 +240,18 @@ def refresh_sanergy_calender(request):
     }
 
     for item in data:
-        Date__c = item['Date__c']
-        Description__c = item['Description__c']
-        isBusinessDay__c = item['isBusinessDay__c']
-        isBusinessDayInclSat__c = item['isBusinessDayInclSat__c']
-        IsHoliday__c = item['IsHoliday__c']
-        IsWeekend__c = item['IsWeekend__c']
-        is_Weekend_or_Holiday__c = item['is_Weekend_or_Holiday__c']
-        Weekday_Name__c = item['Weekday_Name__c']
-        Weekday_No__c = item['Weekday_No__c']
-
-        # sending to database
-        SanergyCalendar.objects.update_or_create(Date=Date__c,
+        SanergyCalendar.objects.update_or_create(Date=item['Date__c'],
                                 defaults={
-                                'Decsritption' : Description__c,
-                                'isBusinessDay' : isBusinessDay__c,
-                                'isBusinessDayInclSat' : isBusinessDayInclSat__c,
-                                'isHoliday' : IsHoliday__c,
-                                'isWeekend' : IsWeekend__c,
-                                'isWeekend_or_Holiday' : is_Weekend_or_Holiday__c,
-                                'Weekday_Name' : Weekday_Name__c,
-                                'Weekday_No' : Weekday_No__c,
+                                'Decsritption' : item['Description__c'],
+                                'isBusinessDay' : item['isBusinessDay__c'],
+                                'isBusinessDayInclSat' :  item['isBusinessDayInclSat__c'],
+                                'isHoliday' : item['IsHoliday__c'],
+                                'isWeekend' :  item['IsWeekend__c'],
+                                'isWeekend_or_Holiday' : item['is_Weekend_or_Holiday__c'],
+                                'Weekday_Name' :  item['Weekday_Name__c'],
+                                'Weekday_No' :  item['Weekday_No__c'],
                                 })
         return HttpResponse("Sanergy calendar is populated")
-
-
-
-
 
 
 def leaves(request):
@@ -381,12 +265,11 @@ def leaves(request):
     return leave
 
 
-def request_leave(request):
+def request_leave_page(request):
     user = request.user.salesforceid 
-    leave = leaves(request) 
-    # history = individual_leave_history(request)
+    leave = leaves(request)
+    history = individual_leave_history(request)
 
-    # leave balances code
     sf = salesforcelogin()
     
     leave_balance_object = sf.bulk.Leave_Entitlement_Utilization__c.query(
@@ -396,9 +279,9 @@ def request_leave(request):
 
     context = {
         'leave': leave,
-        # 'history': history,
-        # 'user_history':history['user_history'],
-        # 'colleagues_leaves':history['colleagues_leaves'],
+        'history': history,
+        'user_history':history['user_history'],
+        'colleagues_leaves':history['colleagues_leaves'],
         'anual_leave': leave_balance_object[0]['Leave_Type__c'],
         'anual_leave_remaining': leave_balance_object[0]['Leave_Days_Remaining__c'],
         'exam_leave': leave_balance_object[1]['Leave_Type__c'],
@@ -433,8 +316,7 @@ def request_leave_data(request):
         
          
         leave = leaves(request) 
-           
-            
+
         leave_type_selected= request.POST.getlist('leave_name')
         leave_type_selected = leave_type_selected[0]
                     
@@ -444,16 +326,17 @@ def request_leave_data(request):
                     return i[0]
         
         leave_to_display = leave_desplayed()
-        # history = individual_leave_history(request)
+        history = individual_leave_history(request)
 
-        # leave balances code
+        '''LEAVE BALANCES SOQL'''
+
         sf = salesforcelogin()
         leave_balance_object = sf.bulk.Leave_Entitlement_Utilization__c.query(
             "SELECT Leave_Type__c,"
             "Leave_Days_Remaining__c FROM  Leave_Entitlement_Utilization__c WHERE Employee__c='"+ user +"' AND Leave_Year__c =2020")
 
+        '''LEAVE BALANCES SOQL'''
 
-        
         context = {
             'days': days_requested,
             'leave': leave,
@@ -461,8 +344,8 @@ def request_leave_data(request):
             'leave_type_selected': leave_type_selected,
             'Leave_display': leave_to_display,
             'coverage': coverage,
-            # 'user_history':history['user_history'],
-            # 'colleagues_leaves':history['colleagues_leaves'],
+            'user_history':history['user_history'],
+            'colleagues_leaves':history['colleagues_leaves'],
             'anual_leave': leave_balance_object[0]['Leave_Type__c'],
             'anual_leave_remaining': leave_balance_object[0]['Leave_Days_Remaining__c'],
             'exam_leave': leave_balance_object[1]['Leave_Type__c'],
@@ -471,10 +354,12 @@ def request_leave_data(request):
             'compassionate_leave_remaining': leave_balance_object[2]['Leave_Days_Remaining__c'],
             'days_selected': total_selected_days + 1
         }
-        
-        
-        
-        return render(request, 'registration/request.html', context)
+
+        if coverage!='' and start_date!='' and leave_type_selected!='':
+            return render(request, 'registration/request.html', context)
+        else:
+            messages.success(request, f'Please fill all required fields!')
+            return redirect('request_leave_data')
 
 
 # @api_view(('GET',))
@@ -491,7 +376,7 @@ def post_leave_to_salesforce(request):
 
     
     leave = leaves(request)
-    # history = individual_leave_history(request)
+    history = individual_leave_history(request)
 
     department_object= Employee.objects.get(Id=user)
     
@@ -514,8 +399,8 @@ def post_leave_to_salesforce(request):
         
     context = {
         'leave': leave,
-        # 'user_history':history['user_history'],
-        # 'colleagues_leaves':history['colleagues_leaves'],
+        'user_history':history['user_history'],
+        'colleagues_leaves':history['colleagues_leaves'],
         'department_unit': department_object.Sanergy_Department_Unit,
         'anual_leave': leave_balance_object[0]['Leave_Type__c'],
         'anual_leave_remaining': leave_balance_object[0]['Leave_Days_Remaining__c'],
@@ -544,9 +429,14 @@ def post_leave_to_salesforce(request):
     
     user_start_date = datetime.strptime(start_date, "%Y-%m-%d")
     user_start_date_time_stamp= datetime.timestamp(user_start_date)
-    
 
-    return render(request, 'registration/request.html', context)
+    if days_requested >= 1:
+        messages.success(request, f'Leave request sent!')
+        return render(request, 'registration/request.html', context)
+    else:
+        messages.warning(request, f'You have applied for zero days, Please confirm details')
+        return redirect('leave_page')
+
 
 def sanergy_department(request):
     sf = salesforcelogin()
