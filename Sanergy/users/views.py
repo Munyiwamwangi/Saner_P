@@ -59,6 +59,10 @@ def create_custom_user(request):
         
         first_name = field.Employee_First_Name
         full_name = field.Employee_Full_Name
+        
+        '''        
+        A ONE TIME RUN CODE, THEN COMMENT OUT
+        '''
 
         # CustomUser.objects.update_or_create(salesforceid = salesforceid,
         #                         defaults={

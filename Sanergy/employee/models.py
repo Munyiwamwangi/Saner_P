@@ -4,11 +4,9 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-# from django.utils.translation import ugettext_lazy as _
-# from leave_management.models import SanergyDepartment, SanergyDepartmentUnit
 
+import leave_management
 from users.models import CustomUser
-
 
 class Employee(models.Model):
     Id = models.CharField(primary_key=True,max_length=100, blank=False)
@@ -17,8 +15,8 @@ class Employee(models.Model):
     Employee_Middle_Name = models.CharField(max_length=100, null=True)
     Employee_Full_Name = models.CharField(max_length=100, blank=False)
     Company_Division = models.CharField(max_length=100, blank=True)
-    Sanergy_Department = models.CharField(max_length=100, null=True)
-    Sanergy_Department_Unit = models.CharField(max_length=100, null=True)
+    Sanergy_Department = models.ForeignKey('leave_management.SanergyDepartment', on_delete=models.SET_NULL, null=True)
+    Sanergy_Department_Unit = models.ForeignKey('leave_management.SanergyDepartmentUnit', on_delete=models.SET_NULL, null=True)
     Employee_Active = models.BooleanField(default=True, null=True)
     email = models.EmailField(unique=True, null=True)
     password = models.CharField(max_length=100, null=True)
