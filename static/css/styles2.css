@@ -1,0 +1,75 @@
+body{
+    background:#F5F5F5
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 290vh;
+  background: #F5F5F5;
+  margin-top:150px;
+  
+  
+}
+.side-nav {
+  background-color:#F5F5F5;
+  width: 48vw;
+  height:290vh;
+  
+  
+}
+.info {
+  background-color:red;
+  width: 100vw;
+ 
+}
+.fluid {
+  
+  width: 200vw;
+  height: 290vh;
+  box-shadow: 0 0 10px;
+  position: relative;
+  z-index: 12;
+   
+}
+
+header {
+    background: pink;
+    text-align: center;
+    position: fixed;
+    width: 40vw;
+   
+   
+}
+.icon-bar {
+            position: absolute;
+            top: 0;
+            width: 130px;
+            margin-top: 15px;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .icon-bar a {
+            display: block;
+            text-align: center;
+            padding: 18px;
+            transition: all 0.3s ease;
+            color: #006699;
+            font-size: 36px;
+            
+        }
+        
+        .icon-bar a:hover {
+            background-color: #FCEE21;
+           
+        }
+
+
+
+footer{
+  background-color:red;
+  width: 291vw;
+  height: 60px;
+  position: relative;
+  z-index: 12;
+}
