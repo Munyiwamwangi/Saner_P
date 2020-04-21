@@ -22,6 +22,9 @@ def search(request):
     context['department_unit'] = SanergyDepartmentUnit.objects.all().order_by('name')
     context['current_user_profile'] = Employee.objects.filter(Id = request.user.salesforceid).first()
     context['employee'] = Employee.objects.all()
+    # departmenr_unit=Employee.objects.all()[:200]
+    # for thing in departmenr_unit:
+    #     print(thing.Sanergy_Department_Unit)
     return render(request, 'employee/search_list.html', context)
 
 

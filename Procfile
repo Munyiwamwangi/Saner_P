@@ -1,0 +1,1 @@
+web: gunicorn leavemanagementsystem.wsgi:application --log-file -
