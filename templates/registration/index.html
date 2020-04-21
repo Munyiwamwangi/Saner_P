@@ -1,0 +1,629 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="http://www.sanergy.com/wp-content/uploads/2019/02/cropped-Favicon_001-01-1-32x32.png" sizes="32x32">
+    <link rel="icon" href="http://www.sanergy.com/wp-content/uploads/2019/02/cropped-Favicon_001-01-1-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="http://www.sanergy.com/wp-content/uploads/2019/02/cropped-Favicon_001-01-1-180x180.png">
+    <link rel="stylesheet" href="{% static 'css/styles3.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/scripts.js"></script>
+    <title>Home</title>
+</head>
+
+<body>
+
+    <!-- Start of code for the top nav -->
+    <header>
+        <div class="container">
+
+
+            <nav>
+                <div class="menu-bar">
+                    <ul>
+                        <li>
+                            <a href="#" style="margin-right: 50em;margin-top: 3em;"><img class="fixed-logo" src="http://www.sanergy.com/wp-content/uploads/2018/11/logo-small-color-195.png" width="160px" alt="Sanergy" style="height: 60px;"></a>
+                        </li>
+                        <li class="list" style="float:right" class="link">
+                            <a class="active" href="#history">
+                                <div class="circle">
+                                    <span class="initials">NS</span>
+                                    <p style="margin-left:50px;margin-top:-8px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+                                </div>
+                            </a>
+
+                            <div class="sub-menu">
+                                <ul>
+                                    <li><a href="" style="color:white;font-weight:bold;font-size:15px;">Profile</a></li>
+                                    <li><a href="{% url 'leave_page' %}" style="color:white;font-weight:bold;font-size:15px;">Apply Leave</a></li>
+                                    <li><a href="{% url 'employee_directory' %}" style="color:white;font-weight:bold;font-size:15px;">Directory</a></li>
+                                    <li><a href="login.html" style="color:white;font-weight:bold;font-size:15px;">Log Out</a></li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="profile" style="float:right" class="link"><a class="active" href="#history"><span class="fa-stack fa-lg">
+  <i class="fa fa-circle fa-stack-2x icon-background1"></i>
+ <i class="fa fa-search fa-stack-1x"></i>
+  
+</span></a></li>
+                        <li class="lis" style="float:right" class="link"><a class="active" href="#history"><span class="fa-stack fa-lg">
+  <i class="fa fa-circle fa-stack-2x icon-background1"></i>
+  <i class="fa fa-bell fa-stack-1x "></i>
+  
+  
+</span>
+</span></a></li>
+                    </ul>
+            </nav>
+
+            </div>
+    </header>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.4/gsap.min.js"></script>
+
+    <!-- End of code for top nav -->
+
+    <!-- Start of code for side nav -->
+
+
+
+
+    <style>
+        body {
+            margin-top: 0em
+        }
+        
+        .icon-bar {
+            position: absolute;
+            top: 0;
+            width: 130px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .icon-bar a {
+            display: block;
+            text-align: center;
+            padding: 18px;
+            transition: all 0.3s ease;
+            color: #006699;
+            font-size: 36px;
+        }
+        
+        .icon-bar a:hover {
+            background-color: #FCEE21;
+        }
+    </style>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+    <div class="icon-bar">
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+
+
+
+        <a href="#" style="text-decoration:none;"><i class="fa fa-tachometer"></i><p style="font-size:10px; font-weight:bold;">Dashboard</p></a>
+
+        <a href="#" style="text-decoration:none;"><i class="fa fa-folder-open"></i><p style="font-size:10px; font-weight:bold">Resources</p></a>
+
+        <a href="#" style="text-decoration:none;"><i class="fa fa-camera"></i><p style="font-size:10px; font-weight:bold">Gallery</p></a>
+
+        <a href="#" style="text-decoration:none;"><i class="fa fa-edit"></i><p style="font-size:10px; font-weight:bold">Newsletter</p></a>
+
+        <a href="#" style="text-decoration:none;"><i class="fa fa-edit"></i><p style="font-size:10px; font-weight:bold">L&D</p></a>
+
+
+    </div>
+
+
+    <!-- End of code for side nav -->
+
+    <!-- Start of code for right update strip -->
+    <br>
+
+    <section>
+        <h1 style="color:#006699;font-size:20px;margin-right:0px;">Whose out</h1>
+        <br>
+
+        <style>
+            .avatar {
+                vertical-align: middle;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+        </style>
+
+
+        <img src="{% static 'img/arjunsyah-TBUA5KHJn6k-unsplash.jpg' %}" alt="Avatar" class="avatar">
+        <p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+        <br>
+        <br>
+        <img src="{% static 'img/daniel-lincoln-0WkuzakMM38-unsplash.jpg' %}" alt="Avatar" class="avatar">
+        <p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+
+</body>
+
+</html>
+<br>
+<br>
+<hr>
+
+<style>
+    .card {
+        transition: 0.3s;
+        width: 40%;
+        background: brown;
+    }
+    
+    .container {
+        padding: 8px 6px;
+    }
+</style>
+
+
+<br>
+
+
+<div class="card" style="background:white;">
+
+
+    <div class="container" style="text-align:center;padding-right:15px;padding-left:14px;">
+        <br>
+        <img src="{% static 'img/coffee.png' %}" alt="Alps" style="width:25%">
+        <div class="w3-container w3-center">
+            <h3 style="color:#006699;font-weight:bold;font-size:20px;">Open Chai</h3>
+            <p style="color:#006699;font-size:13px;font-weight:bold;">Alan Kimutai talks on community standards. </p>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .card {
+        transition: 0.3s;
+        width: 100%;
+        height: 30%;
+    }
+    
+    .container {
+        padding: 8px 6px;
+    }
+</style>
+
+
+<br>
+<br>
+
+<div class="card" style="background:#FCEE21;">
+
+
+    <div class="container" style="text-align:center;padding-right:15px;padding-left:14px;">
+        <br>
+        <img src="{% static 'img/alarm-bell.png' %}" alt="Alps" style="width:20%">
+        <div class="w3-container w3-center">
+            <h3 style="color:#006699;font-weight:bold;font-size:20px;">Notifications</h3>
+            <p style="color:#006699;font-size:13px;font-weight:bold;">Office will be closed till further notice. </p>
+
+        </div>
+    </div>
+
+</div>
+
+
+<br>
+
+
+<!-- <h1 style="color:#006699;font-size:20px;margin-right:0px;">Whose online</h1> -->
+<br>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .avatar {
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+</style>
+
+
+
+
+<!-- <img src="{% static 'img/fahri-ramdani-T7ZhyKVDwdE-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<img src="{% static 'img/marsha-dhita-7w-ovlfpCq4-unsplash.jpg '%}" alt="Avatar" class="avatar">
+<img src="{% static 'img/max-muselmann-3e0dM8wZJK0-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<img src="{% static 'img/fahri-ramdani-T7ZhyKVDwdE-unsplash.jpg' %}" alt="Avatar" class="avatar"> -->
+
+
+
+<br>
+<br>
+<hr>
+
+<h1 style="color:#006699;font-size:20px;margin-right:0px;">Recent updates</h1>
+
+<style>
+    .avatar {
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+</style>
+
+
+
+
+<img src="{% static 'img/romina-farias-ZKUKY559stM-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+
+
+
+
+
+<br>
+
+<hr>
+
+<h1 style="color:#006699;font-size:20px;margin-right:0px;">Birthdays</h1>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .avatar {
+        vertical-align: middle;
+        width: 43px;
+        height: 43px;
+        border-radius: 50%;
+    }
+</style>
+
+
+
+<img src="{% static 'img/romina-farias-ZKUKY559stM-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+<br>
+<br>
+<img src="{% static 'img/syed-muizur-MrRUgFfSjBA-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+<br>
+<br>
+<img src="{% static 'img/terricks-noah-u2ccBBT0eyM-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+<br>
+<br>
+
+<img src="{% static 'img/vamsi-konduri-7C8V6a9FLBQ-unsplash.jpg' %}" alt="Avatar" class="avatar">
+<p style="margin-left: 60px;margin-top: -30px;font-size:12px;color:#006699;font-weight:bold;">Nimo</p>
+
+<br>
+
+
+<style>
+    .card {
+        transition: 0.3s;
+        width: 100%;
+        height: 30%;
+    }
+    
+    .container {
+        padding: 8px 6px;
+    }
+</style>
+
+
+<br>
+<br>
+
+
+
+
+<div class="container" style="text-align:center;">
+    <br>
+
+    <div class="w3-container w3-center">
+
+        <img src="{% static 'img/Skyline-graphic_Homepage.png' %}" alt="Alps" style="width:100%;height:65%;">
+
+    </div>
+</div>
+
+</div>
+
+
+</section>
+
+
+<style>
+    code {
+        background: #F5F5F5;
+        border-radius: 6px;
+        color: black;
+        display: block;
+        font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+        padding: 24px 15px;
+        text-align: center;
+        height: 1196px;
+    }
+    
+    section,
+    aside,
+    footer {
+        margin: 0% 34px 10%;
+    }
+    
+    section {
+        display: inline-block;
+        width: 20%;
+        float: right;
+    }
+    
+    footer {
+        margin-bottom: 0;
+    }
+</style>
+
+<!-- End of code for right update strip -->
+<!-- Start of code for wrapper -->
+<div class="fluid">
+    <div class="container-fluid">
+
+        <div class="row" style=" background-image: url(&quot;https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60&quot;); background-size: cover; background-repeat: no-repeat; background-attachment: scroll; background-position: center center; padding-top: 120px;height:600px;box-shadow: 0 0 10px;">
+        </div>
+
+        <div class="row" style="background:white;height:660px;box-shadow: 0 0 10px;">
+            <br>
+            <br>
+            <h1 style="color:#006699;font-size:20px;margin-left:40px;">Calendar & events</h1>
+            <div class="col-md-6" style="border: 2px solid yellow;width:40%;margin-left:40px;">
+
+                <style>
+                    * {
+                        box-sizing: border-box;
+                    }
+                    
+                    ul {
+                        list-style-type: none;
+                    }
+                    
+                    body {
+                        font-family: Verdana, sans-serif;
+                    }
+                    
+                    .month {
+                        padding: 15px 10px;
+                        margin-top: 10px;
+                        width: 100%;
+                        background: white;
+                        text-align: center;
+                        font-weight: bold;
+                    }
+                    
+                    .month ul {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    .month ul li {
+                        color: yellow;
+                        font-size: 25px;
+                        text-transform: ;
+                        letter-spacing: 3px;
+                    }
+                    
+                    .month .prev {
+                        float: left;
+                        padding-top: 0px;
+                    }
+                    
+                    .month .next {
+                        float: right;
+                        padding-top: 0px;
+                    }
+                    
+                    .weekdays {
+                        margin: 0;
+                        padding: 10px 0;
+                        background-color: white;
+                        font-weight: 10px;
+                    }
+                    
+                    .weekdays li {
+                        display: inline-block;
+                        width: 13.6%;
+                        color: yellow;
+                        text-align: center;
+                    }
+                    
+                    .days {
+                        padding: 10px 0;
+                        background: white;
+                        margin: 0;
+                    }
+                    
+                    .days li {
+                        list-style-type: none;
+                        display: inline-block;
+                        width: 13.6%;
+                        text-align: center;
+                        margin-bottom: 5px;
+                        font-size: 12px;
+                        color: black;
+                    }
+                    
+                    .days li .active {
+                        padding: 5px;
+                        background: yellow;
+                        color: black!important;
+                        border-radius: 50%;
+                    }
+                    /* Add media queries for smaller screens */
+                    
+                    @media screen and (max-width:720px) {
+                        .weekdays li,
+                        .days li {
+                            width: 13.1%;
+                        }
+                    }
+                    
+                    @media screen and (max-width: 420px) {
+                        .weekdays li,
+                        .days li {
+                            width: 12.5%;
+                        }
+                        .days li .active {
+                            padding: 2px;
+                        }
+                    }
+                    
+                    @media screen and (max-width: 290px) {
+                        .weekdays li,
+                        .days li {
+                            width: 12.2%;
+                        }
+                    }
+                </style>
+
+
+
+
+                <div class="month">
+                    <ul>
+                        <li class="prev">&#10094;</li>
+                        <li class="next">&#10095;</li>
+                        <li>
+                            August
+                            <span style="font-size:18px">2017</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <ul class="weekdays">
+                    <li>M</li>
+                    <li>T</li>
+                    <li>W</li>
+                    <li>T</li>
+                    <li>F</li>
+                    <li>S</li>
+                    <li></li>
+                </ul>
+
+                <ul class="days">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li><span class="active">10</span></li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                    <li>14</li>
+                    <li>15</li>
+                    <li>16</li>
+                    <li>17</li>
+                    <li>18</li>
+                    <li>19</li>
+                    <li>20</li>
+                    <li>21</li>
+                    <li>22</li>
+                    <li>23</li>
+                    <li>24</li>
+                    <li>25</li>
+                    <li>26</li>
+                    <li>27</li>
+                    <li>28</li>
+                    <li>29</li>
+                    <li>30</li>
+
+                </ul>
+
+
+
+
+            </div>
+            <br>
+
+            <div class="col-6" style="height:10%;margin-left:9px;">
+                <h1 style="color:#006699;font-size:20px;margin-left:40px;">Worth a look</h1><br>
+                <br>
+                <br>
+                <br>
+                <br></div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+        </div>
+
+    </div>
+</div>
+
+<br>
+<!-- End of code for wrapper-->
+
+<div class="footer">
+    <div class="footer-content">
+        <p class="pp">Bold solutions for booming cities</p>
+    </div>
+    <br>
+    <br>
+    <div class="social-menu">
+        <ul>
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+        </ul>
+    </div>
+
+</div>
+
+
+
+
+</body>
+
+</html>

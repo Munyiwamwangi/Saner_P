@@ -26,7 +26,7 @@ def logout(request):
     return render(request, 'registration/logout.html')
 
 def landing(request):
-    return render (request, 'registration/qudo.html')
+    return render (request, 'registration/index.html')
 
 def password_reset(request):
     return render(request, 'users/password_reset_form.html')
