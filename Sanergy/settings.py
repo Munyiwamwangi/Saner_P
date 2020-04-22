@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-# {% load crispy_forms_tags%}
+
+import dj_database_url
+import django_heroku
+from decouple import Csv, config
+from django.contrib.messages import constants as messages
+
+MODE = config("MODE", default="dev")
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,21 +30,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'dt4n@@q@uayg60$v-qyf@in-!hnks^!651oa41$9f17=-9cgr='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
 db_host = False
-
 
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -89,8 +93,6 @@ TEMPLATES = [
     },
 ]
 
-from django.contrib.messages import constants as message_constants
-from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -101,7 +103,6 @@ MESSAGE_TAGS = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 
 WSGI_APPLICATION = 'Sanergy.wsgi.application'
@@ -119,20 +120,34 @@ SALESFORCE_QUERY_TIMEOUT = (4, 15)  # default (connect timeout, data timeout)
 #         'PORT': '5432',
 #     },
 
-# }
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# development
+if config('MODE') == "dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intranet_sandbox_db',
-        'USER': 'postgres',
-        'PASSWORD': 'intranet2020',
-        'HOST': 'intranet-sandbox-db-instance-v1.cvudwjs0pws7.eu-west-2.rds.amazonaws.com',
-        'PORT': '5432',
-    },
-}
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = []
 
 # DJNAGO FULL LIST OF PASSWORD HASHERS TO SUPPORT ANY HASHING ALGORITHM
 
@@ -180,7 +195,7 @@ SILENCED_SYSTEM_CHECKS = ["auth.W004"]
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -191,17 +206,21 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-SITE_ID = 1
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 MEDIA_URL = 'media/'
 
 # salesforce credentials
@@ -250,3 +269,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "domisemak@gmail.com"
 EMAIL_HOST_PASSWORD = "Dommy2019"
+
+# Configure Django settings for Heroku.
+django_heroku.settings(locals())
