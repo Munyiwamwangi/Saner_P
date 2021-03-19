@@ -24,7 +24,7 @@ django-salesforce==0.9
 django-seed==0.1.9
 django-sendgrid-v5==0.8.1
 django-widget-tweaks==1.4.8
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 entrypoints==0.3
 Faker==4.0.0
 flatten-json==0.1.7
