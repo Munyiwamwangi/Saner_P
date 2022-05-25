@@ -70,7 +70,7 @@ ptyprocess==0.6.0
 pycodestyle==2.5.0
 pycparser==2.19
 Pygments==2.5.2
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyOpenSSL==19.1.0
 pyrsistent==0.15.7
 python-crontab==2.4.0
